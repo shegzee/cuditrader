@@ -10,6 +10,7 @@ defined('BASEPATH') OR exit('');
 class User_model extends CI_Model{
     public function __construct(){
         parent::__construct();
+        $this->load->library('ion_auth');
     }
     
     /*
@@ -31,63 +32,58 @@ class User_model extends CI_Model{
      * @param type $mobile2
      * @return boolean
      */
-    public function add($f_name, $l_name, $email, $password, $mobile1, $mobile2){
-        $data = ['first_name'=>$f_name, 'last_name'=>$l_name, 'email'=>$email, 'password'=>$password,
-            'mobile1'=>$mobile1, 'mobile2'=>$mobile2];
-        
-        //set the datetime based on the db driver in use
-        $this->db->platform() == "sqlite3" 
-                ? 
-        $this->db->set('created_on', "datetime('now')", FALSE) 
-                : 
-        $this->db->set('created_on', "NOW()", FALSE);
-        
-        $this->db->insert('user', $data);
-        
-        if($this->db->affected_rows() > 0){
-            return $this->db->insert_id();
-        }
-        
-        else{
-            return FALSE;
-        }
+    public function add($username, $password, $email, $first_name, $last_name){
+
+        $additional_data = array (
+                'first_name' => $first_name,
+                'last_name' => $last_name
+            );
+        // $this->load->library('ion_auth');
+        return $this->ion_auth->register($username, $password, $email, $additional_data);
+    }
+
+    public function login($username, $password, $remember=FALSE) {
+        return $this->ion_auth->login($username, $password, $remember);
     }
     
-    /*
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    */
-    
-    /**
-     * 
-     * @param type $user_id
-     * @return boolean
-     */
-    public function update_last_login($user_id){
-        $this->db->where('id', $user_id);
-        
-        //set the datetime based on the db driver in use
-        $this->db->platform() == "sqlite3" 
-                ? 
-        $this->db->set('last_login', "datetime('now')", FALSE) 
-                : 
-        $this->db->set('last_login', "NOW()", FALSE);
-        
-        $this->db->update('user');
-        
-        if(!$this->db->error()){
+    public function get_profile($user_id) {
+        $this->db->where('user_id', $user_id);
+        $run_q = $this->db->get('user_profile');
+
+        if ($run_q->num_rows == 0) {
+            return FALSE;
+        }
+        else {
+            return $run_q->result();
+        }
+    }
+
+    public function edit_user_profile($user_id, $details) {
+        if ($this->user_profile($user_id)) {
+            // do edit
+        }
+        else {
+            // de create
+        }
+    }
+
+    public function set_profile_picture($user_id, $file_name) {
+        $this->db->where('user_id', $user_id);
+        $this->db->update('user_profile', ['picture'=>$file_name]);
+       
+        if($this->db->affected_rows()){
             return TRUE;
         }
-        
+
         else{
             return FALSE;
         }
     }
-    
-    
+
+    public function bank_accounts($user_id) {
+
+    }
+
     /*
     ********************************************************************************************************************************
     ********************************************************************************************************************************
@@ -95,7 +91,7 @@ class User_model extends CI_Model{
     ********************************************************************************************************************************
     ********************************************************************************************************************************
     */
-    
+
     /**
      * Get some details about an user (stored in session)
      * @param type $email

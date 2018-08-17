@@ -41,6 +41,9 @@ class Auth_Controller extends MY_Controller {
         if ($this->ion_auth->logged_in() === FALSE) {
             redirect('user/login');
         }
+        else {
+            $this->data['current_user'] = $this->ion_auth->user()->row();
+        }
     }
 
     protected function render($the_view = NULL, $template = 'main') {

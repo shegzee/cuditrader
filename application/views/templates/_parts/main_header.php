@@ -21,7 +21,7 @@
 						</a>
 					</li>
 					<li style="float: right;">
-						<?= isset($current_user) ? $current_user->username." - ".anchor('user/logout', 'Logout') : anchor('user/login', 'Login'); ?>
+						<?= isset($current_user) ? $current_user->username." - ".anchor('user/logout', 'Logout').' | '.anchor('user/profile', 'Profile') : anchor('user/login', 'Login').' | '.anchor('user/register', 'Join Cudi'); ?>
 					</li>
 				</ul>
 			</div>
