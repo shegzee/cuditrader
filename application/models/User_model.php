@@ -38,8 +38,9 @@ class User_model extends CI_Model{
                 'first_name' => $first_name,
                 'last_name' => $last_name
             );
-        // $this->load->library('ion_auth');
-        return $this->ion_auth->register($username, $password, $email, $additional_data);
+        $user_id = $this->ion_auth->register($username, $password, $email, $additional_data);
+        // create an entry in the 'user_profile' table for this user
+        $this->db->insert('user_profile', array("user_id" => $user_id));
     }
 
     public function login($username, $password, $remember=FALSE) {
@@ -50,27 +51,20 @@ class User_model extends CI_Model{
         $this->db->where('user_id', $user_id);
         $run_q = $this->db->get('user_profile');
 
-        if ($run_q->num_rows == 0) {
+        if (!isset($run_q)) {
             return FALSE;
         }
         else {
-            return $run_q->result();
+            // return $run_q->row();
+            return $run_q;
         }
     }
 
-    public function edit_user_profile($user_id, $details) {
-        if ($this->user_profile($user_id)) {
-            // do edit
-        }
-        else {
-            // de create
-        }
-    }
+    public function update_user_details($user_id, $user_data, $user_profile_data) {
+        // do edit all user details
+        $this->update_user($user_id, $user_data);
+        // $this->update_user_profile($user_id, $user_profile_data);
 
-    public function set_profile_picture($user_id, $file_name) {
-        $this->db->where('user_id', $user_id);
-        $this->db->update('user_profile', ['picture'=>$file_name]);
-       
         if($this->db->affected_rows()){
             return TRUE;
         }
@@ -78,6 +72,38 @@ class User_model extends CI_Model{
         else{
             return FALSE;
         }
+    }
+
+    public function update_user($user_id, $details) {
+        // do edit main user table
+        $this->db->where('id', $user_id);
+        $this->db->update('users', $details);
+
+        if($this->db->affected_rows()){
+            return TRUE;
+        }
+
+        else{
+            return FALSE;
+        }
+    }
+
+    public function update_user_profile($user_id, $details) {
+        // do edit user profile table
+        $this->db->where('user_id', $user_id);
+        $this->db->update('user_profile', $details);
+
+        if($this->db->affected_rows()){
+            return TRUE;
+        }
+
+        else{
+            return FALSE;
+        }
+    }
+
+    public function update_profile_picture($user_id, $file_name) {
+        return $this->update_user_profile($user_id, array('picture' => $file_name));
     }
 
     public function bank_accounts($user_id) {

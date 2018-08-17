@@ -3,6 +3,7 @@
 <div class="container">
 	<h1>Your profile</h1>
 	<h2>Personal details</h2>
+	<?= anchor('user/edit_profile', "Edit"); ?>
 	<div class="basic">
 		<p>Name: <?= $user->first_name." ".$user->last_name; ?></p>
 		<p>Username: <?= $user->username; ?></p>
@@ -10,10 +11,12 @@
 	</div>
 
 	<div class="details">
-		<?php if ($user_profile) { ?>
-			<!-- user profile -->
-			<p>Profile picture</p>
-			<img src="profile_pictures/<?= $user_profile->picture; ?>" />
+		<!-- user profile -->
+		<p>Profile picture</p>
+		<?php if ($user->profile->picture != "") { ?>
+			<img src="<?=base_url('uploads/profile_pictures/') ?><?= $user->profile->picture; ?>" />
+		<?php } else { ?>
+			<img src="<?=base_url('public/images/no_pic.jpg') ?>"
 		<?php } ?>
 	</div>
 

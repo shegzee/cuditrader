@@ -258,7 +258,7 @@ class Administrators extends CI_Controller{
     public function crosscheckMobile($mobile_number, $admin_id){
         //check db to ensure number was previously used for admin with $admin_id i.e. the same admin we're updating his details
         $adminWithNum = $this->genmod->getTableCol('admin', 'id', 'mobile1', $mobile_number);
-        
+        if (!$userWithNum) return TRUE;
         if($adminWithNum == $admin_id){
             //used for same admin. All is well.
             return TRUE;
@@ -287,7 +287,7 @@ class Administrators extends CI_Controller{
     public function crosscheckEmail($email, $admin_id){
         //check db to ensure email was previously used for admin with $admin_id i.e. the same admin we're updating his details
         $adminWithEmail = $this->genmod->getTableCol('admin', 'id', 'email', $email);
-        
+        if (!$userWithEmail) return TRUE;
         if($adminWithEmail == $admin_id){
             //used for same admin. All is well.
             return TRUE;

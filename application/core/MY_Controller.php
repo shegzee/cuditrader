@@ -36,13 +36,17 @@ class MY_Controller extends CI_Controller {
 }
 
 class Auth_Controller extends MY_Controller {
+    // var $user;
     function __construct() {
         parent::__construct();
         if ($this->ion_auth->logged_in() === FALSE) {
             redirect('user/login');
         }
         else {
-            $this->data['current_user'] = $this->ion_auth->user()->row();
+            $this->load->model('User_model');
+            $this->user = $this->ion_auth->user()->row();
+            $this->user->profile = $this->User_model->get_profile($this->user->id)->row();
+            $this->data['user'] = $this->user;
         }
     }
 

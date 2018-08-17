@@ -257,7 +257,7 @@ class Users extends CI_Controller{
     public function crosscheckMobile($mobile_number, $user_id){
         //check db to ensure number was previously used for user with $user_id i.e. the same user we're updating his details
         $userWithNum = $this->genmod->getTableCol('users', 'id', 'mobile', $mobile_number);
-        
+        if (!$userWithNum) return TRUE;
         if($userWithNum == $user_id){
             //used for same user. All is well.
             return TRUE;
@@ -286,7 +286,7 @@ class Users extends CI_Controller{
     public function crosscheckEmail($email, $user_id){
         //check db to ensure email was previously used for user with $user_id i.e. the same user we're updating his details
         $userWithEmail = $this->genmod->getTableCol('users', 'id', 'email', $email);
-        
+        if (!$userWithEmail) return TRUE;
         if($userWithEmail == $user_id){
             //used for same user. All is well.
             return TRUE;

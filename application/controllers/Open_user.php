@@ -7,6 +7,7 @@ class Open_user extends MY_Controller {
 	{
 		parent::__construct();
 		$this->load->library('ion_auth');
+		if ($this->ion_auth->logged_in()) redirect("home");
 		$this->load->model('User_model');
 	}
 
