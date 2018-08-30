@@ -113,6 +113,13 @@ defined('BASEPATH') OR exit('');
                                 Database Management
                             </a>
                         </li>
+
+                        <li class="<?= $pageTitle == 'Banks' ? 'active' : '' ?>">
+                            <a href="<?= admin_url('banks') ?>">
+                                <i class="fa fa-database"></i>
+                                Banks
+                            </a>
+                        </li>
                         
                         <li class="<?= $pageTitle == 'Administrators' ? 'active' : '' ?>">
                             <a href="<?= admin_url('administrators') ?>">
@@ -189,6 +196,13 @@ defined('BASEPATH') OR exit('');
                             <a href="<?= admin_url('items') ?>">
                                 <i class="fa fa-shopping-cart"></i>
                                 Collaterals
+                            </a>
+                        </li>
+                        
+                        <li class="<?= $pageTitle == 'Banks' ? 'active' : '' ?>">
+                            <a href="<?= admin_url('banks') ?>">
+                                <i class="fa fa-bank"></i>
+                                Banks
                             </a>
                         </li>
                         

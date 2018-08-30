@@ -100,11 +100,11 @@ class Users extends CI_Controller{
         
         $this->form_validation->set_rules('firstName', 'First name', ['required', 'trim', 'max_length[20]', 'strtolower', 'ucfirst'], ['required'=>"required"]);
         $this->form_validation->set_rules('lastName', 'Last name', ['required', 'trim', 'max_length[20]', 'strtolower', 'ucfirst'], ['required'=>"required"]);
-        $this->form_validation->set_rules('email', 'E-mail', ['trim', 'required', 'valid_email', 'is_unique[user.email]', 'strtolower'], 
+        $this->form_validation->set_rules('email', 'E-mail', ['trim', 'required', 'valid_email', 'is_unique[users.email]', 'strtolower'], 
                 ['required'=>"required", 'is_unique'=>'E-mail exists']);
-        $this->form_validation->set_rules('mobile', 'Phone number', ['required', 'trim', 'numeric', 'max_length[15]', 'min_length[11]', 'is_unique[user.mobile]'], 
+        $this->form_validation->set_rules('mobile', 'Phone number', ['trim', 'numeric', 'max_length[15]', 'min_length[11]', 'is_unique[users.mobile]'], 
                 ['required'=>"required", 'is_unique'=>"This number is already attached to a user"]);
-        $this->form_validation->set_rules('addr', 'Other number', ['trim']);
+        $this->form_validation->set_rules('address', 'Address', ['trim']);
         $this->form_validation->set_rules('passwordOrig', 'Password', ['required', 'min_length[8]'], ['required'=>"Enter password"]);
         $this->form_validation->set_rules('passwordDup', 'Password Confirmation', ['required', 'matches[passwordOrig]'], ['required'=>"Please retype password"]);
         
@@ -116,7 +116,7 @@ class Users extends CI_Controller{
             $hashedPassword = password_hash(set_value('passwordOrig'), PASSWORD_BCRYPT);
             
             $inserted = $this->user->add(set_value('firstName'), set_value('lastName'), set_value('email'), $hashedPassword, 
-                set_value('mobile'), set_value('addr'));
+                set_value('mobile'), set_value('address'));
             
             
             $json = $inserted ? 
@@ -157,9 +157,9 @@ class Users extends CI_Controller{
         
         $this->form_validation->set_rules('firstName', 'First name', ['required', 'trim', 'max_length[20]'], ['required'=>"required"]);
         $this->form_validation->set_rules('lastName', 'Last name', ['required', 'trim', 'max_length[20]'], ['required'=>"required"]);
-        $this->form_validation->set_rules('mobile', 'Phone number', ['required', 'trim', 'numeric', 'max_length[15]', 
-            'min_length[11]', 'callback_crosscheckMobile['. $this->input->post('userId', TRUE).']'], ['required'=>"required"]);
-        $this->form_validation->set_rules('addr', 'Home Address', ['trim']);
+        $this->form_validation->set_rules('phone', 'Phone number', ['trim', 'numeric', 'max_length[15]', 
+            'min_length[11]', 'callback_crosscheckMobile['. $this->input->post('userId', TRUE).']']);
+        $this->form_validation->set_rules('address', 'Home Address', ['trim']);
         $this->form_validation->set_rules('email', 'E-mail', ['required', 'trim', 'valid_email', 'callback_crosscheckEmail['. $this->input->post('userId', TRUE).']']);
         
         if($this->form_validation->run() !== FALSE){
@@ -171,7 +171,7 @@ class Users extends CI_Controller{
             $user_id = $this->input->post('userId', TRUE);
 
             $updated = $this->user->update($user_id, set_value('firstName'), set_value('lastName'), set_value('email'),
-                    set_value('mobile'), set_value('addr'));
+                    set_value('phone'), set_value('address'));
             
             
             $json = $updated ? 
@@ -204,7 +204,7 @@ class Users extends CI_Controller{
         $this->genlib->ajaxOnly();
         
         $user_id = $this->input->post('_uId');
-        $new_status = $this->genmod->gettablecol('users', 'account_status', 'id', $user_id) == 1 ? 0 : 1;
+        $new_status = $this->genmod->gettablecol('users', 'active', 'id', $user_id) == 1 ? 0 : 1;
         
         $done = $this->user->suspend($user_id, $new_status);
         
@@ -229,7 +229,7 @@ class Users extends CI_Controller{
         $this->genlib->ajaxOnly();
         
         $user_id = $this->input->post('_uId');
-        $new_value = $this->genmod->gettablecol('user', 'deleted', 'id', $user_id) == 1 ? 0 : 1;
+        $new_value = $this->genmod->gettablecol('users', 'deleted', 'id', $user_id) == 1 ? 0 : 1;
         
         $done = $this->user->delete($user_id, $new_value);
         
@@ -256,7 +256,10 @@ class Users extends CI_Controller{
      */
     public function crosscheckMobile($mobile_number, $user_id){
         //check db to ensure number was previously used for user with $user_id i.e. the same user we're updating his details
-        $userWithNum = $this->genmod->getTableCol('users', 'id', 'mobile', $mobile_number);
+        if ($mobile_number == "") {
+            return TRUE;
+        }
+        $userWithNum = $this->genmod->getTableCol('users', 'id', 'phone', $mobile_number);
         if (!$userWithNum) return TRUE;
         if($userWithNum == $user_id){
             //used for same user. All is well.

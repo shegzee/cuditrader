@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('');
                     <th>SN</th>
                     <th>NAME</th>
                     <th>E-MAIL</th>
-                    <th>MOBILE</th>
+                    <th>PHONE</th>
                     <th>HOME ADDRESS</th>
                     <th>DATE CREATED</th>
                     <th>LAST LOG IN</th>
@@ -30,23 +30,23 @@ defined('BASEPATH') OR exit('');
                         <td class="hidden firstName"><?=$get->first_name?></td>
                         <td class="hidden lastName"><?=$get->last_name?></td>
                         <td class="userEmail"><?=mailto($get->email)?></td>
-                        <td class="userMobile"><?=$get->mobile?></td>
-                        <td class="userAddress"><?=$get->addr?></td>
-                        <td><?=date('jS M, Y h:i:sa', strtotime($get->created_on))?></td>
+                        <td class="userPhone"><?=$get->phone?></td>
+                        <td class="userAddress"><?=$get->address?></td>
+                        <td><?=date('jS M, Y h:i:sa', $get->created_on)?></td>
                         <td>
-                            <?=$get->last_login === "0000-00-00 00:00:00" ? "---" : date('jS M, Y h:i:sa', strtotime($get->last_login))?>
+                            <?=$get->last_login === "0000-00-00 00:00:00" ? "---" : date('jS M, Y h:i:sa', $get->last_login)?>
                         </td>
-                        <td class="text-center edituser" id="edit-<?=$get->id?>">
+                        <td class="text-center editUser" id="edit-<?=$get->id?>">
                             <i class="fa fa-pencil pointer"></i>
                         </td>
-                        <td class="text-center suspenduser text-success" id="sus-<?=$get->id?>">
-                            <?php if($get->account_status === "1"): ?>
+                        <td class="text-center suspendUser text-success" id="sus-<?=$get->id?>">
+                            <?php if($get->active === "1"): ?>
                             <i class="fa fa-toggle-on pointer"></i>
                             <?php else: ?>
                             <i class="fa fa-toggle-off pointer"></i>
                             <?php endif; ?>
                         </td>
-                        <td class="text-center text-danger deleteuser" id="del-<?=$get->id?>">
+                        <td class="text-center text-danger deleteUser" id="del-<?=$get->id?>">
                             <?php if($get->deleted === "1"): ?>
                             <a class="pointer">Undo Delete</a>
                             <?php else: ?>

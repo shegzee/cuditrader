@@ -6,7 +6,7 @@ class User extends Auth_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->library('ion_auth');
+		// $this->load->library('ion_auth');
 	}
 
 	public function index()
@@ -22,9 +22,10 @@ class User extends Auth_Controller {
 
 	public function profile()
 	{
-		// $current_user = $this->ion_auth->user()->row();
-		// $this->data['user'] = $current_user;
-		// $this->data['user_profile'] = $this->User_model->get_profile($current_user->id);
+		$this->load->model('Bank_model');
+		$this->data['banks'] = $this->compose_array('banks', 'name');
+		$this->data['account_types'] = $this->compose_array('bank_account_types','name');
+		$this->data['bank_details'] = $this->Bank_model->bank_details($this->user->id);
 		$this->render('user/profile');
 		
 	}

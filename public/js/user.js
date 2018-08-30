@@ -76,7 +76,7 @@ $(document).ready(function(){
     
     
     //handles the addition of new user details .i.e. when "add user" button is clicked
-    $("#adduserSubmit").click(function(e){
+    $("#addUserSubmit").click(function(e){
         e.preventDefault();
         
         //reset all error msgs in case they are set
@@ -172,22 +172,22 @@ $(document).ready(function(){
         
         if(formChanges("editUserForm")){
             //reset all error msgs in case they are set
-            changeInnerHTML(['firstNameEditErr', 'lastNameEditErr', 'emailEditErr', 'roleEditErr', 'mobileErr', 'mobile2Err'], "");
+            changeInnerHTML(['firstNameEditErr', 'lastNameEditErr', 'emailEditErr', 'phoneEditErr', 'addressEditErr'], "");
 
             var firstName = $("#firstNameEdit").val();
             var lastName = $("#lastNameEdit").val();
             var email = $("#emailEdit").val();
-            var mobile = $("#mobileEdit").val();
-            var addr = $("#addrEdit").val();
-            var role = $("#roleEdit").val();
+            var phone = $("#phoneEdit").val();
+            var address = $("#addressEdit").val();
+            // var role = $("#roleEdit").val();
             var userId = $("#userId").val();
 
             //ensure all required fields are filled
-            if(!firstName || !lastName || !email || !role || !mobile){
+            if(!firstName || !lastName || !email || !phone){
                 !firstName ? changeInnerHTML('firstNameEditErr', "required") : "";
                 !lastName ? changeInnerHTML('lastNameEditErr', "required") : "";
                 !email ? changeInnerHTML('emailEditErr', "required") : "";
-                !mobile ? changeInnerHTML('mobileEditErr', "required") : "";
+                !phone ? changeInnerHTML('phoneEditErr', "required") : "";
 
                 return;
             }
@@ -205,7 +205,7 @@ $(document).ready(function(){
             $.ajax({
                 method: "POST",
                 url: appRoot+"users/update",
-                data: {firstName:firstName, lastName:lastName, email:email, mobile:mobile, addr:addr, userId:userId}
+                data: {firstName:firstName, lastName:lastName, email:email, phone:phone, address:address, userId:userId}
             }).done(function(returnedData){
                 $("#fMsgEditIcon").removeClass();//remove spinner
 
@@ -219,7 +219,7 @@ $(document).ready(function(){
                     }, 1000);
 
                     //reset all error msgs in case they are set
-                    changeInnerHTML(['firstNameEditErr', 'lastNameEditErr', 'emailEditErr', 'roleEditErr', 'mobileErr', 'mobile2Err'], "");
+                    changeInnerHTML(['firstNameEditErr', 'lastNameEditErr', 'emailEditErr', 'roleEditErr', 'phoneEditErr', 'addressEditErr'], "");
 
                     //refresh user list table
                     laus_();
@@ -303,7 +303,7 @@ $(document).ready(function(){
                     var newIconClass = returnedData._ns === 1 ? "fa fa-toggle-on pointer" : "fa fa-toggle-off pointer";
                     
                     //change the icon
-                    $("#sus-"+returnedData._aId).html("<i class='"+ newIconClass +"'></i>");
+                    $("#sus-"+returnedData._uId).html("<i class='"+ newIconClass +"'></i>");
                     
                 }
                 
@@ -382,15 +382,15 @@ $(document).ready(function(){
         var firstName = $(this).siblings(".firstName").html();
         var lastName = $(this).siblings(".lastName").html();
         var email = $(this).siblings(".userEmail").children('a').html();
-        var mobile = $(this).siblings(".userMobile").html();
-        var addr = $(this).siblings(".userAddress").html();
+        var phone = $(this).siblings(".userPhone").html();
+        var address = $(this).siblings(".userAddress").html();
         
         //prefill the form fields
         $("#firstNameEdit").val(firstName);
         $("#lastNameEdit").val(lastName);
         $("#emailEdit").val(email);
-        $("#mobileEdit").val(mobile);
-        $("#addrEdit").val(addr);
+        $("#phoneEdit").val(phone);
+        $("#addressEdit").val(address);
         
         $("#editUserModal").modal('show');
     });

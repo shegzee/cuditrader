@@ -30,9 +30,9 @@ class User extends CI_Model{
      * @param type $addr
      * @return boolean
      */
-    public function add($f_name, $l_name, $email, $password, $mobile, $addr){
+    public function add($f_name, $l_name, $email, $password, $mobile, $address){
         $data = ['first_name'=>$f_name, 'last_name'=>$l_name, 'email'=>$email, 'password'=>$password,
-            'mobile'=>$mobile, 'addr'=>$addr];
+            'mobile'=>$mobile, 'address'=>$address];
         
         //set the datetime based on the db driver in use
         $this->db->platform() == "sqlite3" 
@@ -135,8 +135,7 @@ class User extends CI_Model{
      * @return boolean
      */
     public function getAll($orderBy = "first_name", $orderFormat = "ASC", $start = 0, $limit = ""){
-        $this->db->select('id, first_name, last_name, email, mobile, addr, created_on, last_login, account_status, deleted');
-        $this->db->where("id != ", $_SESSION['admin_id']);
+        $this->db->select('id, first_name, last_name, email, phone, address, created_on, last_login, active, deleted');
         $this->db->limit($limit, $start);
         $this->db->order_by($orderBy, $orderFormat);
         
@@ -168,7 +167,7 @@ class User extends CI_Model{
     */ 
     public function suspend($user_id, $new_status){       
         $this->db->where('id', $user_id);
-        $this->db->update('users', ['account_status'=>$new_status]);
+        $this->db->update('users', ['active'=>$new_status]);
 
         if($this->db->affected_rows()){
             return TRUE;
@@ -231,13 +230,13 @@ class User extends CI_Model{
                 || MATCH(last_name) AGAINST(?)
                 || MATCH(first_name, last_name) AGAINST(?)
                 || MATCH(email) AGAINST(?)
-                || MATCH(mobile) AGAINST(?)
-                || MATCH(addr) AGAINST(?)
+                || MATCH(phone) AGAINST(?)
+                || MATCH(address) AGAINST(?)
                 || first_name LIKE '%".$this->db->escape_like_str($value)."%'
                 || last_name LIKE '%".$this->db->escape_like_str($value)."%' 
                 || email LIKE '%".$this->db->escape_like_str($value)."%'
-                || mobile LIKE '%".$this->db->escape_like_str($value)."%'
-                || addr LIKE '%".$this->db->escape_like_str($value)."%'
+                || phone LIKE '%".$this->db->escape_like_str($value)."%'
+                || address LIKE '%".$this->db->escape_like_str($value)."%'
                 )";
 
         $run_q = $this->db->query($q, [$value, $value, $value, $value, $value, $value]);
@@ -259,8 +258,8 @@ class User extends CI_Model{
     ********************************************************************************************************************************
     */
     
-    public function update($user_id, $first_name, $last_name, $email, $mobile, $addr){
-        $data = ['first_name'=>$first_name, 'last_name'=>$last_name, 'mobile'=>$mobile, 'addr'=>$addr, 'email'=>$email 
+    public function update($user_id, $first_name, $last_name, $email, $phone, $address){
+        $data = ['first_name'=>$first_name, 'last_name'=>$last_name, 'phone'=>$phone, 'address'=>$address, 'email'=>$email 
             ];
         
         $this->db->where('id', $user_id);
