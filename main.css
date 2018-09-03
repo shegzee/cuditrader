@@ -1,0 +1,39 @@
+<style>
+#MenuH {
+    display: inline-block;
+    background-color: #63b94c;
+	padding-right: 200px;
+	margin-left: -50px;
+        width: 120%;
+	margin-bottom: -30px;
+        text-align: center;
+}
+
+#MenuH li.static>.menu-item .menu-item-text, #MenuH li.static>a.menu-item .menu-item-text, #MenuH .ms-navedit-dropNode .static.menu-item .menu-item-text {
+    font-weight: 500;
+    line-height: 20px;
+	padding: 15px;
+    text-decoration: none;
+    color: #fff;
+    transition: .2s all;
+}
+
+#MenuH li.static>.menu-item:hover .menu-item-text, #MenuH li.static>a.menu-item:hover .menu-item-text, #MenuH .ms-navedit-dropNode .static.menu-item:hover .menu-item-text, #MenuH ul.root>li.selected>.menu-item .menu-item-text, #MenuH ul.root>li>ul>li.selected>.menu-item .menu-item-text {
+    font-weight: 500;
+    line-height: 20px;
+	padding: 15px;
+    text-decoration: none;
+    color: #fff;
+    background: #00834d;
+}
+@media screen and (min-device-width: 1200px){
+.sa-sidebar {
+    max-width: 120%;
+    margin-left: -50px;
+    width: 120%;
+    margin-top: -85px;
+}}
+header.navbar {
+    border-bottom: 0px solid #1A2D07;
+}
+</style>
