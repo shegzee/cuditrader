@@ -24,7 +24,7 @@ class Bank extends Auth_Controller {
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
-		$this->data["title"] = "Add bank";
+		$this->data["page_title"] = "Add bank";
 
 		// prepopulate selects
 		// $get_all_banks 				= $this->Bank_model->get_banks();
@@ -45,11 +45,11 @@ class Bank extends Auth_Controller {
 		// $this->data['account_types'] 	= $account_types;
 
 		$this->data['banks'] 			= parent::prep_select('banks', 'id', 'name', TRUE, 'name');
-		$this->data['banks'][""] = "";
+		// $this->data['banks'][""] = "";
 		$this->data['account_types'] 	= parent::prep_select('bank_account_types', 'id', 'name');
 
 		$this->form_validation->set_rules('bank_id', 'Bank', 'required');
-		$this->form_validation->set_rules('account_number', 'Account number', 'required');
+		$this->form_validation->set_rules('account_number', 'Account number', 'required|is_natural');
 		$this->form_validation->set_rules('account_type_id', 'Account type', 'required');
 
 		if ($this->form_validation->run() === FALSE) {
@@ -65,11 +65,15 @@ class Bank extends Auth_Controller {
     		'is_primary' => $this->input->post('is_primary'),
     		'description' => $this->input->post('description'));
 
-			$this->Bank_model->add_bank_account($data);
+			if ($this->Bank_model->add_bank_account($data)) {
+				$_SESSION['message'] = "The bank account has been added successfully";
+				redirect('user/profile');
+			}
+			else {
+				$_SESSION['message'] = "An error occurred. Please, try later.";
+			}
 			
-			$_SESSION['message'] = "The bank account has been added successfully";
 			$this->session->mark_as_flash('message');
-			redirect('user/profile');
 		}
 
 	}

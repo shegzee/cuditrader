@@ -18,7 +18,7 @@ class Search extends CI_Controller{
         
         $this->genlib->ajaxOnly();
         
-        $this->load->model(['admin/transaction', 'admin/item']);
+        $this->load->model(['admin/transaction', 'admin/item', 'admin/bank']);
         
         $this->load->helper('text');
         
@@ -119,7 +119,26 @@ class Search extends CI_Controller{
         //set final output
         $this->output->set_content_type('application/json')->set_output(json_encode($json));
     }
+
+    public function bankSearch(){
+        $data['allBanks'] = $this->bank->banksearch($this->value);
+        $data['sn'] = 1;
+        
+        $json['bankTable'] = $data['allBanks'] ? $this->load->view('admin/banks/banklist', $data, TRUE) : "No match found";
+        
+        //set final output
+        $this->output->set_content_type('application/json')->set_output(json_encode($json));
+    }
     
+    public function accountTypeSearch(){
+        $data['allBankATs'] = $this->bank->bankATSearch($this->value);
+        $data['sn'] = 1;
+        
+        $json['bankATTable'] = $data['allBankATs'] ? $this->load->view('admin/banks/bankATlist', $data, TRUE) : "No match found";
+        
+        //set final output
+        $this->output->set_content_type('application/json')->set_output(json_encode($json));
+    }
     
     /*
     ********************************************************************************************************************************

@@ -13,11 +13,7 @@
 	<div id="details">
 		<!-- user profile -->
 		<p>Profile picture</p>
-		<?php if ($user->profile->picture != "") { ?>
-			<img src="<?=base_url('uploads/profile_pictures/') ?><?= $user->profile->picture; ?>" />
-		<?php } else { ?>
-			<img src="<?=base_url('public/images/no_pic.jpg') ?>" />
-		<?php } ?>
+		<img src="<?=$user->profile->picture_url ?>" />
 	</div>
 
 	<hr />

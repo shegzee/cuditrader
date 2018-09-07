@@ -141,7 +141,14 @@ class User_model extends CI_Model{
         }
     }
 
-
+    public function profile_picture_url($user_id) {
+        $picture = $this->get_profile($user_id)->row()->picture;
+        if ($picture === "" || ! file_exists(FCPATH.'uploads/profile_pictures/'.$picture)) {
+            $picture = "no_pic.jpg";
+            // $picture = FCPATH.'uploads/profile_pictures/'.$picture;
+        }
+        return base_url('uploads/profile_pictures/').$picture;
+    }
 
 
    /*

@@ -13,6 +13,8 @@ class MY_Controller extends CI_Controller {
             $this->load->model('User_model');
             $this->user = $this->ion_auth->user()->row();
             $this->user->profile = $this->User_model->get_profile($this->user->id)->row();
+            $this->user->profile->picture_url = $this->User_model->profile_picture_url($this->user->id);
+            $this->user->full_name = $this->user->first_name." ".$this->user->last_name;
             $this->data['user'] = $this->user;
         }
         else {
@@ -45,11 +47,20 @@ class MY_Controller extends CI_Controller {
         }
     }
 
-    /* creates an array of all items in a table, indexed by a specified $key_field */
+    /* creates an array of all items in a table, indexed by a specified $key_field. For use in a form_dropdown()
+
+    $table_name: the name of the table to select items from
+    $value_fields: a string of fields to be selected from the table; each separated from the next by a comma
+    $key_field: the field to use as the key. Used for the value attribute of the corresponding <item> in the eventual <select> element.
+
+    */
 
     protected function compose_array($table_name, $value_fields=FALSE, $key_field='id') {
         if ($value_fields !== FALSE) {
             $this->db->select($key_field.",".$value_fields);
+        }
+        else {
+            $this->db->select($value_fields);
         }
         $query = $this->db->get($table_name);
         
@@ -103,10 +114,12 @@ class Auth_Controller extends MY_Controller {
             redirect('user/login');
         }
         else {
-            $this->load->model('User_model');
-            $this->user = $this->ion_auth->user()->row();
-            $this->user->profile = $this->User_model->get_profile($this->user->id)->row();
-            $this->data['user'] = $this->user;
+            // $this->load->model('User_model');
+            // $this->user = $this->ion_auth->user()->row();
+            // $this->user->profile = $this->User_model->get_profile($this->user->id)->row();
+            // $this->user->profile->picture_url = $this->User_model->profile_picture_url($this->user->id);
+            // $this->user->full_name = $this->user->first_name." ".$this->user->last_name;
+            // $this->data['user'] = $this->user;
             if (!$this->user->active) {
                 $this->ion_auth->logout();
                 redirect('home');

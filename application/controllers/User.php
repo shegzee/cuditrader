@@ -114,4 +114,8 @@ class User extends Auth_Controller {
         }
     }
 
+    public function full_name($user) {
+    	return $user->first_name." ".$user->last_name;
+    }
+
 }

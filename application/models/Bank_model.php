@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('');
 
 /**
- * Description of User
+ * Description of Bank_model
  *
  * @author Olu Segun <ojosamuelolusegun@gmail.com>
  * @date 30th August, 2018

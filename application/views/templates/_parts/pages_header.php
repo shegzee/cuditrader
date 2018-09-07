@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta name="description" content="Cudi Trader provides financial products for long-term cryptocurrency owners.">
-    <title>Home | Cudi Trader</title>
+    <title><?= isset($page_title) ? $page_title." | " : "" ?>Cudi Trader</title>
 
     <link rel="stylesheet" href="<?=base_url()?>public/css/podium.css">
     <link rel="stylesheet" href="<?=base_url()?>public/css/fok3hxk.css">
@@ -43,8 +43,8 @@
     <form class="form-inline">
       <?php if (isset($current_user)) { ?>
         <a href="<?= base_url('user/logout') ?>" class="btn btn-primary mr-1 track-click" data-category="sign-in" data-action="goto" data-label="from-navbar">Sign Out</a>
-      <a href="<?= base_url('user/profile') ?>" class="btn btn-outline-primary track-click" data-category="invite" data-action="goto" data-label="from-navbar">Profile</a>
-      <img src="<?=base_url('uploads/profile_pictures/') ?><?= $user->profile->picture; ?>" height="40" width="40" style="border-radius: 50%" alt="<?=$user->username; ?>" title="<?=$user->username; ?>" />
+      <a href="<?= base_url('loan/') ?>" class="btn btn-outline-primary track-click" data-category="invite" data-action="goto" data-label="from-navbar">Loans</a>
+      <a href="<?= base_url('user/profile') ?>"><img src="<?= $user->profile->picture_url; ?>" height="40" width="40" style="border-radius: 50%" alt="<?=$user->username; ?>" title="Profile" /></a>
       <?php } else { ?>
       <a href="<?= base_url('user/login') ?>" class="btn btn-primary mr-1 track-click" data-category="sign-in" data-action="goto" data-label="from-navbar">Sign In</a>
       <a href="<?= base_url('user/register') ?>" class="btn btn-outline-primary track-click" data-category="invite" data-action="goto" data-label="from-navbar">Sign Up</a>
@@ -75,3 +75,6 @@
     </div>
   </div>
 </nav>
+<p>
+<?= isset($_SESSION['auth_message']) ? $_SESSION['auth_message'] : FALSE ?>
+</p>

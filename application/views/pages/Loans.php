@@ -372,7 +372,7 @@ Borrow $1 for every $2 you deposit as collateral.</p>
 <div class="page-section section-dark start-application mb-0">
   <div class="container d-flex justify-content-center">
     <div>
-      <a href="<?= base_url('sign_up') ?>" class="btn btn-orange track-click" data-category="invite" data-action="goto" data-label="from-loans">
+      <a href="<?= base_url('loan/request') ?>" class="btn btn-orange track-click" data-category="invite" data-action="goto" data-label="from-loans">
         Start your application
       </a>
       <span>Unchain your cryptocurrency and apply for a loan now.</span>

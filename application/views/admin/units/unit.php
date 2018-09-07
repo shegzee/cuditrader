@@ -3,18 +3,18 @@ defined('BASEPATH') OR exit('');
 ?>
 
 <div class="row hidden-print">
-    <!-- banks here -->
+    <!-- loan unit here -->
     <div class="col-sm-12">
         <div class="pwell">
-            <!-- Header (add new bank, sort order etc.) -->
+            <!-- Header (add new loan unit, sort order etc.) -->
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="col-sm-2 fa fa-bank pointer" style="color:#337ab7" data-target='#addNewBankModal' data-toggle='modal'>
-                        New Bank
+                    <div class="col-sm-2 fa fa-plus pointer" style="color:#337ab7" data-target='#addNewLUnitModal' data-toggle='modal'>
+                        New Loan Unit
                     </div>
                     <div class="col-sm-3 form-inline form-group-sm">
-                        <label for="bankListPerPage">Show</label>
-                        <select id="bankListPerPage" class="form-control">
+                        <label for="lunitListPerPage">Show</label>
+                        <select id="lunitListPerPage" class="form-control">
                             <option value="1">1</option>
                             <option value="5">5</option>
                             <option value="10" selected>10</option>
@@ -24,22 +24,22 @@ defined('BASEPATH') OR exit('');
                             <option value="50">50</option>
                             <option value="100">100</option>
                         </select>
-                        <label for="bankListPerPage">per page</label>
+                        <label for="lunitListPerPage">per page</label>
                     </div>
                     <div class="col-sm-4 form-inline form-group-sm">
-                        <label for="bankListSortBy" class="control-label">Sort by</label> 
-                        <select id="bankListSortBy" class="form-control">
+                        <label for="lUnitListSortBy" class="control-label">Sort by</label> 
+                        <select id="lUnitListSortBy" class="form-control">
                             <option value="name-ASC" selected>Name (A to Z)</option>
                             <option value="name-DESC">Name (Z to A)</option>
                             <!-- <option value="created_on-ASC">Date Created (older first)</option>
                             <option value="created_on-DESC">Date Created (recent first)</option> -->
-                            <option value="description-ASC">Description - ascending</option>
-                            <option value="description-DESC">Description - descending</option>
+                            <option value="logo-ASC">Logo - ascending</option>
+                            <option value="logo-DESC">Logo - descending</option>
                         </select>
                     </div>
                     <div class="col-sm-3 form-inline form-group-sm">
-                        <label for="bankSearch"><i class="fa fa-search"></i></label>
-                        <input type="search" id="bankSearch" placeholder="Search...." class="form-control">
+                        <label for="lunitSearch"><i class="fa fa-search"></i></label>
+                        <input type="search" id="lunitSearch" placeholder="Search...." class="form-control">
                     </div>
                 </div>
             </div>
@@ -47,26 +47,26 @@ defined('BASEPATH') OR exit('');
             <hr>
             <!-- Header (sort order etc.) ends -->
             
-            <!-- bank list -->
+            <!-- loan unit list -->
             <div class="row">
-                <div class="col-sm-12" id="allBank"></div>
+                <div class="col-sm-12" id="allLUnit"></div>
             </div>
-            <!-- bank list ends -->
+            <!-- loan unit list ends -->
         </div>
     </div>
 
-    <!-- bank account types here -->
+    <!-- collateral units here -->
      <div class="col-sm-12">
         <div class="pwell">
-            <!-- Header (add new accountType, sort order etc.) -->
+            <!-- Header (add new collateral type, sort order etc.) -->
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="col-sm-2 fa fa-plus pointer" style="color:#337ab7" data-target='#addNewAccountTypeModal' data-toggle='modal'>
-                        New Account type
+                    <div class="col-sm-2 fa fa-plus pointer" style="color:#337ab7" data-target='#addNewCUnitModal' data-toggle='modal'>
+                        New Collateral Unit
                     </div>
                     <div class="col-sm-3 form-inline form-group-sm">
-                        <label for="accountTypeListPerPage">Show</label>
-                        <select id="accountTypeListPerPage" class="form-control">
+                        <label for="cUnitListPerPage">Show</label>
+                        <select id="cUnitListPerPage" class="form-control">
                             <option value="1">1</option>
                             <option value="5">5</option>
                             <option value="10" selected>10</option>
@@ -76,22 +76,22 @@ defined('BASEPATH') OR exit('');
                             <option value="50">50</option>
                             <option value="100">100</option>
                         </select>
-                        <label for="accountTypeListPerPage">per page</label>
+                        <label for="cUnitListPerPage">per page</label>
                     </div>
                     <div class="col-sm-4 form-inline form-group-sm">
-                        <label for="accountTypeListSortBy" class="control-label">Sort by</label> 
-                        <select id="accountTypeListSortBy" class="form-control">
+                        <label for="cUnitListSortBy" class="control-label">Sort by</label> 
+                        <select id="cUnitListSortBy" class="form-control">
                             <option value="name-ASC" selected>Name (A to Z)</option>
                             <option value="name-DESC">Name (Z to A)</option>
                             <!-- <option value="created_on-ASC">Date Created (older first)</option>
                             <option value="created_on-DESC">Date Created (recent first)</option> -->
-                            <option value="description-ASC">Description - ascending</option>
-                            <option value="description-DESC">Description - descending</option>
+                            <option value="logo-ASC">Logo - ascending</option>
+                            <option value="logo-DESC">Logo - descending</option>
                         </select>
                     </div>
                     <div class="col-sm-3 form-inline form-group-sm">
-                        <label for="accountTypeSearch"><i class="fa fa-search"></i></label>
-                        <input type="search" id="accountTypeSearch" placeholder="Search...." class="form-control">
+                        <label for="cunitSearch"><i class="fa fa-search"></i></label>
+                        <input type="search" id="cunitSearch" placeholder="Search...." class="form-control">
                     </div>
                 </div>
             </div>
@@ -99,29 +99,29 @@ defined('BASEPATH') OR exit('');
             <hr>
             <!-- Header (sort order etc.) ends -->
             
-            <!-- accountType list -->
+            <!-- cUnit list -->
             <div class="row">
-                <div class="col-sm-12" id="allAccountType"></div>
+                <div class="col-sm-12" id="allCUnit"></div>
             </div>
-            <!-- accountType list ends -->
+            <!-- cUnit list ends -->
         </div>
     </div>
 </div>
 
 
-<!-- Modal to add new bank -->
-<div class='modal fade' id='addNewBankModal' role="dialog" data-backdrop="static">
+<!-- Modal to add new loan unit -->
+<div class='modal fade' id='addNewLUnitModal' role="dialog" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class='modal-header'>
                 <button class="close" data-dismiss='modal'>&times;</button>
-                <h4 class="text-center">Add New Bank</h4>
+                <h4 class="text-center">Add New Loan Unit</h4>
                 <div class="text-center">
                     <i id="fMsgIcon"></i><span id="fMsg"></span>
                 </div>
             </div>
             <div class="modal-body">
-                <form id='addNewBankForm' name='addNewBankForm' role='form'>
+                <form id='addNewLUnitForm' name='addNewLUnitForm' role='form'>
                     <div class="row">
                         <div class="form-group-sm col-sm-6">
                             <label for='name' class="control-label">Name</label>
@@ -130,38 +130,38 @@ defined('BASEPATH') OR exit('');
                         </div>
                         
                         <div class="form-group-sm col-sm-6">
-                            <label for='mobile2' class="control-label">Description</label>
-                            <input type="tel" id='description' class="form-control" placeholder="Bank Description">
-                            <span class="help-block errMsg" id="descriptionErr"></span>
+                            <label for='logo' class="control-label">Logo</label>
+                            <input type="tel" id='logo' class="form-control" placeholder="Logo">
+                            <span class="help-block errMsg" id="logoErr"></span>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="reset" form="addNewBankForm" class="btn btn-warning pull-left">Reset Form</button>
-                <button type='button' id='addBankSubmit' class="btn btn-primary">Add Bank</button>
+                <button type="reset" form="addNewLUnitForm" class="btn btn-warning pull-left">Reset Form</button>
+                <button type='button' id='addLUnitSubmit' class="btn btn-primary">Add Loan Unit</button>
                 <button type='button' class="btn btn-danger" data-dismiss='modal'>Close</button>
             </div>
         </div>
     </div>
 </div>
-<!-- end of modal to add new bank -->
+<!-- end of modal to add new loan unit -->
 
 
-<!-- Modal for editing bank details -->
-<div class='modal fade' id='editBankModal' role="dialog" data-backdrop="static">
+<!-- Modal for editing loan unit details -->
+<div class='modal fade' id='editLUnitModal' role="dialog" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class='modal-header'>
                 <button class="close" data-dismiss='modal'>&times;</button>
-                <h4 class="text-center">Edit bank Info</h4>
+                <h4 class="text-center">Edit Loan Unit Info</h4>
                 <div class="text-center">
                     <i id="fMsgEditIcon"></i>
                     <span id="fMsgEdit"></span>
                 </div>
             </div>
             <div class="modal-body">
-                <form id='editBankForm' name='editBankForm' role='form'>
+                <form id='editLUnitForm' name='editLUnitForm' role='form'>
                     <div class="row">
                         <div class="form-group-sm col-sm-6">
                             <label for='nameEdit' class="control-label">Name</label>
@@ -170,104 +170,104 @@ defined('BASEPATH') OR exit('');
                         </div>
                         
                         <div class="form-group-sm col-sm-6">
-                            <label for='descriptionEdit' class="control-label">Description</label>
-                            <input type="tel" id='descriptionEdit' class="form-control" placeholder="Description">
-                            <span class="help-block errMsg" id="descriptionEditErr"></span>
+                            <label for='logoEdit' class="control-label">Logo</label>
+                            <input type="tel" id='logoEdit' class="form-control" placeholder="Logo">
+                            <span class="help-block errMsg" id="logoEditErr"></span>
                         </div>
                     </div>
                     
-                    <input type="hidden" id="bankId">
+                    <input type="hidden" id="lUnitId">
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="reset" form="editBankForm" class="btn btn-warning pull-left">Reset Form</button>
-                <button type='button' id='editBankSubmit' class="btn btn-primary">Update</button>
+                <button type="reset" form="editLUnitForm" class="btn btn-warning pull-left">Reset Form</button>
+                <button type='button' id='editLUnitSubmit' class="btn btn-primary">Update</button>
                 <button type='button' class="btn btn-danger" data-dismiss='modal'>Close</button>
             </div>
         </div>
     </div>
 </div>
-<!--- end of modal to edit bank details --->
+<!--- end of modal to edit collateral unit --->
 
-<!-- modals for account types -->
-<!-- Modal to add new account type -->
-<div class='modal fade' id='addNewAccountTypeModal' role="dialog" data-backdrop="static">
+<!-- modals for collateral unit -->
+<!-- Modal to add new collateral unit -->
+<div class='modal fade' id='addNewCUnitModal' role="dialog" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class='modal-header'>
                 <button class="close" data-dismiss='modal'>&times;</button>
-                <h4 class="text-center">Add New Account Type</h4>
+                <h4 class="text-center">Add New Collateral Unit</h4>
                 <div class="text-center">
-                    <i id="fMsgATIcon"></i><span id="fMsgAT"></span>
+                    <i id="fMsgCUIcon"></i><span id="fMsgCU"></span>
                 </div>
             </div>
             <div class="modal-body">
-                <form id='addNewAccountTypeForm' name='addNewAccountTypeForm' role='form'>
+                <form id='addNewCUnitForm' name='addNewCUnitForm' role='form'>
                     <div class="row">
                         <div class="form-group-sm col-sm-6">
-                            <label for='nameAT' class="control-label">Name</label>
-                            <input type="text" id='nameAT' class="form-control checkField" placeholder="Name">
-                            <span class="help-block errMsg" id="nameATErr"></span>
+                            <label for='nameCU' class="control-label">Name</label>
+                            <input type="text" id='nameCU' class="form-control checkField" placeholder="Name">
+                            <span class="help-block errMsg" id="nameCUErr"></span>
                         </div>
                         
                         <div class="form-group-sm col-sm-6">
-                            <label for='descriptionAT' class="control-label">Description</label>
-                            <input type="tel" id='descriptionAT' class="form-control" placeholder="Account Type Description">
-                            <span class="help-block errMsg" id="descriptionATErr"></span>
+                            <label for='logoCU' class="control-label">Logo</label>
+                            <input type="tel" id='logoCU' class="form-control" placeholder="Currency  Logo">
+                            <span class="help-block errMsg" id="logoCUErr"></span>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="reset" form="addNewAccountTypeForm" class="btn btn-warning pull-left">Reset Form</button>
-                <button type='button' id='addAccountTypeSubmit' class="btn btn-primary">Add Account Type</button>
+                <button type="reset" form="addNewCUnitForm" class="btn btn-warning pull-left">Reset Form</button>
+                <button type='button' id='addCUnitSubmit' class="btn btn-primary">Add Collateral Unit</button>
                 <button type='button' class="btn btn-danger" data-dismiss='modal'>Close</button>
             </div>
         </div>
     </div>
 </div>
-<!-- end of modal to add new account type -->
+<!-- end of modal to add new collateral unit -->
 
 
-<!-- Modal for editing account type details -->
-<div class='modal fade' id='editAccountTypeModal' role="dialog" data-backdrop="static">
+<!-- Modal for editing collateral unit details -->
+<div class='modal fade' id='editCUnitModal' role="dialog" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class='modal-header'>
                 <button class="close" data-dismiss='modal'>&times;</button>
-                <h4 class="text-center">Edit Account Type</h4>
+                <h4 class="text-center">Edit Collateral Unit</h4>
                 <div class="text-center">
-                    <i id="fMsgEditATIcon"></i>
-                    <span id="fMsgEditAT"></span>
+                    <i id="fMsgEditCUIcon"></i>
+                    <span id="fMsgEditCU"></span>
                 </div>
             </div>
             <div class="modal-body">
-                <form id='editAccountTypeForm' name='editAccountTypeForm' role='form'>
+                <form id='editCUnitForm' name='editCUnitForm' role='form'>
                     <div class="row">
                         <div class="form-group-sm col-sm-6">
-                            <label for='nameATEdit' class="control-label">Name</label>
-                            <input type="text" id='nameATEdit' class="form-control checkField" placeholder="Name">
-                            <span class="help-block errMsg" id="nameATEditErr"></span>
+                            <label for='nameCUEdit' class="control-label">Name</label>
+                            <input type="text" id='nameCUEdit' class="form-control checkField" placeholder="Name">
+                            <span class="help-block errMsg" id="nameCUEditErr"></span>
                         </div>
                         
                         <div class="form-group-sm col-sm-6">
-                            <label for='descriptionATEdit' class="control-label">Description</label>
-                            <input type="tel" id='descriptionATEdit' class="form-control" placeholder="Description">
-                            <span class="help-block errMsg" id="descriptionATEditErr"></span>
+                            <label for='logoCUEdit' class="control-label">Logo</label>
+                            <input type="tel" id='logoCUEdit' class="form-control" placeholder="Logo">
+                            <span class="help-block errMsg" id="logoCUEditErr"></span>
                         </div>
                     </div>
                     
-                    <input type="hidden" id="accountTypeId">
+                    <input type="hidden" id="cUnitId">
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="reset" form="editAccountTypeForm" class="btn btn-warning pull-left">Reset Form</button>
-                <button type='button' id='editAccountTypeSubmit' class="btn btn-primary">Update</button>
+                <button type="reset" form="editCUnitForm" class="btn btn-warning pull-left">Reset Form</button>
+                <button type='button' id='editCUnitSubmit' class="btn btn-primary">Update</button>
                 <button type='button' class="btn btn-danger" data-dismiss='modal'>Close</button>
             </div>
         </div>
     </div>
 </div>
-<!--- end of modal to edit account type --->
+<!--- end of modal to edit collateral unit --->
 
-<script src="<?=base_url()?>public/js/bank.js"></script>
+<script src="<?=base_url()?>public/js/unit.js"></script>

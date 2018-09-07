@@ -5,8 +5,8 @@ $(document).ready(function(){
 	
 	
     //load all banks once the page is ready
-    //function header: laba_(url)
-    laba_();
+    //function header: lalu_(url)
+    lalu_();
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -15,9 +15,9 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     //reload the list of bank when fields are changed
-    $("#bankListSortBy, #bankListPerPage").change(function(){
+    $("#lUnitListSortBy, #lUnitListPerPage").change(function(){
         displayFlashMsg("Please wait...", spinnerClass, "", "");
-        laba_();
+        lalu_();
     });
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -27,12 +27,12 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     //load and show page when pagination link is clicked
-    $("#allBank").on('click', '.lnp', function(e){
+    $("#allLUnit").on('click', '.lnp', function(e){
         e.preventDefault();
 		
         displayFlashMsg("Please wait...", spinnerClass, "", "");
 
-        laba_($(this).attr('href'));
+        lalu_($(this).attr('href'));
 
         return false;
     });
@@ -46,16 +46,16 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
-    //handles the addition of new bank details .i.e. when "add bank" button is clicked
-    $("#addBankSubmit").click(function(e){
+    //handles the addition of new loan unit .i.e. when "add loan unit" button is clicked
+    $("#addLUnitSubmit").click(function(e){
         e.preventDefault();
         
         //reset all error msgs in case they are set
-        changeInnerHTML(['nameErr', 'descriptionErr'],
+        changeInnerHTML(['nameErr', 'logoErr'],
         "");
         
         var name = $("#name").val();
-        var description = $("#description").val();
+        var logo = $("#logo").val();
         
         //ensure all required fields are filled
         if(!name){
@@ -70,8 +70,8 @@ $(document).ready(function(){
         //make ajax request if all is well
         $.ajax({
             method: "POST",
-            url: appRoot+"banks/add",
-            data: {name:name, description:description}
+            url: appRoot+"units/addLUnit",
+            data: {name:name, logo:logo}
         }).done(function(returnedData){
             $("#fMsgIcon").removeClass();//remove spinner
                 
@@ -79,20 +79,20 @@ $(document).ready(function(){
                 $("#fMsg").css('color', 'green').text(returnedData.msg);
 
                 //reset the form
-                document.getElementById("addNewBankForm").reset();
+                document.getElementById("addNewLUnitForm").reset();
 
                 //close the modal
                 setTimeout(function(){
                     $("#fMsg").text("");
-                    $("#addNewBankModal").modal('hide');
+                    $("#addNewLUnitModal").modal('hide');
                 }, 1000);
 
                 //reset all error msgs in case they are set
-                changeInnerHTML(['nameErr', 'descriptionErr'],
+                changeInnerHTML(['nameErr', 'logoErr'],
                 "");
 
                 //refresh bank list table
-                laba_();
+                lalu_();
 
             }
 
@@ -102,7 +102,7 @@ $(document).ready(function(){
 
                 //display individual error messages if applied
                 $("#nameErr").text(returnedData.name);
-                $("#descriptionErr").text(returnedData.description);
+                $("#logoErr").text(returnedData.logo);
             }
         }).fail(function(){
             if(!navigator.onLine){
@@ -120,16 +120,16 @@ $(document).ready(function(){
     
     
     //handles the updating of bank details
-    $("#editBankSubmit").click(function(e){
+    $("#editLUnitSubmit").click(function(e){
         e.preventDefault();
         
-        if(formChanges("editBankForm")){
+        if(formChanges("editLUnitForm")){
             //reset all error msgs in case they are set
-            changeInnerHTML(['nameEditErr', 'descriptionEditErr'], "");
+            changeInnerHTML(['nameEditErr', 'logoEditErr'], "");
 
             var name = $("#nameEdit").val();
-            var description = $("#descriptionEdit").val();
-            var bankId = $("#bankId").val();
+            var logo = $("#logoEdit").val();
+            var lUnitId = $("#lUnitId").val();
 
             //ensure all required fields are filled
             if(!name){
@@ -138,20 +138,20 @@ $(document).ready(function(){
                 return;
             }
 
-            if(!bankId){
-                $("#fMsgEdit").text("An unexpected error occured while trying to update bank's details");
+            if(!lUnitId){
+                $("#fMsgEdit").text("An unexpected error occured while trying to update collateral details");
                 return;
             }
 
             //display message telling bank action is being processed
             $("#fMsgEditIcon").attr('class', spinnerClass);
-            $("#fMsgEdit").text(" Updating details...");
+            $("#fMsgEdit").text(" Updating unit...");
 
             //make ajax request if all is well
             $.ajax({
                 method: "POST",
-                url: appRoot+"banks/update",
-                data: {bankId:bankId, name:name, description:description}
+                url: appRoot+"units/updateLUnit",
+                data: {lUnitId:lUnitId, name:name, logo:logo}
             }).done(function(returnedData){
                 $("#fMsgEditIcon").removeClass();//remove spinner
 
@@ -161,14 +161,14 @@ $(document).ready(function(){
                     //reset the form and close the modal
                     setTimeout(function(){
                         $("#fMsgEdit").text("");
-                        $("#editBankModal").modal('hide');
+                        $("#editLUnitModal").modal('hide');
                     }, 1000);
 
                     //reset all error msgs in case they are set
-                    changeInnerHTML(['nameEditErr', 'descriptionEditErr'], "");
+                    changeInnerHTML(['nameEditErr', 'logoEditErr'], "");
 
                     //refresh bank list table
-                    laba_();
+                    lalu_();
 
                 }
 
@@ -178,7 +178,7 @@ $(document).ready(function(){
 
                     //display individual error messages if applied
                     $("#nameEditErr").html(returnedData.name);
-                    $("#descriptionEditErr").html(returnedData.description);
+                    $("#logoEditErr").html(returnedData.logo);
                 }
             }).fail(function(){
                     if(!navigator.onLine){
@@ -199,22 +199,22 @@ $(document).ready(function(){
     
     
     //handles bank search
-    $("#bankSearch").on('keyup change', function(){
+    $("#lUnitSearch").on('keyup change', function(){
         var value = $(this).val();
         
         if(value){//search only if there is at least one char in input
             $.ajax({
                 type: "get",
-                url: appRoot+"search/banksearch",
+                url: appRoot+"search/lunitsearch",
                 data: {v:value},
                 success: function(returnedData){
-                    $("#allBank").html(returnedData.bankTable);
+                    $("#allLUnit").html(returnedData.lUnitTable);
                 }
             });
         }
         
         else{
-            laba_();
+            lalu_();
         }
     });
     
@@ -228,31 +228,27 @@ $(document).ready(function(){
     */
     
     
-    //When the trash icon in front of a bank account is clicked on the bank list table (i.e. to delete the account)
-    $("#allBank").on('click', '.deleteBank', function(){
+    //When the trash icon in front of a loan unit is clicked on the loan units list table (i.e. to delete the unit)
+    $("#allLUnit").on('click', '.deleteLUnit', function(){
         var confirm = window.confirm("Proceed?");
         
         if(confirm){
             var ElemId = $(this).attr('id');
 
-            var bankId = ElemId.split("-")[1];//get the bankId
+            var lUnitId = ElemId.split("-")[1];//get the bankId
 
             //show spinner
             $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
 
-            if(bankId){
+            if(lUnitId){
                 $.ajax({
-                    url: appRoot+"banks/delete",
+                    url: appRoot+"units/deleteLUnit",
                     method: "POST",
-                    data: {_uId:bankId}
+                    data: {_luId:lUnitId}
                 }).done(function(returnedData){
                     if(returnedData.status === 1){
                        
-                        //change the icon to "undo delete" if it's "active" before the change and vice-versa
-                        var newHTML = returnedData._nv === 1 ? "<a class='pointer'>Undo Delete</a>" : "<i class='fa fa-trash pointer'></i>";
-
-                        //change the icon
-                        $("#del-"+returnedData._uId).html(newHTML);
+                        lalu_();
 
                     }
 
@@ -266,27 +262,27 @@ $(document).ready(function(){
     
     
     //to launch the modal to allow for the editing of bank info
-    $("#allBank").on('click', '.editBank', function(){
+    $("#allLUnit").on('click', '.editLUnit', function(){
         
-        var bankId = $(this).attr('id').split("-")[1];
+        var lUnitId = $(this).attr('id').split("-")[1];
         
-        $("#bankId").val(bankId);
+        $("#lUnitId").val(lUnitId);
         
         //get info of bank with bankId and prefill the form with it
         //alert($(this).siblings(".bankEmail").children('a').html());
         var name = $(this).siblings(".name").html();
-        var description = $(this).siblings(".description").html();
+        var logo = $(this).siblings(".logo").html();
         
         //prefill the form fields
         $("#nameEdit").val(name);
-        $("#descriptionEdit").val(description);
+        $("#logoEdit").val(logo);
         
-        $("#editBankModal").modal('show');
+        $("#editLUnitModal").modal('show');
     });
     
-    /***************** replicate for account types ************************************* */
+    /***************** replicate for collateral units ************************************* */
 
-    laat_();
+    lacu_();
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -295,9 +291,9 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     //reload the list of bank when fields are changed
-    $("#accountTypeListSortBy, #accountTypeListPerPage").change(function(){
+    $("#cUnitListSortBy, #cUnitListPerPage").change(function(){
         displayFlashMsg("Please wait...", spinnerClass, "", "");
-        laat_();
+        lacu_();
     });
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -307,12 +303,12 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     //load and show page when pagination link is clicked
-    $("#allAccountType").on('click', '.lnp', function(e){
+    $("#allCUnit").on('click', '.lnp', function(e){
         e.preventDefault();
         
         displayFlashMsg("Please wait...", spinnerClass, "", "");
 
-        laat_($(this).attr('href'));
+        lacu_($(this).attr('href'));
 
         return false;
     });
@@ -326,67 +322,67 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
-    //handles the addition of new bank details .i.e. when "add bank" button is clicked
-    $("#addAccountTypeSubmit").click(function(e){
+    //handles the addition of new collateral unit .i.e. when "add collateral unit" button is clicked
+    $("#addCUnitSubmit").click(function(e){
         e.preventDefault();
         
         //reset all error msgs in case they are set
-        changeInnerHTML(['nameATErr', 'descriptionATErr'],
+        changeInnerHTML(['nameCUErr', 'logoCUErr'],
         "");
         
-        var name = $("#nameAT").val();
-        var description = $("#descriptionAT").val();
+        var name = $("#nameCU").val();
+        var logo = $("#logoCU").val();
         
         //ensure all required fields are filled
         if(!name){
-            !name ? changeInnerHTML('nameATErr', "required") : "";
+            !name ? changeInnerHTML('nameCUErr', "required") : "";
             return;
         }
         
         //display message telling bank action is being processed
-        $("#fMsgATIcon").attr('class', spinnerClass);
-        $("#fMsgAT").text(" Processing...");
+        $("#fMsgCUIcon").attr('class', spinnerClass);
+        $("#fMsgCU").text(" Processing...");
         
         //make ajax request if all is well
         $.ajax({
             method: "POST",
-            url: appRoot+"banks/addAT",
-            data: {name:name, description:description}
+            url: appRoot+"units/addCUnit",
+            data: {name:name, logo:logo}
         }).done(function(returnedData){
-            $("#fMsgATIcon").removeClass();//remove spinner
+            $("#fMsgCUIcon").removeClass();//remove spinner
                 
             if(returnedData.status === 1){
-                $("#fMsgAT").css('color', 'green').text(returnedData.msg);
+                $("#fMsgCU").css('color', 'green').text(returnedData.msg);
 
                 //reset the form
-                document.getElementById("addNewAccountTypeForm").reset();
+                document.getElementById("addNewCUnitForm").reset();
 
                 //close the modal
                 setTimeout(function(){
-                    $("#fMsgAT").text("");
-                    $("#addNewAccountTypeModal").modal('hide');
+                    $("#fMsgCU").text("");
+                    $("#addNewCUnitModal").modal('hide');
                 }, 1000);
 
                 //reset all error msgs in case they are set
-                changeInnerHTML(['nameATErr', 'descriptionErr'],
+                changeInnerHTML(['nameCUErr', 'logoCUErr'],
                 "");
 
                 //refresh bank list table
-                laat_();
+                lacu_();
 
             }
 
             else{
                 //display error message returned
-                $("#fMsgAT").css('color', 'red').html(returnedData.msg);
+                $("#fMsgCU").css('color', 'red').html(returnedData.msg);
 
                 //display individual error messages if applied
-                $("#nameATErr").text(returnedData.name);
-                $("#descriptionATErr").text(returnedData.description);
+                $("#nameCUErr").text(returnedData.name);
+                $("#logoCUErr").text(returnedData.logo);
             }
         }).fail(function(){
             if(!navigator.onLine){
-                $("#fMsgAT").css('color', 'red').text("Network error! Pls check your network connection");
+                $("#fMsgCU").css('color', 'red').text("Network error! Pls check your network connection");
             }
         });
     });
@@ -400,55 +396,55 @@ $(document).ready(function(){
     
     
     //handles the updating of bank details
-    $("#editAccountTypeSubmit").click(function(e){
+    $("#editCUnitSubmit").click(function(e){
         e.preventDefault();
         
-        if(formChanges("editAccountTypeForm")){
+        if(formChanges("editCUnitForm")){
             //reset all error msgs in case they are set
-            changeInnerHTML(['nameATEditErr', 'descriptionATEditErr'], "");
+            changeInnerHTML(['nameCUEditErr', 'logoCUEditErr'], "");
 
-            var name = $("#nameATEdit").val();
-            var description = $("#descriptionATEdit").val();
-            var accountTypeId = $("#accountTypeId").val();
+            var name = $("#nameCUEdit").val();
+            var logo = $("#logoCUEdit").val();
+            var cUnitId = $("#cUnitId").val();
 
             //ensure all required fields are filled
             if(!name){
-                !name ? changeInnerHTML('nameATEditErr', "required") : "";
+                !name ? changeInnerHTML('nameCUEditErr', "required") : "";
 
                 return;
             }
 
-            if(!accountTypeId){
-                $("#fMsgEditAT").text("An unexpected error occured while trying to update account type");
+            if(!cUnitId){
+                $("#fMsgEditCU").text("An unexpected error occured while trying to update account type");
                 return;
             }
 
             //display message telling bank action is being processed
-            $("#fMsgEditATIcon").attr('class', spinnerClass);
-            $("#fMsgEditAT").text(" Updating details...");
+            $("#fMsgEditCUIcon").attr('class', spinnerClass);
+            $("#fMsgEditCU").text(" Updating details...");
 
             //make ajax request if all is well
             $.ajax({
                 method: "POST",
-                url: appRoot+"banks/updateAT",
-                data: {accountTypeId:accountTypeId, name:name, description:description}
+                url: appRoot+"units/updateCUnit",
+                data: {cUnitId:cUnitId, name:name, logo:logo}
             }).done(function(returnedData){
-                $("#fMsgEditATIcon").removeClass();//remove spinner
+                $("#fMsgEditCUIcon").removeClass();//remove spinner
 
                 if(returnedData.status === 1){
-                    $("#fMsgEditAT").css('color', 'green').text(returnedData.msg);
+                    $("#fMsgEditCU").css('color', 'green').text(returnedData.msg);
 
                     //reset the form and close the modal
                     setTimeout(function(){
-                        $("#fMsgEditAT").text("");
-                        $("#editBankATModal").modal('hide');
+                        $("#fMsgEditCU").text("");
+                        $("#editCUnitModal").modal('hide');
                     }, 1000);
 
                     //reset all error msgs in case they are set
-                    changeInnerHTML(['nameATEditErr', 'descriptionATEditErr'], "");
+                    changeInnerHTML(['nameCUEditErr', 'logoCUEditErr'], "");
 
                     //refresh bank list table
-                    laat_();
+                    lacu_();
 
                 }
 
@@ -458,7 +454,7 @@ $(document).ready(function(){
 
                     //display individual error messages if applied
                     $("#nameATEditErr").html(returnedData.name);
-                    $("#descriptionATEditErr").html(returnedData.description);
+                    $("#logoATEditErr").html(returnedData.logo);
                 }
             }).fail(function(){
                     if(!navigator.onLine){
@@ -479,22 +475,22 @@ $(document).ready(function(){
     
     
     //handles bank search
-    $("#accountTypeSearch").on('keyup change', function(){
+    $("#cUnitSearch").on('keyup change', function(){
         var value = $(this).val();
         
         if(value){//search only if there is at least one char in input
             $.ajax({
                 type: "get",
-                url: appRoot+"search/accountTypesearch",
+                url: appRoot+"search/cUnitsearch",
                 data: {v:value},
                 success: function(returnedData){
-                    $("#allAccountType").html(returnedData.bankATTable);
+                    $("#allCUnit").html(returnedData.cUnitTable);
                 }
             });
         }
         
         else{
-            laat_();
+            lacu_();
         }
     });
     
@@ -509,30 +505,27 @@ $(document).ready(function(){
     
     
     //When the trash icon in front of a bank account is clicked on the bank list table (i.e. to delete the account)
-    $("#allAccountType").on('click', '.deleteAccountType', function(){
+    $("#allCUnit").on('click', '.deleteCUnit', function(){
         var confirm = window.confirm("Proceed?");
         
         if(confirm){
             var ElemId = $(this).attr('id');
 
-            var bankId = ElemId.split("-")[1];//get the bankId
+            var cUnitId = ElemId.split("-")[1];//get the bankId
 
             //show spinner
             $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
 
-            if(bankId){
+            if(cUnitId){
                 $.ajax({
-                    url: appRoot+"banks/delete",
+                    url: appRoot+"units/deleteCUnit",
                     method: "POST",
-                    data: {_uId:accountTypeId}
+                    data: {_cuId:cUnitId}
                 }).done(function(returnedData){
                     if(returnedData.status === 1){
                        
                         //change the icon to "undo delete" if it's "active" before the change and vice-versa
-                        var newHTML = returnedData._nv === 1 ? "<a class='pointer'>Undo Delete</a>" : "<i class='fa fa-trash pointer'></i>";
-
-                        //change the icon
-                        $("#del-"+returnedData._uId).html(newHTML);
+                        lacu_();
 
                     }
 
@@ -546,22 +539,22 @@ $(document).ready(function(){
     
     
     //to launch the modal to allow for the editing of bank info
-    $("#allAccountType").on('click', '.editAccountType', function(){
+    $("#allCUnit").on('click', '.editCUnit', function(){
         
-        var accountTypeId = $(this).attr('id').split("-")[1];
+        var cUnitId = $(this).attr('id').split("-")[1];
         
-        $("#accountTypeId").val(accountTypeId);
+        $("#cUnitId").val(cUnitId);
         
         //get info of bank with bankId and prefill the form with it
         //alert($(this).siblings(".bankEmail").children('a').html());
         var name = $(this).siblings(".name").html();
-        var description = $(this).siblings(".description").html();
+        var logo = $(this).siblings(".logo").html();
         
         //prefill the form fields
-        $("#nameATEdit").val(name);
-        $("#descriptionATEdit").val(description);
+        $("#nameCUEdit").val(name);
+        $("#logoCUEdit").val(logo);
         
-        $("#editAccountTypeModal").modal('show');
+        $("#editCUnitModal").modal('show');
     });
 });
 
@@ -576,43 +569,43 @@ $(document).ready(function(){
 */
 
 /**
- * laba_ = "Load all banks"
+ * lalu_ = "Load all loan units"
  * @returns {undefined}
  */
-function laba_(url){
-    var orderBy = $("#bankListSortBy").val().split("-")[0];
-    var orderFormat = $("#bankListSortBy").val().split("-")[1];
-    var limit = $("#bankListPerPage").val();
+function lalu_(url){
+    var orderBy = $("#lUnitListSortBy").val().split("-")[0];
+    var orderFormat = $("#lUnitListSortBy").val().split("-")[1];
+    var limit = $("#cUnitListPerPage").val();
     
     $.ajax({
         type:'get',
-        url: url ? url : appRoot+"banks/laba_/",
+        url: url ? url : appRoot+"units/lalu_/",
         data: {orderBy:orderBy, orderFormat:orderFormat, limit:limit},
      }).done(function(returnedData){
             hideFlashMsg();
 			
-            $("#allBank").html(returnedData.bankTable);
+            $("#allLUnit").html(returnedData.lUnitTable);
         });
 }
 
 /* *************************************************************************************** */
 
 /**
- * laat_ = "Load all banks"
+ * lacu_ = "Load all collateral units"
  * @returns {undefined}
  */
-function laat_(url){
-    var orderBy = $("#accountTypeListSortBy").val().split("-")[0];
-    var orderFormat = $("#accountTypeListSortBy").val().split("-")[1];
-    var limit = $("#accountTypeListPerPage").val();
+function lacu_(url){
+    var orderBy = $("#cUnitListSortBy").val().split("-")[0];
+    var orderFormat = $("#cUnitListSortBy").val().split("-")[1];
+    var limit = $("#cUnitListPerPage").val();
     
     $.ajax({
         type:'get',
-        url: url ? url : appRoot+"banks/laat_/",
+        url: url ? url : appRoot+"units/lacu_/",
         data: {orderBy:orderBy, orderFormat:orderFormat, limit:limit},
      }).done(function(returnedData){
             hideFlashMsg();
             
-            $("#allAccountType").html(returnedData.bankATTable);
+            $("#allCUnit").html(returnedData.cUnitTable);
         });
 }

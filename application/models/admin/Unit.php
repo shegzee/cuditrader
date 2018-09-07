@@ -2,12 +2,12 @@
 defined('BASEPATH') OR exit('');
 
 /**
- * Description of Bank
+ * Description of Unit
  *
  * @author S. Olusegun Ojo <solusegunojo@gmail.com>
- * @date 1st September, 2018
+ * @date 5th September, 2018
  */
-class Bank extends CI_Model{
+class Unit extends CI_Model{
     public function __construct(){
         parent::__construct();
     }
@@ -22,16 +22,10 @@ class Bank extends CI_Model{
     
     /**
      * 
-     * @param type $f_name
-     * @param type $l_name
-     * @param type $email
-     * @param type $password
-     * @param type $mobile
-     * @param type $addr
-     * @return boolean
+     * 
      */
-    public function add($name, $description){
-        $data = ['name'=>$name, 'description'=>$description];
+    public function addLUnit($name, $logo){
+        $data = ['name'=>$name, 'logo'=>$logo];
         
         //set the datetime based on the db driver in use
         // $this->db->platform() == "sqlite3" 
@@ -40,7 +34,7 @@ class Bank extends CI_Model{
         //         : 
         // $this->db->set('created_on', "NOW()", FALSE);
         
-        $this->db->insert('banks', $data);
+        $this->db->insert('loan_units', $data);
         
         if($this->db->affected_rows() > 0){
             return $this->db->insert_id();
@@ -61,15 +55,15 @@ class Bank extends CI_Model{
     */
     
     /**
-     * Get details about a bank
+     * Get details about a loan unit
      * @param type $id
      * @return boolean
      */
-    public function get_bank_info($id){
+    public function get_lunit_info($id){
         // $this->db->select('id, name, description');
         $this->db->where('id', $id);
 
-        $run_q = $this->db->get('banks');
+        $run_q = $this->db->get('loan_units');
 
         if($run_q->num_rows() > 0){
             return $run_q->result();
@@ -99,12 +93,12 @@ class Bank extends CI_Model{
      * @param type $limit
      * @return boolean
      */
-    public function getAll($orderBy = "name", $orderFormat = "ASC", $start = 0, $limit = ""){
+    public function getAllLUnits($orderBy = "name", $orderFormat = "ASC", $start = 0, $limit = ""){
         // $this->db->select('id, first_name, last_name, email, phone, address, created_on, last_login, active, deleted');
         $this->db->limit($limit, $start);
         $this->db->order_by($orderBy, $orderFormat);
         
-        $run_q = $this->db->get('banks');
+        $run_q = $this->db->get('loan_units');
         
         if($run_q->num_rows() > 0){
             return $run_q->result();
@@ -131,9 +125,10 @@ class Bank extends CI_Model{
     * @param type $new_value
     * @return boolean
     */
-    public function delete($id, $new_value){       
+    public function deleteLUnit($id){       
         $this->db->where('id', $id);
-        $this->db->update('banks', ['deleted'=>$new_value]);
+        // $this->db->update('loan_units', ['deleted'=>$new_value]);
+        $this->db->delete('loan_units');
        
         if($this->db->affected_rows()){
             return TRUE;
@@ -159,11 +154,13 @@ class Bank extends CI_Model{
      * @param type $value
      * @return boolean
      */
-    public function bankSearch($value){
-        $q = "SELECT * FROM banks WHERE 
+    public function lUnitSearch($value){
+        $q = "SELECT * FROM loan_units WHERE 
+                -- id != {$_SESSION['user_id']}
+                --     AND
                 (
-                name LIKE '%".$this->db->escape_like_str($value)."%'
-                || description LIKE '%".$this->db->escape_like_str($value)."%' 
+                MATCH(name) AGAINST(?)
+                || name LIKE '%".$this->db->escape_like_str($value)."%'
                 )";
 
         $run_q = $this->db->query($q, [$value, $value]);
@@ -185,12 +182,12 @@ class Bank extends CI_Model{
     ********************************************************************************************************************************
     */
     
-    public function update($id, $name, $description){
-        $data = ['name'=>$name, 'description'=>$description];
+    public function updateLUnit($id, $name, $logo){
+        $data = ['name'=>$name, 'logo'=>$logo];
         
         $this->db->where('id', $id);
         
-        return $this->db->update('banks', $data);
+        return $this->db->update('loan_units', $data);
         
     }
     
@@ -221,8 +218,8 @@ class Bank extends CI_Model{
      * @param type $addr
      * @return boolean
      */
-    public function addAT($name, $description){
-        $data = ['name'=>$name, 'description'=>$description];
+    public function addCUnit($name, $logo){
+        $data = ['name'=>$name, 'logo'=>$logo];
         
         //set the datetime based on the db driver in use
         // $this->db->platform() == "sqlite3" 
@@ -231,7 +228,7 @@ class Bank extends CI_Model{
         //         : 
         // $this->db->set('created_on', "NOW()", FALSE);
         
-        $this->db->insert('bank_account_types', $data);
+        $this->db->insert('collateral_units', $data);
         
         if($this->db->affected_rows() > 0){
             return $this->db->insert_id();
@@ -252,15 +249,14 @@ class Bank extends CI_Model{
     */
     
     /**
-     * Get details about a bank
+     * Get details about a collateral unit
      * @param type $id
      * @return boolean
      */
-    public function get_bankAT_info($id){
-        // $this->db->select('id, name, description');
+    public function get_cunit_info($id){
         $this->db->where('id', $id);
 
-        $run_q = $this->db->get('bank_account_types');
+        $run_q = $this->db->get('collateral_units');
 
         if($run_q->num_rows() > 0){
             return $run_q->result();
@@ -290,12 +286,11 @@ class Bank extends CI_Model{
      * @param type $limit
      * @return boolean
      */
-    public function getAllAT($orderBy = "name", $orderFormat = "ASC", $start = 0, $limit = ""){
-        // $this->db->select('id, first_name, last_name, email, phone, address, created_on, last_login, active, deleted');
+    public function getAllCUnits($orderBy = "name", $orderFormat = "ASC", $start = 0, $limit = ""){
         $this->db->limit($limit, $start);
         $this->db->order_by($orderBy, $orderFormat);
         
-        $run_q = $this->db->get('bank_account_types');
+        $run_q = $this->db->get('collateral_units');
         
         if($run_q->num_rows() > 0){
             return $run_q->result();
@@ -322,9 +317,9 @@ class Bank extends CI_Model{
     * @param type $new_value
     * @return boolean
     */
-    public function deleteAT($id, $new_value){       
+    public function deleteCUnit($id){       
         $this->db->where('id', $id);
-        $this->db->update('bank_account_types', ['deleted'=>$new_value]);
+        $this->db->delete('collateral_units');
        
         if($this->db->affected_rows()){
             return TRUE;
@@ -350,13 +345,13 @@ class Bank extends CI_Model{
      * @param type $value
      * @return boolean
      */
-    public function bankATSearch($value){
-        $q = "SELECT * FROM bank_account_types WHERE 
+    public function cUnitSearch($value){
+        $q = "SELECT * FROM collateral_units WHERE 
                 -- id != {$_SESSION['user_id']}
                 --     AND
                 (
-                name LIKE '%".$this->db->escape_like_str($value)."%'
-                || description LIKE '%".$this->db->escape_like_str($value)."%' 
+                MATCH(name) AGAINST(?)
+                || name LIKE '%".$this->db->escape_like_str($value)."%'
                 )";
 
         $run_q = $this->db->query($q, [$value, $value]);
@@ -378,13 +373,12 @@ class Bank extends CI_Model{
     ********************************************************************************************************************************
     */
     
-    public function updateAT($id, $name, $description){
-        $data = ['name'=>$name, 'description'=>$description];
+    public function updateCUnit($id, $name, $logo){
+        $data = ['name'=>$name, 'logo'=>$logo];
         
         $this->db->where('id', $id);
         
-        return $this->db->update('bank_account_types', $data);
-        
+        return $this->db->update('collateral_units', $data);
     }
     
    
