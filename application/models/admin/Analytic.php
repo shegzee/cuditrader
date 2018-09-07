@@ -287,15 +287,15 @@ class Analytic extends CI_Model{
         $q = "SELECT items.name, SUM(transactions.quantity) as 'totSold' FROM items 
                 INNER JOIN transactions ON items.code=transactions.itemCode GROUP BY transactions.itemCode ORDER BY totSold DESC LIMIT 5";
 
-        $run_q = $this->db->query($q);
+        // $run_q = $this->db->query($q);
 
-        if($run_q->num_rows() > 0){
-            return $run_q->result();
-        }
+        // if($run_q->num_rows() > 0){
+        //     return $run_q->result();
+        // }
 
-        else{
+        // else{
             return FALSE;
-        }
+        // }
     }
    
    
@@ -316,15 +316,15 @@ class Analytic extends CI_Model{
         $q = "SELECT items.name, SUM(transactions.quantity) as 'totSold' FROM items 
                 INNER JOIN transactions ON items.code=transactions.itemCode GROUP BY transactions.itemCode ORDER BY totSold ASC LIMIT 5";
 
-        $run_q = $this->db->query($q);
+        // $run_q = $this->db->query($q);
 
-        if($run_q->num_rows() > 0){
-            return $run_q->result();
-        }
+        // if($run_q->num_rows() > 0){
+            // return $run_q->result();
+        // }
 
-        else{
+        // else{
             return FALSE;
-        }
+        // }
     }
 
 
@@ -346,15 +346,15 @@ class Analytic extends CI_Model{
                 GROUP BY transactions.itemCode 
                 ORDER BY totEarned DESC LIMIT 5";
 
-        $run_q = $this->db->query($q);
+        // $run_q = $this->db->query($q);
 
-        if($run_q->num_rows() > 0){
-            return $run_q->result();
-        }
+        // if($run_q->num_rows() > 0){
+            // return $run_q->result();
+        // }
 
-        else{
+        // else{
             return FALSE;
-        }
+        // }
     }
 
 
@@ -376,15 +376,15 @@ class Analytic extends CI_Model{
                GROUP BY transactions.itemCode 
                ORDER BY totEarned ASC LIMIT 5";
        
-        $run_q = $this->db->query($q);
+        // $run_q = $this->db->query($q);
 
-        if($run_q->num_rows() > 0){
-            return $run_q->result();
-        }
+        // if($run_q->num_rows() > 0){
+        //     return $run_q->result();
+        // }
 
-        else{
+        // else{
             return FALSE;
-        }
+        // }
     }
     
     
@@ -405,16 +405,16 @@ class Analytic extends CI_Model{
     public function totalSalesToday(){
         $q = "SELECT SUM(quantity) as 'totalTransToday' FROM transactions WHERE DATE(transDate) = CURRENT_DATE";
        
-        $run_q = $this->db->query($q);
+        // $run_q = $this->db->query($q);
        
-        if($run_q->num_rows() > 0){
-            foreach($run_q->result() as $get){
-                return $get->totalTransToday;
-            }
-        }
+        // if($run_q->num_rows() > 0){
+        //     foreach($run_q->result() as $get){
+        //         return $get->totalTransToday;
+        //     }
+        // }
 
-        else{
+        // else{
             return FALSE;
-        }
+        // }
     }
 }

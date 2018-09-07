@@ -54,7 +54,12 @@ $route["admin/access/css"]["GET"] = "admin/misc/check_session_status";
 $route['admin/access/login']['POST'] = "admin/home/login";
 $route['admin/dbmanagement'] = "admin/misc/dbmanagement";
 
+$route['user/login'] = "open_user/login";
+$route['user/register'] = "open_user/register";
+
 $route['user'] = 'user';
+$route['loan/(:num)'] = 'loan/view_loan/$1';
+$route['loan/status/(:any)'] = 'loan/view_loans_by_status/$1';
 $route['loan'] = 'loan';
 
 $route['default_controller'] = 'pages/view';

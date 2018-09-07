@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('');
             <!-- Header (add new user, sort order etc.) -->
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="col-sm-2 fa fa-user-plus pointer" style="color:#337ab7" data-target='#addNewuserModal' data-toggle='modal'>
+                    <div class="col-sm-2 fa fa-user-plus pointer" style="color:#337ab7" data-target='#addNewUserModal' data-toggle='modal'>
                         New User
                     </div>
                     <div class="col-sm-3 form-inline form-group-sm">
@@ -57,7 +57,7 @@ defined('BASEPATH') OR exit('');
 
 
 <!-- Modal to add new user -->
-<div class='modal fade' id='addNewuserModal' role="dialog" data-backdrop="static">
+<div class='modal fade' id='addNewUserModal' role="dialog" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class='modal-header'>
@@ -68,7 +68,7 @@ defined('BASEPATH') OR exit('');
                 </div>
             </div>
             <div class="modal-body">
-                <form id='addNewuserForm' name='addNewuserForm' role='form'>
+                <form id='addNewUserForm' name='addNewUserForm' role='form'>
                     <div class="row">
                         <div class="form-group-sm col-sm-6">
                             <label for='firstName' class="control-label">First Name</label>
@@ -103,13 +103,13 @@ defined('BASEPATH') OR exit('');
                     <div class="row">
                         <div class="form-group-sm col-sm-6">
                             <label for='mobile' class="control-label">Phone Number</label>
-                            <input type="tel" id='mobile' class="form-control checkField" placeholder="Phone Number">
-                            <span class="help-block errMsg" id="mobileErr"></span>
+                            <input type="tel" id='phone' class="form-control checkField" placeholder="Phone Number">
+                            <span class="help-block errMsg" id="phoneErr"></span>
                         </div>
                         <div class="form-group-sm col-sm-6">
                             <label for='mobile2' class="control-label">Address</label>
-                            <input type="tel" id='mobile2' class="form-control" placeholder="Home Address">
-                            <span class="help-block errMsg" id="lastNameErr"></span>
+                            <input type="tel" id='address' class="form-control" placeholder="Home Address">
+                            <span class="help-block errMsg" id="addressErr"></span>
                         </div>
                     </div>
                     
@@ -128,8 +128,8 @@ defined('BASEPATH') OR exit('');
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="reset" form="addNewuserForm" class="btn btn-warning pull-left">Reset Form</button>
-                <button type='button' id='adduserSubmit' class="btn btn-primary">Add User</button>
+                <button type="reset" form="addNewUserForm" class="btn btn-warning pull-left">Reset Form</button>
+                <button type='button' id='addUserSubmit' class="btn btn-primary">Add User</button>
                 <button type='button' class="btn btn-danger" data-dismiss='modal'>Close</button>
             </div>
         </div>
@@ -139,7 +139,7 @@ defined('BASEPATH') OR exit('');
 
 
 <!-- Modal for editing user details -->
-<div class='modal fade' id='edituserModal' role="dialog" data-backdrop="static">
+<div class='modal fade' id='editUserModal' role="dialog" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class='modal-header'>
@@ -151,7 +151,7 @@ defined('BASEPATH') OR exit('');
                 </div>
             </div>
             <div class="modal-body">
-                <form id='edituserForm' name='edituserForm' role='form'>
+                <form id='editUserForm' name='editUserForm' role='form'>
                     <div class="row">
                         <div class="form-group-sm col-sm-6">
                             <label for='firstNameEdit' class="control-label">First Name</label>
@@ -171,7 +171,7 @@ defined('BASEPATH') OR exit('');
                             <input type="email" id='emailEdit' class="form-control checkField" placeholder="Email">
                             <span class="help-block errMsg" id="emailEditErr"></span>
                         </div>
-                        <div class="form-group-sm col-sm-6">
+                        <!-- <div class="form-group-sm col-sm-6">
                             <label for='roleEdit' class="control-label">Role</label>
                             <select class="form-control checkField" id='roleEdit'>
                                 <option value=''>Role</option>
@@ -179,19 +179,19 @@ defined('BASEPATH') OR exit('');
                                 <option value='Basic'>Basic</option>
                             </select>
                             <span class="help-block errMsg" id="roleEditErr"></span>
-                        </div>
+                        </div> -->
                     </div>
                     
                     <div class="row">
                         <div class="form-group-sm col-sm-6">
-                            <label for='mobileEdit' class="control-label">Phone Number</label>
-                            <input type="tel" id='mobileEdit' class="form-control checkField" placeholder="Phone Number">
-                            <span class="help-block errMsg" id="mobileEditErr"></span>
+                            <label for='phoneEdit' class="control-label">Phone Number</label>
+                            <input type="tel" id='phoneEdit' class="form-control checkField" placeholder="Phone Number">
+                            <span class="help-block errMsg" id="phoneEditErr"></span>
                         </div>
                         <div class="form-group-sm col-sm-6">
-                            <label for='mobile2Edit' class="control-label">Other Number</label>
-                            <input type="tel" id='mobile2Edit' class="form-control" placeholder="Other Number (optional)">
-                            <span class="help-block errMsg" id="mobile2EditErr"></span>
+                            <label for='addressEdit' class="control-label">Address</label>
+                            <input type="tel" id='addressEdit' class="form-control" placeholder="Address">
+                            <span class="help-block errMsg" id="addressEditErr"></span>
                         </div>
                     </div>
                     
@@ -199,8 +199,8 @@ defined('BASEPATH') OR exit('');
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="reset" form="edituserForm" class="btn btn-warning pull-left">Reset Form</button>
-                <button type='button' id='edituserSubmit' class="btn btn-primary">Update</button>
+                <button type="reset" form="editUserForm" class="btn btn-warning pull-left">Reset Form</button>
+                <button type='button' id='editUserSubmit' class="btn btn-primary">Update</button>
                 <button type='button' class="btn btn-danger" data-dismiss='modal'>Close</button>
             </div>
         </div>

@@ -1,11 +1,11 @@
 'use strict';
 
 // offline
-var appRoot = setAppRoot("cudi/admin", "cudi/admin");
-var baseRoot = setAppRoot("cudi", "cudi");
+// var appRoot = setAppRoot("cudi/admin", "cudi/admin");
+// var baseRoot = setAppRoot("cudi", "cudi");
 // online
-// var appRoot = setAppRoot("admin", "admin");
-// var baseRoot = setAppRoot("/", "/");
+var appRoot = setAppRoot("admin", "admin");
+var baseRoot = setAppRoot("/", "/");
 
 var spinnerClass = 'fa fa-spinner faa-spin animated';
 

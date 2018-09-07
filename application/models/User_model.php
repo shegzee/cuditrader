@@ -10,6 +10,7 @@ defined('BASEPATH') OR exit('');
 class User_model extends CI_Model{
     public function __construct(){
         parent::__construct();
+        $this->load->library('ion_auth');
     }
     
     /*
@@ -31,63 +32,87 @@ class User_model extends CI_Model{
      * @param type $mobile2
      * @return boolean
      */
-    public function add($f_name, $l_name, $email, $password, $mobile1, $mobile2){
-        $data = ['first_name'=>$f_name, 'last_name'=>$l_name, 'email'=>$email, 'password'=>$password,
-            'mobile1'=>$mobile1, 'mobile2'=>$mobile2];
-        
-        //set the datetime based on the db driver in use
-        $this->db->platform() == "sqlite3" 
-                ? 
-        $this->db->set('created_on', "datetime('now')", FALSE) 
-                : 
-        $this->db->set('created_on', "NOW()", FALSE);
-        
-        $this->db->insert('user', $data);
-        
-        if($this->db->affected_rows() > 0){
-            return $this->db->insert_id();
-        }
-        
-        else{
-            return FALSE;
-        }
+    public function add($username, $password, $email, $first_name, $last_name){
+
+        $additional_data = array (
+                'first_name' => $first_name,
+                'last_name' => $last_name
+            );
+        $user_id = $this->ion_auth->register($username, $password, $email, $additional_data);
+        // create an entry in the 'user_profile' table for this user
+        $this->db->insert('user_profile', array("user_id" => $user_id));
+    }
+
+    public function login($username, $password, $remember=FALSE) {
+        return $this->ion_auth->login($username, $password, $remember);
     }
     
-    /*
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    */
-    
-    /**
-     * 
-     * @param type $user_id
-     * @return boolean
-     */
-    public function update_last_login($user_id){
-        $this->db->where('id', $user_id);
-        
-        //set the datetime based on the db driver in use
-        $this->db->platform() == "sqlite3" 
-                ? 
-        $this->db->set('last_login', "datetime('now')", FALSE) 
-                : 
-        $this->db->set('last_login', "NOW()", FALSE);
-        
-        $this->db->update('user');
-        
-        if(!$this->db->error()){
+    public function get_profile($user_id) {
+        $this->db->where('user_id', $user_id);
+        $run_q = $this->db->get('user_profile');
+
+        if (!isset($run_q)) {
+            return FALSE;
+        }
+        else {
+            // return $run_q->row();
+            return $run_q;
+        }
+    }
+
+    public function update_user_details($user_id, $user_data, $user_profile_data) {
+        // do edit all user details
+        $this->update_user($user_id, $user_data);
+        // $this->update_user_profile($user_id, $user_profile_data);
+
+        if($this->db->affected_rows()){
             return TRUE;
         }
-        
+
         else{
             return FALSE;
         }
     }
-    
-    
+
+    public function update_user($user_id, $details) {
+        // do edit main user table
+        $this->db->where('id', $user_id);
+        $this->db->update('users', $details);
+
+        if($this->db->affected_rows()){
+            return TRUE;
+        }
+
+        else{
+            return FALSE;
+        }
+    }
+
+    public function update_user_profile($user_id, $details) {
+        // do edit user profile table
+        $this->db->where('user_id', $user_id);
+        $this->db->update('user_profile', $details);
+
+        if($this->db->affected_rows()){
+            return TRUE;
+        }
+
+        else{
+            return FALSE;
+        }
+    }
+
+    public function update_profile_picture($user_id, $file_name) {
+        return $this->update_user_profile($user_id, array('picture' => $file_name));
+    }
+
+    public function bank_details($user_id) {
+        $this->db->where('user_id', $user_id);
+        $query = $this->db->get('bank_details');
+
+        return $query->result_array();
+    }
+
     /*
     ********************************************************************************************************************************
     ********************************************************************************************************************************
@@ -95,17 +120,17 @@ class User_model extends CI_Model{
     ********************************************************************************************************************************
     ********************************************************************************************************************************
     */
-    
+
     /**
      * Get some details about an user (stored in session)
      * @param type $email
      * @return boolean
      */
     public function get_user_info($email){
-        $this->db->select('id, first_name, last_name, role');
+        $this->db->select('id, first_name, last_name');
         $this->db->where('email', $email);
 
-        $run_q = $this->db->get('user');
+        $run_q = $this->db->get('users');
 
         if($run_q->num_rows() > 0){
             return $run_q->result();
@@ -116,7 +141,14 @@ class User_model extends CI_Model{
         }
     }
 
-
+    public function profile_picture_url($user_id) {
+        $picture = $this->get_profile($user_id)->row()->picture;
+        if ($picture === "" || ! file_exists(FCPATH.'uploads/profile_pictures/'.$picture)) {
+            $picture = "no_pic.jpg";
+            // $picture = FCPATH.'uploads/profile_pictures/'.$picture;
+        }
+        return base_url('uploads/profile_pictures/').$picture;
+    }
 
 
    /*
@@ -136,13 +168,13 @@ class User_model extends CI_Model{
      * @return boolean
      */
     public function getAll($orderBy = "first_name", $orderFormat = "ASC", $start = 0, $limit = ""){
-        $this->db->select('id, first_name, last_name, email, mobile1, mobile2, created_on, last_login, account_status, deleted');
+        $this->db->select('id, first_name, last_name, email, phone, address, created_on, last_login, active, deleted');
         $this->db->where("id != ", $_SESSION['user_id']);
         $this->db->where("email != ", "admin@cuditrader.com");//added to prevent people from removing the demo user account
         $this->db->limit($limit, $start);
         $this->db->order_by($orderBy, $orderFormat);
         
-        $run_q = $this->db->get('user');
+        $run_q = $this->db->get('users');
         
         if($run_q->num_rows() > 0){
             return $run_q->result();
@@ -170,7 +202,7 @@ class User_model extends CI_Model{
     */ 
     public function suspend($user_id, $new_status){       
         $this->db->where('id', $user_id);
-        $this->db->update('user', ['account_status'=>$new_status]);
+        $this->db->update('users', ['active'=>$new_status]);
 
         if($this->db->affected_rows()){
             return TRUE;
@@ -198,7 +230,7 @@ class User_model extends CI_Model{
     */
     public function delete($user_id, $new_value){       
         $this->db->where('id', $user_id);
-        $this->db->update('user', ['deleted'=>$new_value]);
+        $this->db->update('users', ['deleted'=>$new_value]);
        
         if($this->db->affected_rows()){
             return TRUE;
@@ -225,7 +257,7 @@ class User_model extends CI_Model{
      * @return boolean
      */
     public function userSearch($value){
-        $q = "SELECT * FROM user WHERE 
+        $q = "SELECT * FROM users WHERE 
                 id != {$_SESSION['user_id']}
                     AND
                 (
@@ -233,13 +265,13 @@ class User_model extends CI_Model{
                 || MATCH(last_name) AGAINST(?)
                 || MATCH(first_name, last_name) AGAINST(?)
                 || MATCH(email) AGAINST(?)
-                || MATCH(mobile1) AGAINST(?)
-                || MATCH(mobile2) AGAINST(?)
+                || MATCH(phone) AGAINST(?)
+                || MATCH(address) AGAINST(?)
                 || first_name LIKE '%".$this->db->escape_like_str($value)."%'
                 || last_name LIKE '%".$this->db->escape_like_str($value)."%' 
                 || email LIKE '%".$this->db->escape_like_str($value)."%'
-                || mobile1 LIKE '%".$this->db->escape_like_str($value)."%'
-                || mobile2 LIKE '%".$this->db->escape_like_str($value)."%'
+                || phone LIKE '%".$this->db->escape_like_str($value)."%'
+                || address LIKE '%".$this->db->escape_like_str($value)."%'
                 )";
 
         $run_q = $this->db->query($q, [$value, $value, $value, $value, $value, $value]);
@@ -261,13 +293,12 @@ class User_model extends CI_Model{
     ********************************************************************************************************************************
     */
     
-    public function update($user_id, $first_name, $last_name, $email, $mobile1, $mobile2, $role){
-        $data = ['first_name'=>$first_name, 'last_name'=>$last_name, 'mobile1'=>$mobile1, 'mobile2'=>$mobile2, 'email'=>$email, 
-            'role'=>$role];
+    public function update($user_id, $first_name, $last_name, $email, $phone, $address){
+        $data = ['first_name'=>$first_name, 'last_name'=>$last_name, 'phone'=>$phone, 'address'=>$address, 'email'=>$email];
         
         $this->db->where('id', $user_id);
         
-        $this->db->update('user', $data);
+        $this->db->update('users', $data);
         
         return TRUE;
     }

@@ -58,7 +58,7 @@ function handleLoginRedirect(){
     var currentUrl = window.location.href;
     
     //split the url using "red_uri", then get the 1st part after the red_uri (i.e. key 1)
-    var uriToRedirectTo = currentUrl.split("red_uri=")[1].split("admin/")[1] || "dashboard";
+    var uriToRedirectTo = currentUrl.split("red_uri=")[1] ? currentUrl.split("admin/")[1] || "dashboard" : "dashboard";
     // may have to modify this method for cases where
     // this redirects somewhere outside admin module
     // but, for now, it works for all cases.
