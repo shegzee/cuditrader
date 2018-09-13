@@ -10,6 +10,7 @@ class Open_user extends MY_Controller {
 		if ($this->ion_auth->logged_in()) {
 			redirect("user/profile");
 		}
+		$this->load->helper('email_helper');
 		$this->load->model('User_model');
 	}
 
@@ -35,6 +36,10 @@ class Open_user extends MY_Controller {
 			$remember = (bool) $this->input->post('remember');
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
+
+			if (valid_email($username)) {
+				$username = $this->User_model->get_user_info_from_email($username)->username;
+			}
 
 			if ($this->ion_auth->login($username, $password, $remember))
 			{
@@ -68,17 +73,12 @@ class Open_user extends MY_Controller {
 		{
 			$first_name = $this->input->post('first_name');
 			$last_name = $this->input->post('last_name');
-			$username = $this->input->post('first_name');
+			$username = $this->input->post('username');
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
 
-			$additional_data = array(
-				'first_name' => $first_name,
-				'last_name' => $last_name
-			);
-
 			$this->load->library('ion_auth');
-			if ($this->ion_auth->register($username, $password, $email, $additional_data))
+			if ($this->User_model->add($username, $password, $email, $first_name, $last_name))
 			{
 				$_SESSION['auth_message'] = 'The account has been created. You may now login.';
 				$this->session->mark_as_flash('auth_message');

@@ -191,8 +191,8 @@ defined('BASEPATH') OR exit('');
                                 Users
                             </a>
                         </li>
-                        <li class="<?= $pageTitle == 'Transactions' ? 'active' : '' ?>">
-                            <a href="<?= admin_url('transactions') ?>">
+                        <li class="<?= $pageTitle == 'Loans' ? 'active' : '' ?>">
+                            <a href="<?= admin_url('loans') ?>">
                                 <i class="fa fa-exchange"></i>
                                 Loans
                             </a>

@@ -68,13 +68,9 @@
         <li class="nav-item d-xl-none">
           <a href="<?=base_url('about')?>" class="nav-link big-link track-click" data-category="about-us" data-action="goto" data-label="from-navbar-collapsed">About Us</a>
         </li>
-        <li class="nav-item">
-          <a href="/#" class="nav-link big-link track-click" data-category="blog" data-action="goto" data-label="from-navbar-collapsed" target="_blank">Blog</a>
-        </li>
       </ul>
     </div>
   </div>
 </nav>
-<p>
-<?= isset($_SESSION['auth_message']) ? $_SESSION['auth_message'] : FALSE ?>
-</p>
+
+<?= isset($_SESSION['message']) ? "<p>".$_SESSION['message']."</p>" : FALSE ?>
