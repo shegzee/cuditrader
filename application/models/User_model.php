@@ -40,7 +40,10 @@ class User_model extends CI_Model{
             );
         $user_id = $this->ion_auth->register($username, $password, $email, $additional_data);
         // create an entry in the 'user_profile' table for this user
-        $this->db->insert('user_profile', array("user_id" => $user_id));
+        if ($user_id) {
+            $this->db->insert('user_profile', array("user_id" => $user_id));
+        }
+        return $user_id;
     }
 
     public function login($username, $password, $remember=FALSE) {
@@ -126,14 +129,34 @@ class User_model extends CI_Model{
      * @param type $email
      * @return boolean
      */
-    public function get_user_info($email){
-        $this->db->select('id, first_name, last_name');
+    public function get_user_info_from_email($email){
+        $this->db->select('id, first_name, last_name, username');
         $this->db->where('email', $email);
 
         $run_q = $this->db->get('users');
 
         if($run_q->num_rows() > 0){
-            return $run_q->result();
+            return $run_q->row();
+        }
+
+        else{
+            return FALSE;
+        }
+    }
+
+    /**
+     * Get some details about an user (stored in session)
+     * @param type $email
+     * @return boolean
+     */
+    public function get_user_info_from_username($username){
+        $this->db->select('id, first_name, last_name, email');
+        $this->db->where('username', $username);
+
+        $run_q = $this->db->get('users');
+
+        if($run_q->num_rows() > 0){
+            return $run_q->row();
         }
 
         else{
@@ -144,7 +167,7 @@ class User_model extends CI_Model{
     public function profile_picture_url($user_id) {
         $picture = $this->get_profile($user_id)->row()->picture;
         if ($picture === "" || ! file_exists(FCPATH.'uploads/profile_pictures/'.$picture)) {
-            $picture = "no_pic.jpg";
+            $picture = "no_pic.png";
             // $picture = FCPATH.'uploads/profile_pictures/'.$picture;
         }
         return base_url('uploads/profile_pictures/').$picture;

@@ -135,3 +135,18 @@ class Auth_Controller extends MY_Controller {
     //     parent::prep_selects($table_name, $key_field, $value_field);
     // }
 }
+
+class User_Controller extends Auth_Controller {
+    // var $user;
+    function __construct() {
+        parent::__construct();
+    }
+
+    protected function render($the_view = NULL, $template = 'user_template') {
+        parent::render($the_view, $template);
+    }
+
+    // protected function prep_select($table_name, $key_field, $value_field) {
+    //     parent::prep_selects($table_name, $key_field, $value_field);
+    // }
+}

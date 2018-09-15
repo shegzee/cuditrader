@@ -1,29 +1,60 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
-<div class="container">
-	<?= isset($_SESSION['auth_message']) ? $_SESSION['auth_message'] : FALSE ?>
-	<h1>Register</h1>
+<div id="login_hero" class="minimal"></div>
+<section class="content content-centered content-auth">
+	<h2>Create your Cudi Trader Account</h2>
+	<p class="subheading">We're happy you're here.</p>
+
+	<?php /*
+	<form autocomplete="on" id="register-form" class="login-form">
+	*/?>
 	<?php
-	echo form_open();
-	echo form_label('First name:', 'first_name').'<br />';
-	echo form_error('first_name');
-	echo form_input('first_name', set_value('first_name')).'<br />';
-	echo form_label('Last name:', 'last_name').'<br />';
-	echo form_error('last_name');
-	echo form_input('last_name', set_value('last_name')).'<br />';
-	echo form_label('Username:', 'username').'<br />';
-	echo form_error('username');
-	echo form_input('username', set_value('username')).'<br />';
-	echo form_label('Email:', 'email').'<br />';
-	echo form_error('email');
-	echo form_input('email', set_value('email')).'<br />';
-	echo form_label('Password:', 'password').'<br />';
-	echo form_error('password');
-	echo form_password('password', set_value('password')).'<br />';
-	echo form_label('Confirm password:', 'confirm_password').'<br />';
-	echo form_error('confirm_password');
-	echo form_password('confirm_password').'<br /><br />';
-	echo form_submit('register', 'Register');
-	echo form_close();
+	echo form_open(current_url(), 'autocomplete="on" id="register-form" class="login-form"');
 	?>
+		<div class="form-message error">
+			<i class="fa fa-exclamation-circle"></i><span class="form-message-label"><?= isset($_SESSION['auth_message']) ? "<p><span style='color:black'>".$_SESSION['auth_message']."</span></p>" : "" ?></span>
+		</div>
+
+			<?php
+	echo form_error('first_name', '<div class="error">', '</div>');
+	echo form_input('first_name', set_value('first_name'), "placeholder='First Name'");
+	echo form_error('last_name', '<div class="error">', '</div>');
+	echo form_input('last_name', set_value('last_name'), "placeholder='Last Name'");
+	echo form_error('username', '<div class="error">', '</div>');
+	echo form_input('username', set_value('username'), "placeholder='Username'");
+	echo form_error('email', '<div class="error">', '</div>');
+	echo form_input('email', set_value('email'), "placeholder='Email'");
+	echo form_error('password', '<div class="error">', '</div>');
+	echo form_password('password', set_value('password'), "placeholder='Password'");
+	echo form_error('confirm_password', '<div class="error">', '</div>');
+	echo form_password('confirm_password', '', "placeholder='Confirm Password'");
+	echo form_submit("register", "Create", "class='button button-primary'");
+			?>
+		<?php /*
+		<input type="text" id="name" placeholder="Name">
+		<input type="text" id="username" placeholder="Email">
+		<input type="text" id="phone" placeholder="Phone Number">
+		<input type="text" id="address" placeholder="Address">
+		<input type="password" id="password" placeholder="Password">
+
+		<button class="button button-primary"><span class="button-label">Create</span></button>
+		*/
+		?>
+	</form>
+
+	<div class="below" id="footer_hero">
+		<a href="Cudi – RecoverAccount.html">Lost your password?</a><!--
+		--><span class="divider">・</span><!--
+		--><!-- Already have an account?  --><a id="loginlink" href="<?=base_url('user/login') ?>">Login</a>
+	</div>
+</section>
+
+
+<section class="bottom-message">
+	<p>Having trouble? <a href="#">See our Help Center</a></p>
+</section>
 </div>
+
+<section class="bottom-message">
+	<p>Having trouble? <a href="#">See our Help Center</a></p>
+</section>
