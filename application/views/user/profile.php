@@ -1,44 +1,59 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
-<div class="container">
-	<h1>Your profile</h1>
-	<h2>Personal details</h2>
-	<?= anchor('user/edit_profile', "Edit"); ?>
-	<div id="basic">
-		<p>Name: <?= $user->first_name." ".$user->last_name; ?></p>
-		<p>Username: <?= $user->username; ?></p>
-		<p>Email: <?= $user->email; ?></p>
-	</div>
+<p class="header-description">Welcome to your account settings.</p>
 
-	<div id="details">
-		<!-- user profile -->
-		<p>Profile picture</p>
-		<img src="<?=$user->profile->picture_url ?>" />
-	</div>
+      <div class="profile-details first-section">
+        <h3>Profile Info</h3>
 
-	<hr />
-	<h2>Bank accounts</h2>
-	<div id="accounts">
-		<?= anchor("bank/add", "Add account") ?>
-		<table border="1">
-			<tr>
-				<td>Bank</td>
-				<td>Account number</td>
-				<td>Account name</td>
-				<td>Account type</td>
-				<td>Is Primary?</td>
-				<td>Description</td>
-			</tr>
-			<?php foreach ($bank_details as $bank_account): ?>
-				<tr>
-					<td><?= $banks[$bank_account['bank_id']]["name"] ?></td>
-					<td><?= $bank_account['account_number'] ?></td>
-					<td><?= $bank_account['account_name'] ?></td>
-					<td><?= $account_types[$bank_account['account_type_id']]['name'] ?></td>
-					<td><?= $bank_account['is_primary'] ? "Yes": "No" ?></td><!-- will replace with toggle switch; which will also alter previous primary -->
-					<td><?= $bank_account['description'] ?></td>
-				</tr>
-			<?php endforeach ?>
-		</table>
-	</div>
-</div>
+        <div class="table-wrapper">
+          <table>
+            <tbody>
+              <tr data-email-id="5698536">
+                <td class="email-row">
+                  <span class="emails-email"><?= $user->email; ?></span>
+                  <!-- if there's only one email address, we shouldn't show default -->
+                  <span class="status status-primary">Primary</span>
+                  <span class="status status-error">Unverified</span>
+                  <span class="status">Verified</span>
+                  <span class="actions">
+                    <span class="status action resend">Resend verification</span>
+                  </span>
+                </td>
+                  <!-- <td class="date">Joined on: <?= date('jS M, Y', $user->created_on) ; ?></td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+<?= isset($_SESSION['message']) ? "<p>".$_SESSION['message']."</p>" : FALSE ?>
+
+        <!-- <form autocomplete="on" id="profile-form"> -->
+        <?= form_open('user/edit_profile') ?>
+          <div class="input-group">
+        <?php
+        	echo form_error('full_name');
+        	echo form_label('Full Name', 'full_name');
+        	echo form_input('full_name', set_value('full_name', $user->full_name));
+        ?>
+<!--             <label>Full Name</label>
+            <input id="full_name" type="text" value="<?= $user->full_name; ?>"> -->
+          </div>
+
+          <div class="input-group">
+        <?php
+        	echo form_error('phone');
+        	echo form_label('Phone Number', 'phone');
+        	echo form_input('phone', set_value('phone', $user->phone));
+        ?>
+          </div>
+
+          <div class="input-group">
+        <?php
+        	echo form_error('address');
+        	echo form_label('Address', 'address');
+        	echo form_input('address', set_value('address', $user->address));
+        ?>
+          </div>
+
+          <button class="button">Save</button>
+        </form>
+      </div>

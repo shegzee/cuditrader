@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="<?=base_url()?>public/css/fok3hxk.css">
     <link href="<?=base_url()?>public/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?=base_url('public/css/admin.css')?>">
+    <link rel="stylesheet" href="<?=base_url('public/css/profile.css')?>">
 
 <link rel="apple-touch-icon" sizes="180x180" href="<?=base_url()?>public/images/favicons/apple-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="<?=base_url()?>public/images/favicons/favicon-32x32.png">
@@ -73,4 +74,4 @@
   </div>
 </nav>
 
-<?php //echo isset($_SESSION['message']) ? "<p><span style='color:black'>".$_SESSION['message']."</span></p>" : FALSE ?>
+<?php // echo isset($_SESSION['message']) ? "<p><span style='color:black'>".$_SESSION['message']."</span></p>" : FALSE; ?>

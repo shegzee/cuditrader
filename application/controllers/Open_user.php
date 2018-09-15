@@ -33,7 +33,8 @@ class Open_user extends MY_Controller {
 		}
 		else
 		{
-			$remember = (bool) $this->input->post('remember');
+			// $remember = (bool) $this->input->post('remember');
+			$remember = TRUE;
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
 

@@ -78,6 +78,20 @@ class Bank extends Auth_Controller {
 
 	}
 
+	public function set_primary($id)
+	{
+		if ($this->Bank_model->set_as_primary($id)) {
+			$_SESSION['message'] = "The bank account is now your primary account";
+		}
+		else {
+			$_SESSION['message'] = "Sorry, an error occurred";
+		}
+		$this->session->mark_as_flash('message');
+		redirect('user/bank');
+	}
+
+	
+
 	/*
 	view single bank account details
 	*/
@@ -99,6 +113,13 @@ class Bank extends Auth_Controller {
 	*/
 	public function delete($id)
 	{
-
+		if ($this->Bank_model->delete($id)) {
+			$_SESSION['message'] = "The bank account has been deleted successfully";
+		}
+		else {
+			$_SESSION['message'] = "Sorry, an error occurred";
+		}
+		$this->session->mark_as_flash('message');
+		redirect('user/bank');
 	}
 }
