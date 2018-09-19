@@ -19,12 +19,12 @@
 	
 	echo form_open(current_url(), 'autocomplete="on" id="login-form" class="login-form"');
 		?>
-		<div class="<?= !isset($_SESSION['auth_message']) ?'form-message':'' ?> error">
-			<i class="fa fa-exclamation-circle"></i><span class="form-message-label"><?= isset($_SESSION['auth_message']) ? "<p><span style='color:black'>".$_SESSION['auth_message']."</span></p>" : "" ?></span>
+		<div class="<?= !isset($_SESSION['message']) ?'form-message':'' ?> error">
+			<i class="fa fa-exclamation-circle"></i><span class="form-message-label"><?= isset($_SESSION['message']) ? "<p><span style='color:black'>".$_SESSION['message']."</span></p>" : "" ?></span>
 		</div>
 	<?php
-	echo form_error('username', '<div class="error">', '</div>');
-	echo form_input('username', set_value('username'), "placeholder='Username/Email'");
+	echo form_error('email', '<div class="error">', '</div>');
+	echo form_input('email', set_value('email'), "placeholder='Email'");
 	echo form_error('password', '<div class="error">', '</div>');
 	echo form_password('password', '', "placeholder='Password'");
 	// echo form_button("login", "<span class='button-label'>Login</span>", "class='button button-primary' onclick='form.submit()'");

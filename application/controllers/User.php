@@ -6,8 +6,18 @@ class User extends User_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		$this->data['loan_unit_icons'] = $this->load_loan_unit_icons();
+        $this->data['collateral_unit_icons'] = $this->load_collateral_unit_icons();
 		// $this->load->library('ion_auth');
 	}
+
+	private function load_loan_unit_icons() {
+		return $this->prep_select('loan_units', 'id', 'logo', TRUE);
+    }
+
+    private function load_collateral_unit_icons() {
+		return $this->prep_select('collateral_units', 'id', 'logo', TRUE);
+    }
 
 	public function index()
 	{
@@ -62,16 +72,8 @@ class User extends User_Controller {
 	public function bank()
 	{
 		$this->load->helper('form');
-		$this->data['banks_dropdown'] = parent::prep_select('banks', 'id', 'name', TRUE, 'name');
-		$this->data['account_types_dropdown'] 	= parent::prep_select('bank_account_types', 'id', 'name', TRUE);
-
-
 		$this->load->model('Bank_model');
-		$this->data['banks'] = $this->compose_array('banks', 'name');
-		$this->data['account_types'] = $this->compose_array('bank_account_types','name');
-		$this->data['bank_details'] = $this->Bank_model->bank_details($this->user->id);
-
-		$this->data['page_title'] = "Bank Accounts";
+		
 
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('bank_id', 'Bank', 'required');
@@ -87,21 +89,37 @@ class User extends User_Controller {
     		'account_type_id' => $this->input->post('account_type_id'),
     		'description' => $this->input->post('description'));
 
-			if ($this->input->post('is_primary') == "set") {
-				$data['is_primary'] = 1;
+			if ($this->input->post('is_primary')) {
+				$data['is_primary'] = TRUE;
+				// echo $dab;
+			} else {
+				$data['is_primary'] = FALSE;
 			}
 
 			if ($this->Bank_model->add_bank_account($data)) {
-				$_SESSION['message'] = "The bank account has been added successfully";
+			// if (TRUE) {
+				if ($data['is_primary']){
+					$_SESSION['message'] = "The new primary bank account has been added successfully";
+				} else {
+					$_SESSION['message'] = "The bank account has been added successfully";
+				}
 				$this->session->mark_as_flash('message');
-				redirect('user/bank');
+				// redirect('user/bank');
 			}
 			else {
 				$_SESSION['message'] = "An error occurred. Please, try later.";
 				$this->session->mark_as_flash('message');
 			}
 		}
+		$this->data['banks_dropdown'] = parent::prep_select('banks', 'id', 'name', TRUE, 'name');
+		$this->data['account_types_dropdown'] 	= parent::prep_select('bank_account_types', 'id', 'name', TRUE);
 
+
+		$this->data['banks'] = $this->compose_array('banks', 'name');
+		$this->data['account_types'] = $this->compose_array('bank_account_types','name');
+		$this->data['bank_details'] = $this->Bank_model->bank_details($this->user->id);
+
+		$this->data['page_title'] = "Bank Accounts";
 		$this->render('user/bank');
 	}
 
@@ -110,7 +128,10 @@ class User extends User_Controller {
 	*/
 	public function loans($status="all")
 	{
+		$this->data['page_title'] = "Loans";
+
 		$this->load->model("Loan_model");
+
 		$this->data['loan_currencies']	= parent::prep_select('loan_units', 'id', 'name', FALSE, 'name');
 		$this->data['cryptocurrencies']	= parent::prep_select('collateral_units', 'id', 'name', TRUE, 'name', 'ASC');
 		$this->data['statuses']			= parent::prep_select('loan_status', 'status_number', 'status', FALSE, 'status');

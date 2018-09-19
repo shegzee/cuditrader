@@ -32,13 +32,15 @@ class User_model extends CI_Model{
      * @param type $mobile2
      * @return boolean
      */
-    public function add($username, $password, $email, $first_name, $last_name){
+    public function add($email, $password, $first_name, $last_name, $phone="", $address=""){
 
         $additional_data = array (
                 'first_name' => $first_name,
-                'last_name' => $last_name
+                'last_name' => $last_name,
+                'phone' => $phone,
+                'address' => $address
             );
-        $user_id = $this->ion_auth->register($username, $password, $email, $additional_data);
+        $user_id = $this->ion_auth->register($email, $password, $email, $additional_data);
         // create an entry in the 'user_profile' table for this user
         if ($user_id) {
             $this->db->insert('user_profile', array("user_id" => $user_id));
@@ -46,8 +48,8 @@ class User_model extends CI_Model{
         return $user_id;
     }
 
-    public function login($username, $password, $remember=FALSE) {
-        return $this->ion_auth->login($username, $password, $remember);
+    public function login($email, $password, $remember=FALSE) {
+        return $this->ion_auth->login($email, $password, $remember);
     }
     
     public function get_profile($user_id) {
@@ -130,7 +132,7 @@ class User_model extends CI_Model{
      * @return boolean
      */
     public function get_user_info_from_email($email){
-        $this->db->select('id, first_name, last_name, username');
+        $this->db->select('id, first_name, last_name');
         $this->db->where('email', $email);
 
         $run_q = $this->db->get('users');

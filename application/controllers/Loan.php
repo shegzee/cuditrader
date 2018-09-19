@@ -55,7 +55,6 @@ class Loan extends Auth_Controller {
 			if ($this->Loan_model->new_loan($data) == TRUE) {
 				$_SESSION['message'] = "The loan request has been made. It will be processed within 24 hours.";
 				$this->session->mark_as_flash('message');
-				redirect('loan/view');
 			}
 			// else if {
 
@@ -64,6 +63,7 @@ class Loan extends Auth_Controller {
 				$_SESSION['message'] = "Sorry, you have a pending loan request.";
 				$this->session->mark_as_flash('message');
 			}
+			redirect('user/loans');
 
 		}
 	}
@@ -71,13 +71,15 @@ class Loan extends Auth_Controller {
 	public function cancel($loan_id)
 	{
 		$result = $this->Loan_model->cancel_loan($loan_id, $this->user->id);
-		$_SESSION['message'] = $result;
-		$this->session->mark_as_flash('message');
 		if ($result) {
-			redirect('loan/');
+			$_SESSION['message'] = "Loan request has been cancelled";
+			$this->session->mark_as_flash('message');
+			redirect('user/loans');
 		}
 		else {
-			redirect('loan/view_loan/'.$loan_id);
+			$_SESSION['message'] = "Sorry, we were unable to perform this action";
+			$this->session->mark_as_flash('message');
+			redirect('user/loans/'.$loan_id);
 		}
 	}
 

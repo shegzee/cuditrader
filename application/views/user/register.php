@@ -20,10 +20,12 @@
 	echo form_input('first_name', set_value('first_name'), "placeholder='First Name'");
 	echo form_error('last_name', '<div class="error">', '</div>');
 	echo form_input('last_name', set_value('last_name'), "placeholder='Last Name'");
-	echo form_error('username', '<div class="error">', '</div>');
-	echo form_input('username', set_value('username'), "placeholder='Username'");
 	echo form_error('email', '<div class="error">', '</div>');
 	echo form_input('email', set_value('email'), "placeholder='Email'");
+	echo form_error('phone', '<div class="error">', '</div>');
+	echo form_input('phone', set_value('phone'), "placeholder='Phone number'");
+	echo form_error('address', '<div class="error">', '</div>');
+	echo form_input('address', set_value('address'), "placeholder='Address'");
 	echo form_error('password', '<div class="error">', '</div>');
 	echo form_password('password', set_value('password'), "placeholder='Password'");
 	echo form_error('confirm_password', '<div class="error">', '</div>');

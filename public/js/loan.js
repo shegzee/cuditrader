@@ -6,7 +6,10 @@ $(document).ready(function(){
 	
     //load all banks once the page is ready
     //function header: larl_(url)
-    larl_();
+    // larl_();
+    // laal_();
+    // ladl_();
+    load_all();
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -14,10 +17,10 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    //reload the list of bank when fields are changed
+    //reload the list of loans when fields are changed
     $("#reqLoanListSortBy, #reqLoanListPerPage").change(function(){
         displayFlashMsg("Please wait...", spinnerClass, "", "");
-        larl_();
+        load_all();
     });
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,7 +35,7 @@ $(document).ready(function(){
 		
         displayFlashMsg("Please wait...", spinnerClass, "", "");
 
-        larl_($(this).attr('href'));
+        load_all($(this).attr('href'));
 
         return false;
     });
@@ -92,7 +95,7 @@ $(document).ready(function(){
                 "");
 
                 //refresh bank list table
-                larl_();
+                load_all();
 
             }
 
@@ -119,7 +122,7 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
-    //handles the updating of bank details
+    //handles the updating of loan details
     $("#editLoanSubmit").click(function(e){
         e.preventDefault();
         
@@ -143,7 +146,7 @@ $(document).ready(function(){
                 return;
             }
 
-            //display message telling bank action is being processed
+            //display message telling loan is being processed
             $("#fMsgEditIcon").attr('class', spinnerClass);
             $("#fMsgEdit").text(" Updating details...");
 
@@ -168,7 +171,7 @@ $(document).ready(function(){
                     changeInnerHTML(['nameEditErr', 'descriptionEditErr'], "");
 
                     //refresh bank list table
-                    larl_();
+                    load_all();
 
                 }
 
@@ -198,7 +201,7 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
-    //handles bank search
+    //handles loan search
     $("#reqLoanSearch").on('keyup change', function(){
         var value = $(this).val();
         
@@ -214,7 +217,7 @@ $(document).ready(function(){
         }
         
         else{
-            larl_();
+            load_all();
         }
     });
     
@@ -273,7 +276,7 @@ $(document).ready(function(){
     */
     
     
-    //When the trash icon in front of a bank account is clicked on the bank list table (i.e. to delete the account)
+    //When the approve icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
     $("#reqLoan").on('click', '.approveLoan', function(){
         var confirm = window.confirm("Proceed?");
         
@@ -298,7 +301,44 @@ $(document).ready(function(){
 
                         //change the icon
                         $("#"+ElemId).html(newHTML);
-                        larl_();
+                        load_all();
+
+                    }
+
+                    else{
+                        alert(returnedData.status);
+                    }
+                });
+            }
+        }
+    });
+
+    //When the deny icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
+    $("#reqLoan").on('click', '.denyLoan', function(){
+        var confirm = window.confirm("Proceed?");
+        
+        if(confirm){
+            var ElemId = $(this).attr('id');
+
+            var loanId = ElemId.split("-")[1];//get the loanId
+
+            //show spinner
+            $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
+
+            if(loanId){
+                $.ajax({
+                    url: appRoot+"loans/deny",
+                    method: "POST",
+                    data: {_lId:loanId}
+                }).done(function(returnedData){
+                    if(returnedData.status === 1){
+                       
+                        //change the icon to "undo delete" if it's "active" before the change and vice-versa
+                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Deny</a>" : "<i class='fa fa-remove pointer'></i>";
+
+                        //change the icon
+                        $("#"+ElemId).html(newHTML);
+                        load_all();
 
                     }
 
@@ -334,7 +374,404 @@ $(document).ready(function(){
     
 });
 
+// ******************************************
+// APPROVED LOANS
 
+    //reload the list of loans when fields are changed
+    $("#appLoanListSortBy, #appLoanListPerPage").change(function(){
+        displayFlashMsg("Please wait...", spinnerClass, "", "");
+        load_all();
+    });
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    //load and show page when pagination link is clicked
+    $("#appLoan").on('click', '.lnp', function(e){
+        e.preventDefault();
+        
+        displayFlashMsg("Please wait...", spinnerClass, "", "");
+
+        load_all($(this).attr('href'));
+
+        return false;
+    });
+
+    //handles loan search
+    $("#appLoanSearch").on('keyup change', function(){
+        var value = $(this).val();
+        
+        if(value){//search only if there is at least one char in input
+            $.ajax({
+                type: "get",
+                url: appRoot+"search/appLoanSearch",
+                data: {v:value},
+                success: function(returnedData){
+                    $("#appLoan").html(returnedData.loanTable);
+                }
+            });
+        }
+        
+        else{
+            load_all();
+        }
+    });
+    
+
+//When the deny icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
+    $("#appLoan").on('click', '.denyLoan', function(){
+        var confirm = window.confirm("Proceed?");
+        
+        if(confirm){
+            var ElemId = $(this).attr('id');
+
+            var loanId = ElemId.split("-")[1];//get the loanId
+
+            //show spinner
+            $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
+
+            if(loanId){
+                $.ajax({
+                    url: appRoot+"loans/deny",
+                    method: "POST",
+                    data: {_lId:loanId}
+                }).done(function(returnedData){
+                    if(returnedData.status === 1){
+                       
+                        //change the icon to "undo delete" if it's "active" before the change and vice-versa
+                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Deny</a>" : "<i class='fa fa-remove pointer'></i>";
+
+                        //change the icon
+                        $("#"+ElemId).html(newHTML);
+                        load_all();
+
+                    }
+
+                    else{
+                        alert(returnedData.status);
+                    }
+                });
+            }
+        }
+    });
+
+    //When the revert icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
+    $("#appLoan").on('click', '.revertLoan', function(){
+        var confirm = window.confirm("Proceed?");
+        
+        if(confirm){
+            var ElemId = $(this).attr('id');
+
+            var loanId = ElemId.split("-")[1];//get the loanId
+
+            //show spinner
+            $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
+
+            if(loanId){
+                $.ajax({
+                    url: appRoot+"loans/revert",
+                    method: "POST",
+                    data: {_lId:loanId}
+                }).done(function(returnedData){
+                    if(returnedData.status === 1){
+                       
+                        //change the icon to "undo delete" if it's "active" before the change and vice-versa
+                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Revert</a>" : "<i class='fa fa-check pointer'></i>";
+
+                        //change the icon
+                        $("#"+ElemId).html(newHTML);
+                        load_all();
+
+                    }
+
+                    else{
+                        alert(returnedData.status);
+                    }
+                });
+            }
+        }
+    });
+
+//When the clear icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
+    $("#appLoan").on('click', '.clearLoan', function(){
+        var confirm = window.confirm("Proceed?");
+        
+        if(confirm){
+            var ElemId = $(this).attr('id');
+
+            var loanId = ElemId.split("-")[1];//get the loanId
+
+            //show spinner
+            $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
+
+            if(loanId){
+                $.ajax({
+                    url: appRoot+"loans/clear",
+                    method: "POST",
+                    data: {_lId:loanId}
+                }).done(function(returnedData){
+                    if(returnedData.status === 1){
+                       
+                        //change the icon to "undo delete" if it's "active" before the change and vice-versa
+                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Revert</a>" : "<i class='fa fa-check pointer'></i>";
+
+                        //change the icon
+                        $("#"+ElemId).html(newHTML);
+                        load_all();
+
+                    }
+
+                    else{
+                        alert(returnedData.status);
+                    }
+                });
+            }
+        }
+    });
+
+
+// ******************************************
+// DENIED LOANS
+
+    //reload the list of loans when fields are changed
+    $("#denLoanListSortBy, #denLoanListPerPage").change(function(){
+        displayFlashMsg("Please wait...", spinnerClass, "", "");
+        load_all();
+    });
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    //load and show page when pagination link is clicked
+    $("#denLoan").on('click', '.lnp', function(e){
+        e.preventDefault();
+        
+        displayFlashMsg("Please wait...", spinnerClass, "", "");
+
+        load_all($(this).attr('href'));
+
+        return false;
+    });
+
+    //handles loan search
+    $("#denLoanSearch").on('keyup change', function(){
+        var value = $(this).val();
+        
+        if(value){//search only if there is at least one char in input
+            $.ajax({
+                type: "get",
+                url: appRoot+"search/denLoanSearch",
+                data: {v:value},
+                success: function(returnedData){
+                    $("#denLoan").html(returnedData.loanTable);
+                }
+            });
+        }
+        
+        else{
+            load_all();
+        }
+    });
+
+//When the approve icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
+    $("#denLoan").on('click', '.approveLoan', function(){
+        var confirm = window.confirm("Proceed?");
+        
+        if(confirm){
+            var ElemId = $(this).attr('id');
+
+            var loanId = ElemId.split("-")[1];//get the loanId
+
+            //show spinner
+            $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
+
+            if(loanId){
+                $.ajax({
+                    url: appRoot+"loans/approve",
+                    method: "POST",
+                    data: {_lId:loanId}
+                }).done(function(returnedData){
+                    if(returnedData.status === 1){
+                       
+                        //change the icon to "undo delete" if it's "active" before the change and vice-versa
+                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Approve</a>" : "<i class='fa fa-check pointer'></i>";
+
+                        //change the icon
+                        $("#"+ElemId).html(newHTML);
+                        load_all();
+
+                    }
+
+                    else{
+                        alert(returnedData.status);
+                    }
+                });
+            }
+        }
+    });
+
+    //When the approve icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
+    $("#denLoan").on('click', '.revertLoan', function(){
+        var confirm = window.confirm("Proceed?");
+        
+        if(confirm){
+            var ElemId = $(this).attr('id');
+
+            var loanId = ElemId.split("-")[1];//get the loanId
+
+            //show spinner
+            $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
+
+            if(loanId){
+                $.ajax({
+                    url: appRoot+"loans/revert",
+                    method: "POST",
+                    data: {_lId:loanId}
+                }).done(function(returnedData){
+                    if(returnedData.status === 1){
+                       
+                        //change the icon to "undo delete" if it's "active" before the change and vice-versa
+                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Revert</a>" : "<i class='fa fa-check pointer'></i>";
+
+                        //change the icon
+                        $("#"+ElemId).html(newHTML);
+                        load_all();
+
+                    }
+
+                    else{
+                        alert(returnedData.status);
+                    }
+                });
+            }
+        }
+    });
+
+// ******************************************
+// CLEARED LOANS
+
+    //reload the list of loans when fields are changed
+    $("#cleLoanListSortBy, #cleLoanListPerPage").change(function(){
+        displayFlashMsg("Please wait...", spinnerClass, "", "");
+        load_all();
+    });
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    //load and show page when pagination link is clicked
+    $("#cleLoan").on('click', '.lnp', function(e){
+        e.preventDefault();
+        
+        displayFlashMsg("Please wait...", spinnerClass, "", "");
+
+        load_all($(this).attr('href'));
+
+        return false;
+    });
+
+    //handles loan search
+    $("#cleLoanSearch").on('keyup change', function(){
+        var value = $(this).val();
+        
+        if(value){//search only if there is at least one char in input
+            $.ajax({
+                type: "get",
+                url: appRoot+"search/cleLoanSearch",
+                data: {v:value},
+                success: function(returnedData){
+                    $("#cleLoan").html(returnedData.loanTable);
+                }
+            });
+        }
+        
+        else{
+            load_all();
+        }
+    });
+
+//When the approve icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
+    $("#cleLoan").on('click', '.approveLoan', function(){
+        var confirm = window.confirm("Proceed?");
+        
+        if(confirm){
+            var ElemId = $(this).attr('id');
+
+            var loanId = ElemId.split("-")[1];//get the loanId
+
+            //show spinner
+            $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
+
+            if(loanId){
+                $.ajax({
+                    url: appRoot+"loans/approve",
+                    method: "POST",
+                    data: {_lId:loanId}
+                }).done(function(returnedData){
+                    if(returnedData.status === 1){
+                       
+                        //change the icon to "undo delete" if it's "active" before the change and vice-versa
+                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Approve</a>" : "<i class='fa fa-check pointer'></i>";
+
+                        //change the icon
+                        $("#"+ElemId).html(newHTML);
+                        load_all();
+
+                    }
+
+                    else{
+                        alert(returnedData.status);
+                    }
+                });
+            }
+        }
+    });
+
+    //When the approve icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
+    $("#cleLoan").on('click', '.revertLoan', function(){
+        var confirm = window.confirm("Proceed?");
+        
+        if(confirm){
+            var ElemId = $(this).attr('id');
+
+            var loanId = ElemId.split("-")[1];//get the loanId
+
+            //show spinner
+            $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
+
+            if(loanId){
+                $.ajax({
+                    url: appRoot+"loans/revert",
+                    method: "POST",
+                    data: {_lId:loanId}
+                }).done(function(returnedData){
+                    if(returnedData.status === 1){
+                       
+                        //change the icon to "undo delete" if it's "active" before the change and vice-versa
+                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Revert</a>" : "<i class='fa fa-check pointer'></i>";
+
+                        //change the icon
+                        $("#"+ElemId).html(newHTML);
+                        load_all();
+
+                    }
+
+                    else{
+                        alert(returnedData.status);
+                    }
+                });
+            }
+        }
+    });
 
 /*
 ***************************************************************************************************************************************
@@ -359,7 +796,95 @@ function larl_(url){
         data: {orderBy:orderBy, orderFormat:orderFormat, limit:limit},
      }).done(function(returnedData){
             hideFlashMsg();
-			
+            
             $("#reqLoan").html(returnedData.loansList);
         });
+}
+
+/**
+ * laal_ = "Load all approved loans"
+ * @returns {undefined}
+ */
+function laal_(url){
+    var orderBy = $("#appLoanListSortBy").val().split("-")[0];
+    var orderFormat = $("#appLoanListSortBy").val().split("-")[1];
+    var limit = $("#appLoanListPerPage").val();
+    
+    $.ajax({
+        type:'get',
+        url: url ? url : appRoot+"loans/laal_/",
+        data: {orderBy:orderBy, orderFormat:orderFormat, limit:limit},
+     }).done(function(returnedData){
+            hideFlashMsg();
+            
+            $("#appLoan").html(returnedData.loansList);
+        });
+}
+
+/**
+ * ladl_ = "Load all denied loans"
+ * @returns {undefined}
+ */
+function ladl_(url){
+    var orderBy = $("#denLoanListSortBy").val().split("-")[0];
+    var orderFormat = $("#denLoanListSortBy").val().split("-")[1];
+    var limit = $("#denLoanListPerPage").val();
+    
+    $.ajax({
+        type:'get',
+        url: url ? url : appRoot+"loans/ladl_/",
+        data: {orderBy:orderBy, orderFormat:orderFormat, limit:limit},
+     }).done(function(returnedData){
+            hideFlashMsg();
+            
+            $("#denLoan").html(returnedData.loansList);
+        });
+}
+
+/**
+ * lacl_ = "Load all cleared loans"
+ * @returns {undefined}
+ */
+function lacl_(url){
+    var orderBy = $("#cleLoanListSortBy").val().split("-")[0];
+    var orderFormat = $("#cleLoanListSortBy").val().split("-")[1];
+    var limit = $("#cleLoanListPerPage").val();
+    
+    $.ajax({
+        type:'get',
+        url: url ? url : appRoot+"loans/lacl_/",
+        data: {orderBy:orderBy, orderFormat:orderFormat, limit:limit},
+     }).done(function(returnedData){
+            hideFlashMsg();
+            
+            $("#cleLoan").html(returnedData.loansList);
+        });
+}
+
+/**
+ * laca_ = "Load all cancelled loans"
+ * @returns {undefined}
+ */
+function laca_(url){
+    var orderBy = $("#canLoanListSortBy").val().split("-")[0];
+    var orderFormat = $("#canLoanListSortBy").val().split("-")[1];
+    var limit = $("#canLoanListPerPage").val();
+    
+    $.ajax({
+        type:'get',
+        url: url ? url : appRoot+"loans/laca_/",
+        data: {orderBy:orderBy, orderFormat:orderFormat, limit:limit},
+     }).done(function(returnedData){
+            hideFlashMsg();
+			
+            $("#canLoan").html(returnedData.loansList);
+        });
+}
+
+function load_all(url) {
+    larl_();
+    laal_();
+    ladl_();
+    lacl_();
+    laca_();
 }

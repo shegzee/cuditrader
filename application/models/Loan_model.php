@@ -17,7 +17,7 @@ class Loan_model extends CI_Model
 
     public function new_loan($data) 
     {
-    	if (has_loan_with_status($data['user_id'], "PENDING")) {
+    	if ($this->has_loan_with_status($data['user_id'], "PENDING")) {
     		return FALSE;
     	}
     	$data['status_number'] = $this->get_status_number("PENDING");
@@ -53,7 +53,7 @@ class Loan_model extends CI_Model
 
     public function has_loan_with_status($user_id, $status)
     {
-    	if (get_loans($user_id, $status)) {
+    	if ($this->get_loans($user_id, $status)) {
     		return TRUE;
     	}
     	return FALSE;

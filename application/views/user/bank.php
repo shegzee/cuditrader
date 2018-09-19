@@ -110,7 +110,7 @@
                               <?php
                               	echo form_label('Set as primary account:', 'is_primary');
 								echo form_error('is_primary');
-								echo form_checkbox('is_primary', "set");
+								echo form_checkbox('is_primary', "1");
                               ?>
                             </div>
                           <div class="input-group">
