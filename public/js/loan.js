@@ -121,6 +121,12 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
+    $("#editLoanCancel").click(function(e){
+        e.preventDefault();
+
+        changeInnerHTML(['userEditErr', 'statusNumberEditErr', 'loanUnitEditErr',
+                'loanAmountEditErr', 'collateralUnitEditErr', 'collateralAmountEditErr','durationEditErr'], "");
+    });
     
     //handles the updating of loan details
     $("#editLoanSubmit").click(function(e){
@@ -128,18 +134,48 @@ $(document).ready(function(){
         
         if(formChanges("editLoanForm")){
             //reset all error msgs in case they are set
-            changeInnerHTML(['nameEditErr', 'descriptionEditErr'], "");
+            changeInnerHTML(['userEditErr', 'statusNumberEditErr', 'loanUnitEditErr',
+                'loanAmountEditErr', 'collateralUnitEditErr', 'collateralAmountEditErr','durationEditErr'], "");
 
-            var name = $("#nameEdit").val();
-            var description = $("#descriptionEdit").val();
+            var userId = $("#userEdit").val();
+            var statusNumber = $("#statusNumberEdit").val();
+            var loanUnitId = $("#loanUnitEdit").val();
+            var loanAmount = $("#loanAmountEdit").val();
+            var collateralUnitId = $("#collateralUnitEdit").val();
+            var collateralAmount = $("#collateralAmountEdit").val();
+            var duration = $("#durationEdit").val();
             var loanId = $("#loanId").val();
 
             //ensure all required fields are filled
-            if(!name){
-                !name ? changeInnerHTML('nameEditErr', "required") : "";
-
+            if(!userId || !statusNumber || !loanUnitId || !loanAmount || ! collateralUnitId || !collateralAmount
+                || !duration){
+                !userId ? changeInnerHTML('userEditErr', "required") : "";
+                !statusNumber ? changeInnerHTML('statusNumberEditErr', "required") : "";
+                !loanUnitId ? changeInnerHTML('loanUnitEditErr', "required") : "";
+                !loanAmount ? changeInnerHTML('loanAmountEditErr', "required") : "";
+                !collateralUnitId ? changeInnerHTML('collateralUnitEditErr', "required") : "";
+                !collateralAmount ? changeInnerHTML('collateralAmountEditErr', "required") : "";
+                !duration ? changeInnerHTML('durationEditErr', "required") : "";
                 return;
             }
+            // if(!statusNumber){
+            //     return;
+            // }
+            // if(!loanUnitId){
+            //     return;
+            // }
+            // if(!loanAmount){
+            //     return;
+            // }
+            // if(!collateralUnitId){
+            //     return;
+            // }
+            // if(!collateralAmount){
+            //     return;
+            // }
+            // if(!duration){
+            //     return;
+            // }
 
             if(!loanId){
                 $("#fMsgEdit").text("An unexpected error occured while trying to update bank's details");
@@ -154,7 +190,10 @@ $(document).ready(function(){
             $.ajax({
                 method: "POST",
                 url: appRoot+"loans/update",
-                data: {loanId:loanId, name:name, description:description}
+                data: {loanId:loanId, userId:userId, statusNumber:statusNumber, 
+                    loanUnitId:loanUnitId, loanAmount:loanAmount, 
+                    collateralUnitId:collateralUnitId, collateralAmount:collateralAmount,
+                    duration:duration}
             }).done(function(returnedData){
                 $("#fMsgEditIcon").removeClass();//remove spinner
 
@@ -360,14 +399,27 @@ $(document).ready(function(){
         
         //get info of bank with loanId and prefill the form with it
         //alert($(this).siblings(".bankEmail").children('a').html());
-        var user = $(this).siblings(".user").html();
-        var amount = $(this).siblings(".amount").html();
-        var duration = $(this).siblings(".duration").html();
-        var status = $(this).siblings(".status").html();
+        var user_id = $(this).siblings(".user_id").html();
+        var loan_unit_id = $(this).siblings(".loan_unit_id").html();
+        var loan_amount = parseFloat($(this).siblings(".loan_amount").html());
+        var collateral_unit_id = $(this).siblings(".collateral_unit_id").html();
+        var collateral_amount = parseFloat($(this).siblings(".collateral_amount").html());
+        var duration = parseInt($(this).siblings(".duration").html());
+        var status_id = $(this).siblings(".status_id").html();
         
         //prefill the form fields
         $("#nameEdit").val(name);
-        $("#descriptionEdit").val(description);
+        $("#loanUnitEdit").val(loan_unit_id);
+        $("#loanAmountEdit").val(loan_amount);
+        $("#collateralUnitEdit").val(collateral_unit_id);
+        $("#collateralAmountEdit").val(collateral_amount);
+        $("#durationEdit").val(duration);
+
+        // prefill dropdowns
+        $("#status-"+status_id).prop('selected', 'selected');
+        $("#user-"+user_id).prop('selected', 'selected');
+        $("#loan_unit-"+loan_unit_id).prop('selected', 'selected');
+        $("#collateral_unit-"+collateral_unit_id).prop('selected', 'selected');
         
         $("#editLoanModal").modal('show');
     });

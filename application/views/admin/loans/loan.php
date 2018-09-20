@@ -351,24 +351,62 @@ defined('BASEPATH') OR exit('');
                 <form id='editLoanForm' name='editLoanForm' role='form'>
                     <div class="row">
                         <div class="form-group-sm col-sm-6">
-                            <label for='userEdit' class="control-label">Name</label>
+                            <label for='userEdit' class="control-label">User</label><br />
                             <!-- <input type="text" id='userEdit' class="form-control checkField" placeholder="User"> -->
-                            <?php // form_dropdown('userEdit', $allUsersList, set_select('userEdit')); ?>
-                            <select id="userEdit", ></select>
+                            <?php // form_dropdown('userEdit', $allUsersList, set_select('userEdit'), 'class="form-control"'); ?>
+                            <select id="userEdit" name="userEdit" class="form-control">
+                                <?php foreach ($allUsersList as $id => $text) { ?>
+                                    <option id="user-<?= $id ?>" value="<?= $id ?>"><?= $text ?></option>
+                                <?php } ?>
+                            </select>
+                            <!-- <select id="userEdit", ></select> -->
                             <span class="help-block errMsg" id="userEditErr"></span>
                         </div>
                         
+                        <div class="form-group-sm col-sm-6">
+                            <label for='statusNumberEdit' class="control-label">Status</label><br />
+                            <!-- <input type="text" id='statusNumberEdit' class="form-control" placeholder="Status"> -->
+                            <?php // form_dropdown('statusNumberEdit', $allStatusesList, set_select('statusNumberEdit'), 'class="form-control"'); ?>
+                            <select id="statusNumberEdit" name="statusNumberEdit" class="form-control">
+                                <?php foreach ($allStatusesList as $id => $this_status) { ?>
+                                    <option id="status-<?= $id ?>" value="<?= $id ?>"><?= $this_status ?></option>
+                                <?php } ?>
+                            </select>
+                            <span class="help-block errMsg" id="statusNumberEditErr"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="form-group-sm col-sm-6">
+                            <label for='loanUnitEdit' class="control-label">Loan Unit</label><br />
+                            <!-- <input type="text" id='loanUnitEdit' class="form-control" placeholder="Loan Unit"> -->
+                            <?php // form_dropdown('loanUnitEdit', $allLUnitsList, set_select('loanUnitEdit'), 'class="form-control"'); ?>
+                            <select id="loanUnitEdit" name="loanUnitEdit" class="form-control">
+                                <?php foreach ($allLUnitsList as $id => $text) { ?>
+                                    <option id="loan_unit-<?= $id ?>" value="<?= $id ?>"><?= $text ?></option>
+                                <?php } ?>
+                            </select>
+                            <span class="help-block errMsg" id="loanUnitEditErr"></span>
+                        </div>
+
                         <div class="form-group-sm col-sm-6">
                             <label for='loanAmountEdit' class="control-label">Amount</label>
                             <input type="tel" id='loanAmountEdit' class="form-control" placeholder="Amount">
                             <span class="help-block errMsg" id="loanAmountEditErr"></span>
                         </div>
-                        
+                    </div>
+
+                    <div class="row">
                         <div class="form-group-sm col-sm-6">
-                            <label for='loanUnitEdit' class="control-label">Loan Unit</label>
-                            <!-- <input type="text" id='loanUnitEdit' class="form-control" placeholder="Loan Unit"> -->
-                            <?php // form_dropdown('loanUnitEdit', $allLUnitsList, set_select('loanUnitEdit')); ?>
-                            <span class="help-block errMsg" id="loanUnitEdit"></span>
+                            <label for='collateralUnitEdit' class="control-label">Collateral Unit</label><br />
+                            <!-- <input type="text" id='collateralUnitEdit' class="form-control" placeholder="Collateral Unit"> -->
+                            <?php //form_dropdown('collateralUnitEdit', $allCUnitsList, set_select('collateralUnitEdit'), 'class="form-control"'); ?>
+                            <select id="collateralUnitEdit" name="collateralUnitEdit" class="form-control">
+                                <?php foreach ($allCUnitsList as $id => $text) { ?>
+                                    <option id="collateral_unit-<?= $id ?>" value="<?= $id ?>"><?= $text ?></option>
+                                <?php } ?>
+                            </select>
+                            <span class="help-block errMsg" id="collateralUnitEditErr"></span>
                         </div>
                         
                         <div class="form-group-sm col-sm-6">
@@ -376,25 +414,14 @@ defined('BASEPATH') OR exit('');
                             <input type="tel" id='collateralAmountEdit' class="form-control" placeholder="Collateral Amount">
                             <span class="help-block errMsg" id="collateralAmountEditErr"></span>
                         </div>
+                    </div>
                         
-                        <div class="form-group-sm col-sm-6">
-                            <label for='collateralUnitEdit' class="control-label">Collateral Unit</label>
-                            <!-- <input type="text" id='collateralUnitEdit' class="form-control" placeholder="Collateral Unit"> -->
-                            <?php // form_dropdown('collateralUnitEdit', $allCUnitsList, set_select('collateralUnitEdit')); ?>
-                            <span class="help-block errMsg" id="collateralUnitEdit"></span>
-                        </div>
                         
+                    <div class="row">
                         <div class="form-group-sm col-sm-6">
-                            <label for='durationEdit' class="control-label">Duration</label>
+                            <label for='durationEdit' class="control-label">Duration (months)</label>
                             <input type="tel" id='durationEdit' class="form-control" placeholder="Duration">
                             <span class="help-block errMsg" id="durationEditErr"></span>
-                        </div>
-                        
-                        <div class="form-group-sm col-sm-6">
-                            <label for='statusNumberEdit' class="control-label">Status</label>
-                            <!-- <input type="text" id='statusNumberEdit' class="form-control" placeholder="Status"> -->
-                            <?php //form_dropdown('statusNumberEdit', $allStatusesList, set_select('statusNumberEdit')); ?>
-                            <span class="help-block errMsg" id="statusNumberEdit"></span>
                         </div>
 
 
@@ -406,7 +433,7 @@ defined('BASEPATH') OR exit('');
             <div class="modal-footer">
                 <button type="reset" form="editLoanForm" class="btn btn-warning pull-left">Reset Form</button>
                 <button type='button' id='editLoanSubmit' class="btn btn-primary">Update</button>
-                <button type='button' class="btn btn-danger" data-dismiss='modal'>Close</button>
+                <button type='button' id='editLoanCancel' class="btn btn-danger" data-dismiss='modal'>Close</button>
             </div>
         </div>
     </div>

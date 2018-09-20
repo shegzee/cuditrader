@@ -70,7 +70,13 @@ class Loans extends CI_Controller
     }
 
     public function index(){
-        $data['pageContent'] = $this->load->view('admin/loans/loan', '', TRUE);
+        $this->load->helper('form');
+
+        $sub_data['allUsersList'] = $this->prep_select('users', 'id', 'email', TRUE);
+        $sub_data['allStatusesList'] = $this->prep_select('loan_status', 'status_number', 'status', TRUE);
+        $sub_data['allLUnitsList'] = $this->prep_select('loan_units', 'id', 'name', TRUE);
+        $sub_data['allCUnitsList'] = $this->prep_select('collateral_units', 'id', 'name', TRUE);
+        $data['pageContent'] = $this->load->view('admin/loans/loan', $sub_data, TRUE);
         $data['pageTitle'] = "Loans";
 
         $this->load->view('admin/main', $data);
@@ -298,6 +304,51 @@ class Loans extends CI_Controller
     ********************************************************************************************************************************
     ********************************************************************************************************************************
     */
+
+    /**
+     * 
+     */
+    public function update(){
+        $this->genlib->ajaxOnly();
+        
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_error_delimiters('', '');
+        
+        $this->form_validation->set_rules('userId', 'User', ['required'], ['required'=>"required"]);
+        $this->form_validation->set_rules('statusNumber', 'Status', ['required']);
+        $this->form_validation->set_rules('loanUnitId', 'Loan Unit', ['required']);
+        $this->form_validation->set_rules('loanAmount', 'Loan Amount', ['required']);
+        $this->form_validation->set_rules('collateralUnitId', 'Collateral Unit', ['required']);
+        $this->form_validation->set_rules('collateralAmount', 'Collateral Amount', ['required']);
+        $this->form_validation->set_rules('duration', 'Collateral Amount', ['required']);
+        $this->form_validation->set_rules('loanId', 'Loan', ['required']);
+        
+        if($this->form_validation->run() !== FALSE){
+            /**
+             * update info in db
+             */
+                
+            $id = $this->input->post('loanId', TRUE);
+
+            $updated = $this->loan->update($id, set_value('userId'), set_value('statusNumber'), set_value('loanUnitId'), set_value('loanAmount'), set_value('collateralUnitId'), set_value('collateralAmount'), set_value('duration'));
+            
+            
+            $json = $updated ? 
+                    ['status'=>1, 'msg'=>"Loan successfully updated"] 
+                    : 
+                    ['status'=>0, 'msg'=>"Oops! Unexpected server error! Pls contact administrator for help. Sorry for the embarrassment"];
+        }
+        
+        else{
+            //return all error messages
+            $json = $this->form_validation->error_array();//get an array of all errors
+            
+            $json['msg'] = "One or more required fields are empty or not correctly filled";
+            $json['status'] = 0;
+        }
+        $this->output->set_content_type('application/json')->set_output(json_encode($json));
+    }
     
     public function delete(){
         $this->genlib->ajaxOnly();

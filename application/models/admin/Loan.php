@@ -379,16 +379,15 @@ class Loan extends CI_Model{
     ********************************************************************************************************************************
     */
     
-    // public function update($admin_id, $first_name, $last_name, $email, $mobile1, $mobile2, $role){
-    //     $data = ['first_name'=>$first_name, 'last_name'=>$last_name, 'mobile1'=>$mobile1, 'mobile2'=>$mobile2, 'email'=>$email, 
-    //         'role'=>$role];
+    public function update($loan_id, $user_id, $status_number, $loan_unit_id, $loan_amount, $collateral_unit_id, $collateral_amount, $duration){
+        $data = ['user_id'=>$user_id, 'status_number'=>$status_number, 'loan_unit_id'=>$loan_unit_id, 'loan_amount'=>$loan_amount, 'collateral_unit_id'=>$collateral_unit_id, 'collateral_amount'=>$collateral_amount, 'loan_duration'=>$duration];
         
-    //     $this->db->where('id', $admin_id);
+        $this->db->where('id', $loan_id);
         
-    //     $this->db->update('admin', $data);
+        $this->db->update('loans', $data);
         
-    //     return TRUE;
-    // }
+        return TRUE;
+    }
     
     
     /*
