@@ -30,6 +30,11 @@ defined('BASEPATH') OR exit('');
                         <th><?=$sn?>.</th>
                         <td class="user"><?=$get->email?></td>
                         <td class="hidden user_id"><?=$get->user_id?></td>
+                        <td class="hidden loan_unit_id"><?=$get->loan_unit_id?></td>
+                        <td class="hidden loan_amount"><?=$get->loan_amount?></td>
+                        <td class="hidden collateral_unit_id"><?=$get->collateral_unit_id?></td>
+                        <td class="hidden collateral_amount"><?=$get->collateral_amount?></td>
+                        <td class="hidden status_id"><?=$get->status_number?></td>
                         <td class="loan_amount"><?= html_entity_decode($loan_unit_icons[$get->loan_unit_id])?><?=number_format($get->loan_amount) ?></td>
                         <td class="collateral_amount"><?=$get->collateral_amount?><?=html_entity_decode($collateral_unit_icons[$get->collateral_unit_id])?></td>
                         <td class="duration"><?=$get->loan_duration ?> months</td>

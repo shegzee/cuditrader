@@ -482,3 +482,144 @@ ERROR - 2018-09-20 14:48:16 --> Severity: Notice --> Undefined property: stdClas
 ERROR - 2018-09-20 14:48:16 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\cancelledloanlist.php 47
 ERROR - 2018-09-20 14:48:16 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\deniedloanlist.php 38
 ERROR - 2018-09-20 14:48:16 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\deniedloanlist.php 49
+ERROR - 2018-09-20 15:03:07 --> 404 Page Not Found: Public/images
+ERROR - 2018-09-20 15:03:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:09 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:09 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:09 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:09 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:09 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:26 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:26 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:26 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:26 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:03:26 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:04:42 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:04:42 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:04:42 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:04:42 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:04:42 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:05 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:05 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:05 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:05 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:05 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:51 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:51 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:51 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:51 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:51 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:55 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:55 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:55 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:55 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:05:55 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:06:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:06:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:06:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:06:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:06:07 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:06:18 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:06:18 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:06:18 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:06:18 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:06:18 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:06:18 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:06:18 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:06:18 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:06:18 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:06:18 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:06:18 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 27
+ERROR - 2018-09-20 15:06:18 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 32
+ERROR - 2018-09-20 15:06:18 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 27
+ERROR - 2018-09-20 15:06:18 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 32
+ERROR - 2018-09-20 15:06:27 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:06:27 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:06:27 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:06:27 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:06:27 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:06:27 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:06:27 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:06:27 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:06:27 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:06:27 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:06:33 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:06:33 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:06:33 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:06:33 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:06:33 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:07:15 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 27
+ERROR - 2018-09-20 15:07:15 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 32
+ERROR - 2018-09-20 15:07:15 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 27
+ERROR - 2018-09-20 15:07:15 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 32
+ERROR - 2018-09-20 15:07:15 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 27
+ERROR - 2018-09-20 15:07:15 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 32
+ERROR - 2018-09-20 15:07:23 --> 404 Page Not Found: Public/img
+ERROR - 2018-09-20 15:07:27 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:07:27 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:07:27 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:07:27 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:07:28 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:07:29 --> 404 Page Not Found: Public/img
+ERROR - 2018-09-20 15:08:02 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:08:02 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:08:02 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:08:02 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:08:02 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:08:04 --> 404 Page Not Found: Public/img
+ERROR - 2018-09-20 15:08:29 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:08:29 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:08:29 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:08:29 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:08:30 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:08:41 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:08:41 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:08:42 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:08:42 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:08:42 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:11:10 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:11:10 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:11:10 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:11:10 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:11:10 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:11:10 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:11:10 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:11:10 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:11:10 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\banklist.php 27
+ERROR - 2018-09-20 15:11:10 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\banklist.php 32
+ERROR - 2018-09-20 15:11:10 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 27
+ERROR - 2018-09-20 15:11:10 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 32
+ERROR - 2018-09-20 15:11:10 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 27
+ERROR - 2018-09-20 15:11:11 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 32
+ERROR - 2018-09-20 15:11:11 --> Severity: Notice --> Undefined property: stdClass::$created_on C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 27
+ERROR - 2018-09-20 15:11:11 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\banks\bankATlist.php 32
+ERROR - 2018-09-20 15:11:27 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\approvedloanlist.php 40
+ERROR - 2018-09-20 15:11:28 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\approvedloanlist.php 51
+ERROR - 2018-09-20 15:11:28 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\clearedloanlist.php 50
+ERROR - 2018-09-20 15:11:28 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\requestedloanlist.php 50
+ERROR - 2018-09-20 15:11:28 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\deniedloanlist.php 38
+ERROR - 2018-09-20 15:11:28 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\deniedloanlist.php 49
+ERROR - 2018-09-20 15:11:28 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\cancelledloanlist.php 47
+ERROR - 2018-09-20 15:12:52 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\deniedloanlist.php 43
+ERROR - 2018-09-20 15:12:52 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\deniedloanlist.php 54
+ERROR - 2018-09-20 15:12:53 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\requestedloanlist.php 50
+ERROR - 2018-09-20 15:12:53 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\clearedloanlist.php 55
+ERROR - 2018-09-20 15:12:53 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\approvedloanlist.php 45
+ERROR - 2018-09-20 15:12:53 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\approvedloanlist.php 56
+ERROR - 2018-09-20 15:12:53 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\cancelledloanlist.php 52
+ERROR - 2018-09-20 15:15:58 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\requestedloanlist.php 50
+ERROR - 2018-09-20 15:15:58 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\deniedloanlist.php 43
+ERROR - 2018-09-20 15:15:58 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\deniedloanlist.php 54
+ERROR - 2018-09-20 15:15:58 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\approvedloanlist.php 45
+ERROR - 2018-09-20 15:15:58 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\approvedloanlist.php 56
+ERROR - 2018-09-20 15:15:58 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\cancelledloanlist.php 52
+ERROR - 2018-09-20 15:15:58 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\clearedloanlist.php 55

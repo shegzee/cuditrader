@@ -81,7 +81,7 @@ class Bank extends Auth_Controller {
 	public function set_primary($id)
 	{
 		if ($this->Bank_model->set_as_primary($id)) {
-			$_SESSION['message'] = "The bank account is now your primary account";
+			$_SESSION['message'] = "Your primary account has been changed";
 		}
 		else {
 			$_SESSION['message'] = "Sorry, an error occurred";

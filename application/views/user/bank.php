@@ -117,7 +117,7 @@
                               <?php
                               	echo form_label('Description:', 'description');
 								echo form_error('description');
-								echo form_textarea('description');
+								echo form_input('description');
                               ?>
                             </div>
                   </div>

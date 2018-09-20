@@ -471,6 +471,40 @@ $(document).ready(function(){
             load_all();
         }
     });
+
+    //to launch the modal to allow for the editing of bank info
+    $("#appLoan").on('click', '.editLoan', function(){
+        
+        var loanId = $(this).attr('id').split("-")[1];
+        
+        $("#loanId").val(loanId);
+        
+        //get info of bank with loanId and prefill the form with it
+        //alert($(this).siblings(".bankEmail").children('a').html());
+        var user_id = $(this).siblings(".user_id").html();
+        var loan_unit_id = $(this).siblings(".loan_unit_id").html();
+        var loan_amount = parseFloat($(this).siblings(".loan_amount").html());
+        var collateral_unit_id = $(this).siblings(".collateral_unit_id").html();
+        var collateral_amount = parseFloat($(this).siblings(".collateral_amount").html());
+        var duration = parseInt($(this).siblings(".duration").html());
+        var status_id = $(this).siblings(".status_id").html();
+        
+        //prefill the form fields
+        $("#nameEdit").val(name);
+        $("#loanUnitEdit").val(loan_unit_id);
+        $("#loanAmountEdit").val(loan_amount);
+        $("#collateralUnitEdit").val(collateral_unit_id);
+        $("#collateralAmountEdit").val(collateral_amount);
+        $("#durationEdit").val(duration);
+
+        // prefill dropdowns
+        $("#status-"+status_id).prop('selected', 'selected');
+        $("#user-"+user_id).prop('selected', 'selected');
+        $("#loan_unit-"+loan_unit_id).prop('selected', 'selected');
+        $("#collateral_unit-"+collateral_unit_id).prop('selected', 'selected');
+        
+        $("#editLoanModal").modal('show');
+    });
     
 
 //When the deny icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
@@ -631,6 +665,40 @@ $(document).ready(function(){
         }
     });
 
+    //to launch the modal to allow for the editing of bank info
+    $("#denLoan").on('click', '.editLoan', function(){
+        
+        var loanId = $(this).attr('id').split("-")[1];
+        
+        $("#loanId").val(loanId);
+        
+        //get info of bank with loanId and prefill the form with it
+        //alert($(this).siblings(".bankEmail").children('a').html());
+        var user_id = $(this).siblings(".user_id").html();
+        var loan_unit_id = $(this).siblings(".loan_unit_id").html();
+        var loan_amount = parseFloat($(this).siblings(".loan_amount").html());
+        var collateral_unit_id = $(this).siblings(".collateral_unit_id").html();
+        var collateral_amount = parseFloat($(this).siblings(".collateral_amount").html());
+        var duration = parseInt($(this).siblings(".duration").html());
+        var status_id = $(this).siblings(".status_id").html();
+        
+        //prefill the form fields
+        $("#nameEdit").val(name);
+        $("#loanUnitEdit").val(loan_unit_id);
+        $("#loanAmountEdit").val(loan_amount);
+        $("#collateralUnitEdit").val(collateral_unit_id);
+        $("#collateralAmountEdit").val(collateral_amount);
+        $("#durationEdit").val(duration);
+
+        // prefill dropdowns
+        $("#status-"+status_id).prop('selected', 'selected');
+        $("#user-"+user_id).prop('selected', 'selected');
+        $("#loan_unit-"+loan_unit_id).prop('selected', 'selected');
+        $("#collateral_unit-"+collateral_unit_id).prop('selected', 'selected');
+        
+        $("#editLoanModal").modal('show');
+    });
+
 //When the approve icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
     $("#denLoan").on('click', '.approveLoan', function(){
         var confirm = window.confirm("Proceed?");
@@ -751,6 +819,40 @@ $(document).ready(function(){
         }
     });
 
+    //to launch the modal to allow for the editing of bank info
+    $("#cleLoan").on('click', '.editLoan', function(){
+        
+        var loanId = $(this).attr('id').split("-")[1];
+        
+        $("#loanId").val(loanId);
+        
+        //get info of bank with loanId and prefill the form with it
+        //alert($(this).siblings(".bankEmail").children('a').html());
+        var user_id = $(this).siblings(".user_id").html();
+        var loan_unit_id = $(this).siblings(".loan_unit_id").html();
+        var loan_amount = parseFloat($(this).siblings(".loan_amount").html());
+        var collateral_unit_id = $(this).siblings(".collateral_unit_id").html();
+        var collateral_amount = parseFloat($(this).siblings(".collateral_amount").html());
+        var duration = parseInt($(this).siblings(".duration").html());
+        var status_id = $(this).siblings(".status_id").html();
+        
+        //prefill the form fields
+        $("#nameEdit").val(name);
+        $("#loanUnitEdit").val(loan_unit_id);
+        $("#loanAmountEdit").val(loan_amount);
+        $("#collateralUnitEdit").val(collateral_unit_id);
+        $("#collateralAmountEdit").val(collateral_amount);
+        $("#durationEdit").val(duration);
+
+        // prefill dropdowns
+        $("#status-"+status_id).prop('selected', 'selected');
+        $("#user-"+user_id).prop('selected', 'selected');
+        $("#loan_unit-"+loan_unit_id).prop('selected', 'selected');
+        $("#collateral_unit-"+collateral_unit_id).prop('selected', 'selected');
+        
+        $("#editLoanModal").modal('show');
+    });
+
 //When the approve icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
     $("#cleLoan").on('click', '.approveLoan', function(){
         var confirm = window.confirm("Proceed?");
@@ -823,6 +925,116 @@ $(document).ready(function(){
                 });
             }
         }
+    });
+
+    // CANCELLED LOAN
+    //When the approve icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
+    $("#canLoan").on('click', '.approveLoan', function(){
+        var confirm = window.confirm("Proceed?");
+        
+        if(confirm){
+            var ElemId = $(this).attr('id');
+
+            var loanId = ElemId.split("-")[1];//get the loanId
+
+            //show spinner
+            $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
+
+            if(loanId){
+                $.ajax({
+                    url: appRoot+"loans/approve",
+                    method: "POST",
+                    data: {_lId:loanId}
+                }).done(function(returnedData){
+                    if(returnedData.status === 1){
+                       
+                        //change the icon to "undo delete" if it's "active" before the change and vice-versa
+                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Approve</a>" : "<i class='fa fa-check pointer'></i>";
+
+                        //change the icon
+                        $("#"+ElemId).html(newHTML);
+                        load_all();
+
+                    }
+
+                    else{
+                        alert(returnedData.status);
+                    }
+                });
+            }
+        }
+    });
+
+    //When the deny icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
+    $("#canLoan").on('click', '.denyLoan', function(){
+        var confirm = window.confirm("Proceed?");
+        
+        if(confirm){
+            var ElemId = $(this).attr('id');
+
+            var loanId = ElemId.split("-")[1];//get the loanId
+
+            //show spinner
+            $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
+
+            if(loanId){
+                $.ajax({
+                    url: appRoot+"loans/deny",
+                    method: "POST",
+                    data: {_lId:loanId}
+                }).done(function(returnedData){
+                    if(returnedData.status === 1){
+                       
+                        //change the icon to "undo delete" if it's "active" before the change and vice-versa
+                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Deny</a>" : "<i class='fa fa-remove pointer'></i>";
+
+                        //change the icon
+                        $("#"+ElemId).html(newHTML);
+                        load_all();
+
+                    }
+
+                    else{
+                        alert(returnedData.status);
+                    }
+                });
+            }
+        }
+    });
+    
+    
+    //to launch the modal to allow for the editing of bank info
+    $("#canLoan").on('click', '.editLoan', function(){
+        
+        var loanId = $(this).attr('id').split("-")[1];
+        
+        $("#loanId").val(loanId);
+        
+        //get info of bank with loanId and prefill the form with it
+        //alert($(this).siblings(".bankEmail").children('a').html());
+        var user_id = $(this).siblings(".user_id").html();
+        var loan_unit_id = $(this).siblings(".loan_unit_id").html();
+        var loan_amount = parseFloat($(this).siblings(".loan_amount").html());
+        var collateral_unit_id = $(this).siblings(".collateral_unit_id").html();
+        var collateral_amount = parseFloat($(this).siblings(".collateral_amount").html());
+        var duration = parseInt($(this).siblings(".duration").html());
+        var status_id = $(this).siblings(".status_id").html();
+        
+        //prefill the form fields
+        $("#nameEdit").val(name);
+        $("#loanUnitEdit").val(loan_unit_id);
+        $("#loanAmountEdit").val(loan_amount);
+        $("#collateralUnitEdit").val(collateral_unit_id);
+        $("#collateralAmountEdit").val(collateral_amount);
+        $("#durationEdit").val(duration);
+
+        // prefill dropdowns
+        $("#status-"+status_id).prop('selected', 'selected');
+        $("#user-"+user_id).prop('selected', 'selected');
+        $("#loan_unit-"+loan_unit_id).prop('selected', 'selected');
+        $("#collateral_unit-"+collateral_unit_id).prop('selected', 'selected');
+        
+        $("#editLoanModal").modal('show');
     });
 
 /*
