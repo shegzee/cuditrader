@@ -181,6 +181,29 @@ class Loan extends CI_Model{
     }
 
     /*
+    admin reverts loan to pending status
+    *******************
+    change STATUS
+    set approve_date to 0
+    set approver_id to ""
+    */
+    public function revert_loan($loan_id, $admin_id)
+    {
+        if (!$this->is_assigned_to_loan($admin_id, $loan_id)) {
+            return FALSE;
+        }
+        $this->db->set('approved_by_id', "");
+        $this->db->set('approved_on', 0);
+
+        // $this->db->platform() == "sqlite3" 
+        //         ? 
+        // $this->db->set('approved_on', "datetime('now')", FALSE) 
+        //         : 
+        // $this->db->set('approved_on', "NOW()", FALSE);
+        return $this->update_status($loan_id, "PENDING");
+    }
+
+    /*
     a granted loan is no different from an approved loan on the user end;
     only difference is that an approved loan shows to the admin that, though approved, money has not been sent
 
@@ -227,39 +250,7 @@ class Loan extends CI_Model{
         return $this->update_status($loan_id, "CLEARED");
     }
 
-    // /**
-    //  * 
-    //  * @param type $f_name
-    //  * @param type $l_name
-    //  * @param type $email
-    //  * @param type $password
-    //  * @param type $role
-    //  * @param type $mobile1
-    //  * @param type $mobile2
-    //  * @return boolean
-    //  */
-    // public function add($f_name, $l_name, $email, $password, $role, $mobile1, $mobile2){
-    //     $data = ['first_name'=>$f_name, 'last_name'=>$l_name, 'email'=>$email, 'password'=>$password, 'role'=>$role,
-    //         'mobile1'=>$mobile1, 'mobile2'=>$mobile2];
-        
-    //     //set the datetime based on the db driver in use
-    //     $this->db->platform() == "sqlite3" 
-    //             ? 
-    //     $this->db->set('created_on', "datetime('now')", FALSE) 
-    //             : 
-    //     $this->db->set('created_on', "NOW()", FALSE);
-        
-    //     $this->db->insert('admin', $data);
-        
-    //     if($this->db->affected_rows() > 0){
-    //         return $this->db->insert_id();
-    //     }
-        
-    //     else{
-    //         return FALSE;
-    //     }
-    // }
-    
+
     /*
     ********************************************************************************************************************************
     ********************************************************************************************************************************
@@ -315,11 +306,20 @@ class Loan extends CI_Model{
         $this->db->limit($limit, $start);
         $this->db->order_by($orderBy, $orderFormat);
         $query_text = "SELECT `loans`.*, `loan_status`.`status`, `users`.`first_name`, `users`.`last_name`, `users`.`email` FROM `loans` JOIN `users` ON `users`.`id`=`loans`.`user_id` JOIN `loan_status` ON `loan_status`.`status_number`=`loans`.`status_number`";
-        if ($status_number) {
-            $query_text .= " WHERE `loans`.`status_number`=".$status_number.";";
-        }
-        else {
-            $query_text .= ";";
+        if (!is_array($status_number)) {
+            if ($status_number) {
+                $query_text .= " WHERE `loans`.`status_number`=".$status_number.";";
+            }
+            else {
+                $query_text .= ";";
+            }
+        } else {
+            $query_text .= " WHERE `loans`.`status_number`=0 ";
+            foreach ($status_number as $status) {
+                $query_text .= " OR `loans`.`status_number`=".$status;
+            }
+
+            $query_text .= " ORDER BY ".$orderBy." ".$orderFormat.";";
         }
         // join with users table to get user names
         // $this->db->join('users', 'users.id = loans.user_id', 'left');
@@ -338,71 +338,7 @@ class Loan extends CI_Model{
     }
     
     
-    /*
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    */
     
-   /**
-    * 
-    * @param type $admin_id
-    * @param type $new_status New account status
-    * @return boolean
-    */ 
-    // public function suspend($admin_id, $new_status){       
-    //     $this->db->where('id', $admin_id);
-    //     $this->db->update('admin', ['account_status'=>$new_status]);
-
-    //     if($this->db->affected_rows()){
-    //         return TRUE;
-    //     }
-
-    //     else{
-    //         return FALSE;
-    //     }
-    // }
-
-
-   /*
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    */
-    
-   /**
-    * 
-    * @param type $admin_id
-    * @param type $new_value
-    * @return boolean
-    */
-   //  public function delete($admin_id, $new_value){       
-   //      $this->db->where('id', $admin_id);
-   //      $this->db->update('admin', ['deleted'=>$new_value]);
-       
-   //      if($this->db->affected_rows()){
-   //          return TRUE;
-   //      }
-
-   //      else{
-   //          return FALSE;
-   //      }
-   // }
-
-
-    /*
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    ********************************************************************************************************************************
-    */
-   
-   
     /**
      * 
      * @param type $value
@@ -411,7 +347,7 @@ class Loan extends CI_Model{
     public function loanSearch($value){
         $q = "SELECT * FROM loans WHERE 
                 (
-                MATCH(first_name) AGAINST(?)
+                MATCH(amount) AGAINST(?)
                 || MATCH(last_name) AGAINST(?)
                 || MATCH(first_name, last_name) AGAINST(?)
                 || MATCH(email) AGAINST(?)

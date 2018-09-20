@@ -4,8 +4,8 @@ defined('BASEPATH') OR exit('');
 
 <?php echo isset($range) && !empty($range) ? $range : ""?>
 <div class="panel panel-primary">
-    <div class="panel-heading">REQUESTED LOANS <i class="fa fa-refresh"></i></div>
-    <?php if($reqLoans):?>
+    <div class="panel-heading">DENIED LOANS <i class="fa fa-remove"></i></div>
+    <?php if($denLoans):?>
     <div class="table table-responsive">
         <table class="table table-striped table-bordered">
             <thead>
@@ -16,6 +16,7 @@ defined('BASEPATH') OR exit('');
                     <th>COLLATERAL</th>
                     <th>DURATION</th>
                     <th>DATE REQUESTED</th>
+                    <th>DATE DENIED</th>
                     <th>STATUS</th>
                     <th>EDIT</th>
                     <th>ACTIONS</th>
@@ -24,7 +25,7 @@ defined('BASEPATH') OR exit('');
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($reqLoans as $get):?>
+                <?php foreach($denLoans as $get):?>
                     <tr>
                         <th><?=$sn?>.</th>
                         <td class="user"><?=$get->email?></td>
@@ -33,13 +34,16 @@ defined('BASEPATH') OR exit('');
                         <td class="collateral_amount"><?=$get->collateral_amount?><?=html_entity_decode($collateral_unit_icons[$get->collateral_unit_id])?></td>
                         <td class="duration"><?=$get->loan_duration ?> months</td>
                         <td class="requested_on"><?=$get->requested_on ?></td>
+                        <td class="denied_on"><?=$get->approved_on ?></td>
+                        <!-- <td><?=date('jS M, Y h:i:sa', $get->requested_on)?></td> -->
                         <td class="status"><?=$get->status ?></td>
                         <td class="text-center editLoan" id="edit-<?=$get->id?>">
                             <i class="fa fa-pencil pointer"></i>
                         </td>
                         <td class="actions">
                             <a class="approveLoan" id="approve-<?=$get->id?>" title="Approve"><i class="fa fa-check"></i></a>
-                            <a class="denyLoan" id="deny-<?=$get->id?>" title="Deny"><i class="fa fa-remove"></i></a>
+
+                            <a class="revertLoan" id="revert-<?=$get->id?>" title="Revert to Pending"><i class="fa fa-refresh"></i></a>
                         </td>
                         <!-- <td class="text-center text-danger deleteBank" id="del-<?=$get->id?>">
                             <?php if($get->deleted === "1"): ?>
@@ -55,7 +59,7 @@ defined('BASEPATH') OR exit('');
         </table>
     </div>
     <?php else:?>
-    No Requested Loans
+    No Denied Loans
     <?php endif; ?>
 </div>
 <!-- Pagination -->

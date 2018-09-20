@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('');
 ?>
 
 <div class="row hidden-print">
-    <!-- loans here -->
+    <!-- requested loans here -->
     <div class="col-sm-12">
         <div class="pwell">
             <!-- Header (add new loan?, sort order etc.) -->
@@ -44,8 +44,8 @@ defined('BASEPATH') OR exit('');
                         </select>
                     </div>
                     <div class="col-sm-3 form-inline form-group-sm">
-                        <label for="loanSearch"><i class="fa fa-search"></i></label>
-                        <input type="search" id="loanSearch" placeholder="Search...." class="form-control">
+                        <label for="appLoanSearch"><i class="fa fa-search"></i></label>
+                        <input type="search" id="appLoanSearch" placeholder="Search...." class="form-control">
                     </div>
                 </div>
             </div>
@@ -56,6 +56,240 @@ defined('BASEPATH') OR exit('');
             <!-- loan list -->
             <div class="row">
                 <div class="col-sm-12" id="reqLoan"></div>
+            </div>
+            <!-- loan list ends -->
+        </div>
+    </div>
+
+
+<!-- approved loans here -->
+    <div class="col-sm-12">
+        <div class="pwell">
+            <!-- Header (add new loan?, sort order etc.) -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-3 form-inline form-group-sm">
+                        <label for="appLoanListPerPage">Show</label>
+                        <select id="appLoanListPerPage" class="form-control">
+                            <option value="1">1</option>
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <label for="appLoanListPerPage">per page</label>
+                    </div>
+                    <div class="col-sm-4 form-inline form-group-sm">
+                        <label for="appLoanListSortBy" class="control-label">Sort by</label> 
+                        <select id="appLoanListSortBy" class="form-control">
+                            <option value="loan_amount-ASC">Amount (A to Z)</option>
+                            <option value="loan_amount-DESC">Amount (Z to A)</option>
+                            <option value="collateral_amount-ASC">Collateral Amount (A to Z)</option>
+                            <option value="collateral_amount-DESC">Collateral Amount (Z to A)</option>
+                            <option value="requested_on-ASC">Date Requested (A to Z)</option>
+                            <option value="requested_on-DESC">Date Requested (Z to A)</option>
+                            <option value="approved_on-ASC" selected>Date Approved (A to Z)</option>
+                            <option value="approved_on-DESC">Date Approved (Z to A)</option>
+                            <option value="user_id-ASC">User (A to Z)</option>
+                            <option value="user_id-DESC">User (Z to A)</option>
+                            <!-- <option value="created_on-ASC">Date Created (older first)</option>
+                            <option value="created_on-DESC">Date Created (recent first)</option> -->
+                            <option value="description-ASC">Description - ascending<!-- </option>
+                            <option value="description-DESC">Description - descending</option> -->
+                        </select>
+                    </div>
+                    <div class="col-sm-3 form-inline form-group-sm">
+                        <label for="appLoanSearch"><i class="fa fa-search"></i></label>
+                        <input type="search" id="appLoanSearch" placeholder="Search...." class="form-control">
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+            <!-- Header (sort order etc.) ends -->
+            
+            <!-- loan list -->
+            <div class="row">
+                <div class="col-sm-12" id="appLoan"></div>
+            </div>
+            <!-- loan list ends -->
+        </div>
+    </div>
+
+<!-- denied loans here -->
+    <div class="col-sm-12">
+        <div class="pwell">
+            <!-- Header (add new loan?, sort order etc.) -->
+            <div class="row">
+                <div class="col-sm-12">
+                    
+                    <div class="col-sm-3 form-inline form-group-sm">
+                        <label for="denLoanListPerPage">Show</label>
+                        <select id="denLoanListPerPage" class="form-control">
+                            <option value="1">1</option>
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <label for="denLoanListPerPage">per page</label>
+                    </div>
+                    <div class="col-sm-4 form-inline form-group-sm">
+                        <label for="denLoanListSortBy" class="control-label">Sort by</label> 
+                        <select id="denLoanListSortBy" class="form-control">
+                            <option value="loan_amount-ASC">Amount (A to Z)</option>
+                            <option value="loan_amount-DESC">Amount (Z to A)</option>
+                            <option value="collateral_amount-ASC">Collateral Amount (A to Z)</option>
+                            <option value="collateral_amount-DESC">Collateral Amount (Z to A)</option>
+                            <option value="requested_on-ASC">Date Requested (A to Z)</option>
+                            <option value="requested_on-DESC">Date Requested (Z to A)</option>
+                            <option value="approved_on-ASC" selected>Date Denied (A to Z)</option>
+                            <option value="approved_on-DESC">Date Denied (Z to A)</option>
+                            <option value="user_id-ASC">User (A to Z)</option>
+                            <option value="user_id-DESC">User (Z to A)</option>
+                            <!-- <option value="created_on-ASC">Date Created (older first)</option>
+                            <option value="created_on-DESC">Date Created (recent first)</option> -->
+                            <option value="description-ASC">Description - ascending<!-- </option>
+                            <option value="description-DESC">Description - descending</option> -->
+                        </select>
+                    </div>
+                    <div class="col-sm-3 form-inline form-group-sm">
+                        <label for="denLoanSearch"><i class="fa fa-search"></i></label>
+                        <input type="search" id="denLoanSearch" placeholder="Search...." class="form-control">
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+            <!-- Header (sort order etc.) ends -->
+            
+            <!-- loan list -->
+            <div class="row">
+                <div class="col-sm-12" id="denLoan"></div>
+            </div>
+            <!-- loan list ends -->
+        </div>
+    </div>
+
+<!-- cleared loans here -->
+    <div class="col-sm-12">
+        <div class="pwell">
+            <!-- Header (add new loan?, sort order etc.) -->
+            <div class="row">
+                <div class="col-sm-12">
+                    
+                    <div class="col-sm-3 form-inline form-group-sm">
+                        <label for="cleLoanListPerPage">Show</label>
+                        <select id="cleLoanListPerPage" class="form-control">
+                            <option value="1">1</option>
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <label for="cleLoanListPerPage">per page</label>
+                    </div>
+                    <div class="col-sm-4 form-inline form-group-sm">
+                        <label for="cleLoanListSortBy" class="control-label">Sort by</label> 
+                        <select id="cleLoanListSortBy" class="form-control">
+                            <option value="loan_amount-ASC">Amount (A to Z)</option>
+                            <option value="loan_amount-DESC">Amount (Z to A)</option>
+                            <option value="collateral_amount-ASC">Collateral Amount (A to Z)</option>
+                            <option value="collateral_amount-DESC">Collateral Amount (Z to A)</option>
+                            <option value="requested_on-ASC">Date Requested (A to Z)</option>
+                            <option value="requested_on-DESC">Date Requested (Z to A)</option>
+                            <option value="approved_on-ASC">Date Approved (A to Z)</option>
+                            <option value="approved_on-DESC">Date Approved (Z to A)</option>
+                            <option value="cleared_on-ASC" selected>Date Cleared (A to Z)</option>
+                            <option value="cleared_on-DESC">Date Cleared (Z to A)</option>
+                            <option value="user_id-ASC">User (A to Z)</option>
+                            <option value="user_id-DESC">User (Z to A)</option>
+                            <!-- <option value="created_on-ASC">Date Created (older first)</option>
+                            <option value="created_on-DESC">Date Created (recent first)</option> -->
+                            <option value="description-ASC">Description - ascending<!-- </option>
+                            <option value="description-DESC">Description - descending</option> -->
+                        </select>
+                    </div>
+                    <div class="col-sm-3 form-inline form-group-sm">
+                        <label for="cleLoanSearch"><i class="fa fa-search"></i></label>
+                        <input type="search" id="cleLoanSearch" placeholder="Search...." class="form-control">
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+            <!-- Header (sort order etc.) ends -->
+            
+            <!-- loan list -->
+            <div class="row">
+                <div class="col-sm-12" id="cleLoan"></div>
+            </div>
+            <!-- loan list ends -->
+        </div>
+    </div>
+
+<!-- cancelled loans here -->
+    <div class="col-sm-12">
+        <div class="pwell">
+            <!-- Header (add new loan?, sort order etc.) -->
+            <div class="row">
+                <div class="col-sm-12">
+                    
+                    <div class="col-sm-3 form-inline form-group-sm">
+                        <label for="canLoanListPerPage">Show</label>
+                        <select id="canLoanListPerPage" class="form-control">
+                            <option value="1">1</option>
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <label for="canLoanListPerPage">per page</label>
+                    </div>
+                    <div class="col-sm-4 form-inline form-group-sm">
+                        <label for="canLoanListSortBy" class="control-label">Sort by</label> 
+                        <select id="canLoanListSortBy" class="form-control">
+                            <option value="loan_amount-ASC">Amount (A to Z)</option>
+                            <option value="loan_amount-DESC">Amount (Z to A)</option>
+                            <option value="collateral_amount-ASC">Collateral Amount (A to Z)</option>
+                            <option value="collateral_amount-DESC">Collateral Amount (Z to A)</option>
+                            <option value="requested_on-ASC">Date Requested (A to Z)</option>
+                            <option value="requested_on-DESC">Date Requested (Z to A)</option>
+                            <option value="approved_on-ASC" selected>Date Cancelled (A to Z)</option>
+                            <option value="approved_on-DESC">Date Cancelled (Z to A)</option>
+                            <option value="user_id-ASC">User (A to Z)</option>
+                            <option value="user_id-DESC">User (Z to A)</option>
+                            <!-- <option value="created_on-ASC">Date Created (older first)</option>
+                            <option value="created_on-DESC">Date Created (recent first)</option> -->
+                            <option value="description-ASC">Description - ascending<!-- </option>
+                            <option value="description-DESC">Description - descending</option> -->
+                        </select>
+                    </div>
+                    <div class="col-sm-3 form-inline form-group-sm">
+                        <label for="canLoanSearch"><i class="fa fa-search"></i></label>
+                        <input type="search" id="canLoanSearch" placeholder="Search...." class="form-control">
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+            <!-- Header (sort order etc.) ends -->
+            
+            <!-- loan list -->
+            <div class="row">
+                <div class="col-sm-12" id="canLoan"></div>
             </div>
             <!-- loan list ends -->
         </div>

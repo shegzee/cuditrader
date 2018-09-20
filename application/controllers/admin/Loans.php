@@ -94,7 +94,7 @@ class Loans extends CI_Controller
         $this->load->library('pagination');
         
         $pageNumber = $this->uri->segment(3, 0);//set page number to zero if the page number is not set in the third segment of uri
-	
+    
         $limit = $this->input->get('limit', TRUE) ? $this->input->get('limit', TRUE) : 10;//show $limit per page
         $start = $pageNumber == 0 ? 0 : ($pageNumber - 1) * $limit;//start from 0 if pageNumber is 0, else start from the next iteration
         
@@ -115,6 +115,178 @@ class Loans extends CI_Controller
         $data['sn'] = $start+1;
         
         $json['loansList'] = $this->load->view('admin/loans/requestedloanlist', $data, TRUE);//get view with populated items table
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($json));
+    }
+    
+    /**
+     * "laal_" = "Load All Approved Loans"
+     */
+    public function laal_(){
+        $this->genlib->ajaxOnly();
+        
+        $this->load->helper('text');
+        
+        //set the sort order
+        $orderBy = $this->input->get('orderBy', TRUE) ? $this->input->get('orderBy', TRUE) : "status_number";
+        $orderFormat = $this->input->get('orderFormat', TRUE) ? $this->input->get('orderFormat', TRUE) : "ASC";
+        
+        //count the total number of items in db
+        $totalLoans = $this->db->count_all('loans');
+        
+        $this->load->library('pagination');
+        
+        $pageNumber = $this->uri->segment(3, 0);//set page number to zero if the page number is not set in the third segment of uri
+    
+        $limit = $this->input->get('limit', TRUE) ? $this->input->get('limit', TRUE) : 10;//show $limit per page
+        $start = $pageNumber == 0 ? 0 : ($pageNumber - 1) * $limit;//start from 0 if pageNumber is 0, else start from the next iteration
+        
+        //call setPaginationConfig($totalRows, $urlToCall, $limit, $attributes) in genlib to configure pagination
+        $config = $this->genlib->setPaginationConfig($totalLoans, "loans/laal_", $limit, ['onclick'=>'return loans(this.href);']);
+        
+        $this->pagination->initialize($config);//initialize the library class
+        
+        // load currencies
+        $data['loan_unit_icons'] = $this->load_loan_unit_icons();
+        $data['collateral_unit_icons'] = $this->load_collateral_unit_icons();
+
+        $status_number = array($this->loan->get_status_number("APPROVED"), $this->loan->get_status_number("GRANTED"));
+        //get all items from db
+        $data['appLoans'] = $this->loan->getAll($status_number, $orderBy, $orderFormat, $start, $limit);
+        $data['range'] = $totalLoans > 0 ? "Showing " . ($start+1) . "-" . ($start + count($data['appLoans'])) . " of " . $totalLoans : "";
+        $data['links'] = $this->pagination->create_links();//page links
+        $data['sn'] = $start+1;
+        
+        $json['loansList'] = $this->load->view('admin/loans/approvedloanlist', $data, TRUE);//get view with populated items table
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($json));
+    }
+    
+    /**
+     * "ladl_" = "Load All Denied Loans"
+     */
+    public function ladl_(){
+        $this->genlib->ajaxOnly();
+        
+        $this->load->helper('text');
+        
+        //set the sort order
+        $orderBy = $this->input->get('orderBy', TRUE) ? $this->input->get('orderBy', TRUE) : "status_number";
+        $orderFormat = $this->input->get('orderFormat', TRUE) ? $this->input->get('orderFormat', TRUE) : "ASC";
+        
+        //count the total number of items in db
+        $totalLoans = $this->db->count_all('loans');
+        
+        $this->load->library('pagination');
+        
+        $pageNumber = $this->uri->segment(3, 0);//set page number to zero if the page number is not set in the third segment of uri
+    
+        $limit = $this->input->get('limit', TRUE) ? $this->input->get('limit', TRUE) : 10;//show $limit per page
+        $start = $pageNumber == 0 ? 0 : ($pageNumber - 1) * $limit;//start from 0 if pageNumber is 0, else start from the next iteration
+        
+        //call setPaginationConfig($totalRows, $urlToCall, $limit, $attributes) in genlib to configure pagination
+        $config = $this->genlib->setPaginationConfig($totalLoans, "loans/ladl_", $limit, ['onclick'=>'return loans(this.href);']);
+        
+        $this->pagination->initialize($config);//initialize the library class
+        
+        // load currencies
+        $data['loan_unit_icons'] = $this->load_loan_unit_icons();
+        $data['collateral_unit_icons'] = $this->load_collateral_unit_icons();
+
+        $status_number = $this->loan->get_status_number("DENIED");
+        //get all items from db
+        $data['denLoans'] = $this->loan->getAll($status_number, $orderBy, $orderFormat, $start, $limit);
+        $data['range'] = $totalLoans > 0 ? "Showing " . ($start+1) . "-" . ($start + count($data['denLoans'])) . " of " . $totalLoans : "";
+        $data['links'] = $this->pagination->create_links();//page links
+        $data['sn'] = $start+1;
+        
+        $json['loansList'] = $this->load->view('admin/loans/deniedloanlist', $data, TRUE);//get view with populated items table
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($json));
+    }
+    
+    /**
+     * "lacl_" = "Load All Cleared Loans"
+     */
+    public function lacl_(){
+        $this->genlib->ajaxOnly();
+        
+        $this->load->helper('text');
+        
+        //set the sort order
+        $orderBy = $this->input->get('orderBy', TRUE) ? $this->input->get('orderBy', TRUE) : "status_number";
+        $orderFormat = $this->input->get('orderFormat', TRUE) ? $this->input->get('orderFormat', TRUE) : "ASC";
+        
+        //count the total number of items in db
+        $totalLoans = $this->db->count_all('loans');
+        
+        $this->load->library('pagination');
+        
+        $pageNumber = $this->uri->segment(3, 0);//set page number to zero if the page number is not set in the third segment of uri
+    
+        $limit = $this->input->get('limit', TRUE) ? $this->input->get('limit', TRUE) : 10;//show $limit per page
+        $start = $pageNumber == 0 ? 0 : ($pageNumber - 1) * $limit;//start from 0 if pageNumber is 0, else start from the next iteration
+        
+        //call setPaginationConfig($totalRows, $urlToCall, $limit, $attributes) in genlib to configure pagination
+        $config = $this->genlib->setPaginationConfig($totalLoans, "loans/lacl_", $limit, ['onclick'=>'return loans(this.href);']);
+        
+        $this->pagination->initialize($config);//initialize the library class
+        
+        // load currencies
+        $data['loan_unit_icons'] = $this->load_loan_unit_icons();
+        $data['collateral_unit_icons'] = $this->load_collateral_unit_icons();
+
+        $status_number = $this->loan->get_status_number("CLEARED");
+        //get all items from db
+        $data['cleLoans'] = $this->loan->getAll($status_number, $orderBy, $orderFormat, $start, $limit);
+        $data['range'] = $totalLoans > 0 ? "Showing " . ($start+1) . "-" . ($start + count($data['cleLoans'])) . " of " . $totalLoans : "";
+        $data['links'] = $this->pagination->create_links();//page links
+        $data['sn'] = $start+1;
+        
+        $json['loansList'] = $this->load->view('admin/loans/clearedloanlist', $data, TRUE);//get view with populated items table
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($json));
+    }
+    
+    /**
+     * "laca_" = "Load All Cancelled Loans"
+     */
+    public function laca_(){
+        $this->genlib->ajaxOnly();
+        
+        $this->load->helper('text');
+        
+        //set the sort order
+        $orderBy = $this->input->get('orderBy', TRUE) ? $this->input->get('orderBy', TRUE) : "status_number";
+        $orderFormat = $this->input->get('orderFormat', TRUE) ? $this->input->get('orderFormat', TRUE) : "ASC";
+        
+        //count the total number of items in db
+        $totalLoans = $this->db->count_all('loans');
+        
+        $this->load->library('pagination');
+        
+        $pageNumber = $this->uri->segment(3, 0);//set page number to zero if the page number is not set in the third segment of uri
+	
+        $limit = $this->input->get('limit', TRUE) ? $this->input->get('limit', TRUE) : 10;//show $limit per page
+        $start = $pageNumber == 0 ? 0 : ($pageNumber - 1) * $limit;//start from 0 if pageNumber is 0, else start from the next iteration
+        
+        //call setPaginationConfig($totalRows, $urlToCall, $limit, $attributes) in genlib to configure pagination
+        $config = $this->genlib->setPaginationConfig($totalLoans, "loans/laca_", $limit, ['onclick'=>'return loans(this.href);']);
+        
+        $this->pagination->initialize($config);//initialize the library class
+        
+        // load currencies
+        $data['loan_unit_icons'] = $this->load_loan_unit_icons();
+        $data['collateral_unit_icons'] = $this->load_collateral_unit_icons();
+
+        $status_number = $this->loan->get_status_number("CANCELLED");
+        //get all items from db
+        $data['canLoans'] = $this->loan->getAll($status_number, $orderBy, $orderFormat, $start, $limit);
+        $data['range'] = $totalLoans > 0 ? "Showing " . ($start+1) . "-" . ($start + count($data['canLoans'])) . " of " . $totalLoans : "";
+        $data['links'] = $this->pagination->create_links();//page links
+        $data['sn'] = $start+1;
+        
+        $json['loansList'] = $this->load->view('admin/loans/cancelledloanlist', $data, TRUE);//get view with populated items table
 
         $this->output->set_content_type('application/json')->set_output(json_encode($json));
     }
@@ -160,17 +332,56 @@ class Loans extends CI_Controller
         $this->output->set_content_type('application/json')->set_output(json_encode($json));
     }
 
-    public function deny($loan_id){
+    public function deny(){
         $this->genlib->ajaxOnly();
-        
-        		
-        $id = $loan_id;
+        $denied_status_number = $this->loan->get_status_number("DENIED");
+        $requested_status_number = $this->loan->get_status_number("REQUESTED");
+        $loan_id = $this->input->post('_lId');
+        $new_value = $this->genmod->gettablecol('loans', 'status_number', 'id', $loan_id) == $denied_status_number ? $requested_status_number : $denied_status_number;
 
-        $updated = $this->loan->deny_loan($id, $_SESSION['admin_id']);
+        $updated = $this->loan->deny_loan($loan_id, $_SESSION['admin_id'], $new_value);
         
         
         $json = $updated ? 
-                ['status'=>1, 'msg'=>"Loan denied"] 
+                ['status'=>1, 'msg'=>"Loan denied", '_lid'=>$loan_id] 
+                : 
+                ['status'=>0, 'msg'=>"Oops! Unexpected server error! Pls contact administrator for help. Sorry for the embarrassment"];
+                    
+        $this->output->set_content_type('application/json')->set_output(json_encode($json));
+    }
+
+    public function revert(){
+        $this->genlib->ajaxOnly();
+        $pending_status_number = $this->loan->get_status_number("PENDING");
+        // $requested_status_number = $this->loan->get_status_number("REQUESTED");
+        $loan_id = $this->input->post('_lId');
+        // $new_value = $this->genmod->gettablecol('loans', 'status_number', 'id', $loan_id) == $denied_status_number ? $requested_status_number : $denied_status_number;
+        $new_value = $pending_status_number;
+
+        $updated = $this->loan->revert_loan($loan_id, $_SESSION['admin_id'], $new_value);
+        
+        
+        $json = $updated ? 
+                ['status'=>1, 'msg'=>"Loan reverted to pending", '_lid'=>$loan_id] 
+                : 
+                ['status'=>0, 'msg'=>"Oops! Unexpected server error! Pls contact administrator for help. Sorry for the embarrassment"];
+                    
+        $this->output->set_content_type('application/json')->set_output(json_encode($json));
+    }
+
+    public function clear(){
+        $this->genlib->ajaxOnly();
+        $cleared_status_number = $this->loan->get_status_number("CLEARED");
+        // $requested_status_number = $this->loan->get_status_number("REQUESTED");
+        $loan_id = $this->input->post('_lId');
+        // $new_value = $this->genmod->gettablecol('loans', 'status_number', 'id', $loan_id) == $denied_status_number ? $requested_status_number : $denied_status_number;
+        $new_value = $cleared_status_number;
+
+        $updated = $this->loan->clear_loan($loan_id, $_SESSION['admin_id'], $new_value);
+        
+        
+        $json = $updated ? 
+                ['status'=>1, 'msg'=>"Loan cleared", '_lid'=>$loan_id] 
                 : 
                 ['status'=>0, 'msg'=>"Oops! Unexpected server error! Pls contact administrator for help. Sorry for the embarrassment"];
                     
@@ -194,22 +405,6 @@ class Loans extends CI_Controller
         $this->output->set_content_type('application/json')->set_output(json_encode($json));
     }
 
-    public function clear($loan_id){
-        $this->genlib->ajaxOnly();
-        
-        		
-        $id = $loan_id;
-
-        $updated = $this->loan->clear_loan($id, $_SESSION['admin_id']);
-        
-        
-        $json = $updated ? 
-                ['status'=>1, 'msg'=>"Loan cleared"] 
-                : 
-                ['status'=>0, 'msg'=>"Oops! Unexpected server error! Pls contact administrator for help. Sorry for the embarrassment"];
-                    
-        $this->output->set_content_type('application/json')->set_output(json_encode($json));
-    }
     
     /*
     Creates items for use in a dropdown (to be used in form_dropdown())
