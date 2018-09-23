@@ -23,7 +23,7 @@
           </div>
         </div>
         <div id="unchained-phone">
-          <a data-category="contact-us" data-action="phone" data-label="from-footer" class="track-click" href="tel:">080</a>
+          <a data-category="contact-us" data-action="phone" data-label="from-footer" class="track-click" href="tel:">0815 245 7369</a>
         </div>
         <div id="unchained-email">
           <a data-category="contact-us" data-action="email" data-label="from-footer" class="track-click" href="mailto:info@cuditrader.com">info@cuditrader.com</a>
@@ -43,10 +43,10 @@
           <li><a data-category="privacy" data-action="goto" data-label="from-footer" class="track-click" href="<?=base_url('privacy')?>">Privacy Policy</a></li>
         </ul>
         <ul class="list-unstyled">
-          <li><a data-category="contact-us" data-action="twitter" data-label="from-footer" class="track-click" target="_blank" href="#">Twitter</a></li>
-          <li><a data-category="contact-us" data-action="telegram" data-label="from-footer" class="track-click" target="_blank" href="#">Telegram</a></li>
-          <li><a data-category="contact-us" data-action="facebook" data-label="from-footer" class="track-click" target="_blank" href="#">Facebook</a></li>
-	  <li><a data-category="contact-us" data-action="github" data-label="from-footer" class="track-click" target="_blank" href="#">Instagram</a></li>
+          <li><a data-category="contact-us" data-action="twitter" data-label="from-footer" class="track-click" target="_blank" href="https://www.twitter.com/CudiTrader">Twitter</a></li>
+          <!-- <li><a data-category="contact-us" data-action="telegram" data-label="from-footer" class="track-click" target="_blank" href="#">Telegram</a></li>
+          <li><a data-category="contact-us" data-action="facebook" data-label="from-footer" class="track-click" target="_blank" href="#">Facebook</a></li> -->
+	  <li><a data-category="contact-us" data-action="github" data-label="from-footer" class="track-click" target="_blank" href="https://www.instagram.com/get_loans_on_bitcoins">Instagram</a></li>
         </ul>
       </div>
     </div>
@@ -59,7 +59,7 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-99101441-3', 'auto', {'allowLinker': true});
+  ga('create', 'UA-125466439-1', 'auto', {'allowLinker': true});
   ga('require', 'linker');
   ga('linker:autoLink', ['<?=current_url()?>'] );
 
