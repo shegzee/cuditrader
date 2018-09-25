@@ -156,7 +156,7 @@ class Loans extends CI_Controller
         $data['loan_unit_icons'] = $this->load_loan_unit_icons();
         $data['collateral_unit_icons'] = $this->load_collateral_unit_icons();
 
-        $status_number = array($this->loan->get_status_number("APPROVED"), $this->loan->get_status_number("GRANTED"));
+        $status_number = $this->loan->get_status_number("APPROVED");
         //get all items from db
         $data['appLoans'] = $this->loan->getAll($status_number, $orderBy, $orderFormat, $start, $limit);
         $data['range'] = $totalLoans > 0 ? "Showing " . ($start+1) . "-" . ($start + count($data['appLoans'])) . " of " . $totalLoans : "";
@@ -164,6 +164,49 @@ class Loans extends CI_Controller
         $data['sn'] = $start+1;
         
         $json['loansList'] = $this->load->view('admin/loans/approvedloanlist', $data, TRUE);//get view with populated items table
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($json));
+    }
+
+    /**
+     * "lagl_" = "Load All Granted Loans" (user has sent collateral)
+     */
+    public function lagl_(){
+        $this->genlib->ajaxOnly();
+        
+        $this->load->helper('text');
+        
+        //set the sort order
+        $orderBy = $this->input->get('orderBy', TRUE) ? $this->input->get('orderBy', TRUE) : "status_number";
+        $orderFormat = $this->input->get('orderFormat', TRUE) ? $this->input->get('orderFormat', TRUE) : "ASC";
+        
+        //count the total number of items in db
+        $totalLoans = $this->db->count_all('loans');
+        
+        $this->load->library('pagination');
+        
+        $pageNumber = $this->uri->segment(3, 0);//set page number to zero if the page number is not set in the third segment of uri
+    
+        $limit = $this->input->get('limit', TRUE) ? $this->input->get('limit', TRUE) : 10;//show $limit per page
+        $start = $pageNumber == 0 ? 0 : ($pageNumber - 1) * $limit;//start from 0 if pageNumber is 0, else start from the next iteration
+        
+        //call setPaginationConfig($totalRows, $urlToCall, $limit, $attributes) in genlib to configure pagination
+        $config = $this->genlib->setPaginationConfig($totalLoans, "loans/lagl_", $limit, ['onclick'=>'return loans(this.href);']);
+        
+        $this->pagination->initialize($config);//initialize the library class
+        
+        // load currencies
+        $data['loan_unit_icons'] = $this->load_loan_unit_icons();
+        $data['collateral_unit_icons'] = $this->load_collateral_unit_icons();
+
+        $status_number = $this->loan->get_status_number("GRANTED");
+        //get all items from db
+        $data['graLoans'] = $this->loan->getAll($status_number, $orderBy, $orderFormat, $start, $limit);
+        $data['range'] = $totalLoans > 0 ? "Showing " . ($start+1) . "-" . ($start + count($data['graLoans'])) . " of " . $totalLoans : "";
+        $data['links'] = $this->pagination->create_links();//page links
+        $data['sn'] = $start+1;
+        
+        $json['loansList'] = $this->load->view('admin/loans/grantedloanlist', $data, TRUE);//get view with populated items table
 
         $this->output->set_content_type('application/json')->set_output(json_encode($json));
     }
@@ -439,17 +482,19 @@ class Loans extends CI_Controller
         $this->output->set_content_type('application/json')->set_output(json_encode($json));
     }
 
-    public function grant($loan_id){
-        $this->genlib->ajaxOnly();
-        
-        		
-        $id = $loan_id;
+    public function grant(){
 
-        $updated = $this->loan->grant_loan($id, $_SESSION['admin_id']);
+        $this->genlib->ajaxOnly();
+        $granted_status_number = $this->loan->get_status_number("GRANTED");
+        $approved_status_number = $this->loan->get_status_number("APPROVED");
+        $loan_id = $this->input->post('_lId');
+        $new_value = $this->genmod->gettablecol('loans', 'status_number', 'id', $loan_id) == $granted_status_number ? $approved_status_number : $granted_status_number;
+
+        $updated = $this->loan->grant_loan($loan_id, $_SESSION['admin_id'], $new_value);
         
         
         $json = $updated ? 
-                ['status'=>1, 'msg'=>"Loan granted"] 
+                ['status'=>1, 'msg'=>"Loan granted", '_lid'=>$loan_id] 
                 : 
                 ['status'=>0, 'msg'=>"Oops! Unexpected server error! Pls contact administrator for help. Sorry for the embarrassment"];
                     

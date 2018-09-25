@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('');
 
 <?php echo isset($range) && !empty($range) ? $range : ""?>
 <div class="panel panel-primary">
-    <div class="panel-heading">CANCELLED LOANS <i class="fa fa-ban"></i> (cancelled by user)</div>
+    <div class="panel-heading">CANCELLED LOANS <i class="fa fa-ban"></i> - cancelled by user</div>
     <?php if($canLoans):?>
     <div class="table table-responsive">
         <table class="table table-striped table-bordered">

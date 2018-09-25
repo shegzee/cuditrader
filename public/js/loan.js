@@ -565,7 +565,163 @@ $(document).ready(function(){
                     if(returnedData.status === 1){
                        
                         //change the icon to "undo delete" if it's "active" before the change and vice-versa
-                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Revert</a>" : "<i class='fa fa-check pointer'></i>";
+                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Revert</a>" : "<i class='fa fa-reload pointer'></i>";
+
+                        //change the icon
+                        $("#"+ElemId).html(newHTML);
+                        load_all();
+
+                    }
+
+                    else{
+                        alert(returnedData.status);
+                    }
+                });
+            }
+        }
+    });
+
+//When the grant icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
+    $("#appLoan").on('click', '.grantLoan', function(){
+        var confirm = window.confirm("Proceed?");
+        
+        if(confirm){
+            var ElemId = $(this).attr('id');
+
+            var loanId = ElemId.split("-")[1];//get the loanId
+
+            //show spinner
+            $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
+
+            if(loanId){
+                $.ajax({
+                    url: appRoot+"loans/grant",
+                    method: "POST",
+                    data: {_lId:loanId}
+                }).done(function(returnedData){
+                    if(returnedData.status === 1){
+                       
+                        //change the icon to "undo delete" if it's "active" before the change and vice-versa
+                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Grant</a>" : "<i class='fa fa-money pointer'></i>";
+
+                        //change the icon
+                        $("#"+ElemId).html(newHTML);
+                        load_all();
+
+                    }
+
+                    else{
+                        alert(returnedData.status);
+                    }
+                });
+            }
+        }
+    });
+
+// ******************************************
+// GRANTED LOANS
+
+
+    //reload the list of loans when fields are changed
+    $("#graLoanListSortBy, #graLoanListPerPage").change(function(){
+        displayFlashMsg("Please wait...", spinnerClass, "", "");
+        load_all();
+    });
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    //load and show page when pagination link is clicked
+    $("#graLoan").on('click', '.lnp', function(e){
+        e.preventDefault();
+        
+        displayFlashMsg("Please wait...", spinnerClass, "", "");
+
+        load_all($(this).attr('href'));
+
+        return false;
+    });
+
+    //handles loan search
+    $("#graLoanSearch").on('keyup change', function(){
+        var value = $(this).val();
+        
+        if(value){//search only if there is at least one char in input
+            $.ajax({
+                type: "get",
+                url: appRoot+"search/graLoanSearch",
+                data: {v:value},
+                success: function(returnedData){
+                    $("#appLoan").html(returnedData.loanTable);
+                }
+            });
+        }
+        
+        else{
+            load_all();
+        }
+    });
+
+    //to launch the modal to allow for the editing of bank info
+    $("#graLoan").on('click', '.editLoan', function(){
+        
+        var loanId = $(this).attr('id').split("-")[1];
+        
+        $("#loanId").val(loanId);
+        
+        //get info of bank with loanId and prefill the form with it
+        //alert($(this).siblings(".bankEmail").children('a').html());
+        var user_id = $(this).siblings(".user_id").html();
+        var loan_unit_id = $(this).siblings(".loan_unit_id").html();
+        var loan_amount = parseFloat($(this).siblings(".loan_amount").html());
+        var collateral_unit_id = $(this).siblings(".collateral_unit_id").html();
+        var collateral_amount = parseFloat($(this).siblings(".collateral_amount").html());
+        var duration = parseInt($(this).siblings(".duration").html());
+        var status_id = $(this).siblings(".status_id").html();
+        
+        //prefill the form fields
+        $("#nameEdit").val(name);
+        $("#loanUnitEdit").val(loan_unit_id);
+        $("#loanAmountEdit").val(loan_amount);
+        $("#collateralUnitEdit").val(collateral_unit_id);
+        $("#collateralAmountEdit").val(collateral_amount);
+        $("#durationEdit").val(duration);
+
+        // prefill dropdowns
+        $("#status-"+status_id).prop('selected', 'selected');
+        $("#user-"+user_id).prop('selected', 'selected');
+        $("#loan_unit-"+loan_unit_id).prop('selected', 'selected');
+        $("#collateral_unit-"+collateral_unit_id).prop('selected', 'selected');
+        
+        $("#editLoanModal").modal('show');
+    });
+
+
+    //When the revert icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
+    $("#graLoan").on('click', '.revertLoan', function(){
+        var confirm = window.confirm("Proceed?");
+        
+        if(confirm){
+            var ElemId = $(this).attr('id');
+
+            var loanId = ElemId.split("-")[1];//get the loanId
+
+            //show spinner
+            $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
+
+            if(loanId){
+                $.ajax({
+                    url: appRoot+"loans/revert",
+                    method: "POST",
+                    data: {_lId:loanId}
+                }).done(function(returnedData){
+                    if(returnedData.status === 1){
+                       
+                        //change the icon to "undo delete" if it's "active" before the change and vice-versa
+                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Revert</a>" : "<i class='fa fa-reload pointer'></i>";
 
                         //change the icon
                         $("#"+ElemId).html(newHTML);
@@ -582,7 +738,7 @@ $(document).ready(function(){
     });
 
 //When the clear icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
-    $("#appLoan").on('click', '.clearLoan', function(){
+    $("#graLoan").on('click', '.clearLoan', function(){
         var confirm = window.confirm("Proceed?");
         
         if(confirm){
@@ -602,7 +758,7 @@ $(document).ready(function(){
                     if(returnedData.status === 1){
                        
                         //change the icon to "undo delete" if it's "active" before the change and vice-versa
-                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Revert</a>" : "<i class='fa fa-check pointer'></i>";
+                        var newHTML = returnedData.status === 1 ? "<a class='pointer'>Undo Clear</a>" : "<i class='fa fa-check-circle pointer'></i>";
 
                         //change the icon
                         $("#"+ElemId).html(newHTML);
@@ -1086,6 +1242,26 @@ function laal_(url){
 }
 
 /**
+ * lagl_ = "Load all approved loans"
+ * @returns {undefined}
+ */
+function lagl_(url){
+    var orderBy = $("#graLoanListSortBy").val().split("-")[0];
+    var orderFormat = $("#graLoanListSortBy").val().split("-")[1];
+    var limit = $("#graLoanListPerPage").val();
+    
+    $.ajax({
+        type:'get',
+        url: url ? url : appRoot+"loans/lagl_/",
+        data: {orderBy:orderBy, orderFormat:orderFormat, limit:limit},
+     }).done(function(returnedData){
+            hideFlashMsg();
+            
+            $("#graLoan").html(returnedData.loansList);
+        });
+}
+
+/**
  * ladl_ = "Load all denied loans"
  * @returns {undefined}
  */
@@ -1148,6 +1324,7 @@ function laca_(url){
 function load_all(url) {
     larl_();
     laal_();
+    lagl_();
     ladl_();
     lacl_();
     laca_();

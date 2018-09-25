@@ -119,6 +119,65 @@ defined('BASEPATH') OR exit('');
         </div>
     </div>
 
+<!-- granted loans here -->
+    <div class="col-sm-12">
+        <div class="pwell">
+            <!-- Header (add new loan?, sort order etc.) -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-3 form-inline form-group-sm">
+                        <label for="graLoanListPerPage">Show</label>
+                        <select id="graLoanListPerPage" class="form-control">
+                            <option value="1">1</option>
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <label for="graLoanListPerPage">per page</label>
+                    </div>
+                    <div class="col-sm-4 form-inline form-group-sm">
+                        <label for="graLoanListSortBy" class="control-label">Sort by</label> 
+                        <select id="graLoanListSortBy" class="form-control">
+                            <option value="loan_amount-ASC">Amount (A to Z)</option>
+                            <option value="loan_amount-DESC">Amount (Z to A)</option>
+                            <option value="collateral_amount-ASC">Collateral Amount (A to Z)</option>
+                            <option value="collateral_amount-DESC">Collateral Amount (Z to A)</option>
+                            <option value="requested_on-ASC">Date Requested (A to Z)</option>
+                            <option value="requested_on-DESC">Date Requested (Z to A)</option>
+                            <option value="approved_on-ASC" selected>Date Approved (A to Z)</option>
+                            <option value="approved_on-DESC">Date Approved (Z to A)</option>
+                            <option value="granted_on-ASC" selected>Date Granted (A to Z)</option>
+                            <option value="granted_on-DESC">Date Granted (Z to A)</option>
+                            <option value="user_id-ASC">User (A to Z)</option>
+                            <option value="user_id-DESC">User (Z to A)</option>
+                            <!-- <option value="created_on-ASC">Date Created (older first)</option>
+                            <option value="created_on-DESC">Date Created (recent first)</option> -->
+                            <option value="description-ASC">Description - ascending<!-- </option>
+                            <option value="description-DESC">Description - descending</option> -->
+                        </select>
+                    </div>
+                    <div class="col-sm-3 form-inline form-group-sm">
+                        <label for="graLoanSearch"><i class="fa fa-search"></i></label>
+                        <input type="search" id="graLoanSearch" placeholder="Search...." class="form-control">
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+            <!-- Header (sort order etc.) ends -->
+            
+            <!-- loan list -->
+            <div class="row">
+                <div class="col-sm-12" id="graLoan"></div>
+            </div>
+            <!-- loan list ends -->
+        </div>
+    </div>
+
 <!-- denied loans here -->
     <div class="col-sm-12">
         <div class="pwell">

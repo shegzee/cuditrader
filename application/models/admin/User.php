@@ -226,13 +226,8 @@ class User extends CI_Model{
                 -- id != {$_SESSION['user_id']}
                 --     AND
                 (
-                MATCH(first_name) AGAINST(?)
-                || MATCH(last_name) AGAINST(?)
-                || MATCH(first_name, last_name) AGAINST(?)
-                || MATCH(email) AGAINST(?)
-                || MATCH(phone) AGAINST(?)
-                || MATCH(address) AGAINST(?)
-                || first_name LIKE '%".$this->db->escape_like_str($value)."%'
+                
+                first_name LIKE '%".$this->db->escape_like_str($value)."%'
                 || last_name LIKE '%".$this->db->escape_like_str($value)."%' 
                 || email LIKE '%".$this->db->escape_like_str($value)."%'
                 || phone LIKE '%".$this->db->escape_like_str($value)."%'

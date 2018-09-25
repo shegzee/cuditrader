@@ -134,7 +134,7 @@ class User extends User_Controller {
 
 		$this->data['loan_currencies']	= parent::prep_select('loan_units', 'id', 'name', FALSE, 'name');
 		$this->data['cryptocurrencies']	= parent::prep_select('collateral_units', 'id', 'name', TRUE, 'name', 'ASC');
-		$this->data['statuses']			= parent::prep_select('loan_status', 'status_number', 'status', FALSE, 'status');
+		$this->data['statuses']			= parent::prep_select('loan_status', 'status_number', 'status', FALSE, 'status_number');
 		$this->data['status_ids'] 		= array_flip($this->data['statuses']);
 
 		$this->data['status'] 			= $status;
@@ -154,6 +154,7 @@ class User extends User_Controller {
 	public function collaterals()
 	{
 		$this->data['page_title'] = "Collaterals";
+		// $approved_loans = 
 		$this->render('user/collaterals');
 	}
 

@@ -623,3 +623,8 @@ ERROR - 2018-09-20 15:15:58 --> Severity: Notice --> A non well formed numeric v
 ERROR - 2018-09-20 15:15:58 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\approvedloanlist.php 56
 ERROR - 2018-09-20 15:15:58 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\cancelledloanlist.php 52
 ERROR - 2018-09-20 15:15:58 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\clearedloanlist.php 55
+ERROR - 2018-09-20 15:20:29 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:20:29 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:20:29 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:20:29 --> 404 Page Not Found: Public/fonts
+ERROR - 2018-09-20 15:20:29 --> 404 Page Not Found: Public/fonts

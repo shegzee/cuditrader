@@ -18,7 +18,7 @@ class Search extends CI_Controller{
         
         $this->genlib->ajaxOnly();
         
-        $this->load->model(['admin/transaction', 'admin/item', 'admin/bank']);
+        $this->load->model(['admin/transaction', 'admin/item', 'admin/bank', 'admin/user']);
         
         $this->load->helper('text');
         
@@ -139,6 +139,18 @@ class Search extends CI_Controller{
         //set final output
         $this->output->set_content_type('application/json')->set_output(json_encode($json));
     }
+
+    public function userSearch(){
+        $data['allUsers'] = $this->user->usersearch($this->value);
+        $data['sn'] = 1;
+        
+        $json['userTable'] = $data['allUsers'] ? $this->load->view('admin/users/userlist', $data, TRUE) : "No match found";
+        
+        //set final output
+        $this->output->set_content_type('application/json')->set_output(json_encode($json));
+    }
+    
+
     
     /*
     ********************************************************************************************************************************

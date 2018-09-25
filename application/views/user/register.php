@@ -34,7 +34,7 @@
 			?>
 		<?php /*
 		<input type="text" id="name" placeholder="Name">
-		<input type="text" id="username" placeholder="Email">
+		<input type="text" id="email" placeholder="Email">
 		<input type="text" id="phone" placeholder="Phone Number">
 		<input type="text" id="address" placeholder="Address">
 		<input type="password" id="password" placeholder="Password">

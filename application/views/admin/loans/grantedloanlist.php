@@ -4,8 +4,8 @@ defined('BASEPATH') OR exit('');
 
 <?php echo isset($range) && !empty($range) ? $range : ""?>
 <div class="panel panel-primary">
-    <div class="panel-heading">CLEARED LOANS <i class="fa fa-check-circle"></i> - user has repayed loan</div>
-    <?php if($cleLoans):?>
+    <div class="panel-heading">GRANTED LOANS <i class="fa fa-money"></i> - money paid to user</div>
+    <?php if($graLoans):?>
     <div class="table table-responsive">
         <table class="table table-striped table-bordered">
             <thead>
@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('');
                     <th>DUE DATE</th>
                     <th>DATE REQUESTED</th>
                     <th>DATE APPROVED</th>
-                    <th>DATE CLEARED</th>
+                    <th>DATE GRANTED</th>
                     <th>STATUS</th>
                     <th>EDIT</th>
                     <th>ACTIONS</th>
@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('');
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($cleLoans as $get):?>
+                <?php foreach($graLoans as $get):?>
                     <tr>
                         <th><?=$sn?>.</th>
                         <td class="user"><?=$get->email?></td>
@@ -37,19 +37,21 @@ defined('BASEPATH') OR exit('');
                         <td class="hidden collateral_unit_id"><?=$get->collateral_unit_id?></td>
                         <td class="hidden collateral_amount"><?=$get->collateral_amount?></td>
                         <td class="hidden status_id"><?=$get->status_number?></td>
-                        <td class="loan_amount_display"><?= html_entity_decode($loan_unit_icons[$get->loan_unit_id])?><?=number_format($get->loan_amount) ?></td>
+                        <td class="loan_amount"><?= html_entity_decode($loan_unit_icons[$get->loan_unit_id])?><?=number_format($get->loan_amount) ?></td>
                         <td class="collateral_amount"><?=$get->collateral_amount?><?=html_entity_decode($collateral_unit_icons[$get->collateral_unit_id])?></td>
                         <td class="duration"><?=$get->loan_duration ?> months</td>
-                        <td class="end_date"><?= date('Y-m-d', strtotime("+".$get->loan_duration." months", strtotime($get->approved_on))) ?></td>
+                        <td class="end_date"><?= date('Y-m-d', strtotime("+".$get->loan_duration." months", strtotime($get->granted_on))) ?></td>
                         <td class="requested_on"><?=$get->requested_on ?></td>
                         <td class="approved_on"><?=$get->approved_on ?></td>
-                        <td class="cleared_on"><?=$get->cleared_on ?></td>
+                        <td class="granted_on"><?=$get->granted_on ?></td>
+                        <!-- <td><?=date('jS M, Y h:i:sa', $get->requested_on)?></td> -->
                         <td class="status"><?=$get->status ?></td>
                         <td class="text-center editLoan" id="edit-<?=$get->id?>">
                             <i class="fa fa-pencil pointer"></i>
                         </td>
-                        <td class="text-center actions">
-                            <a class="revertLoan" id="revert-<?=$get->id?>" title="Revert to pending"><i class="fa fa-refresh"></i></a>
+                        <td class="actions">
+                            <a class="clearLoan" id="clear-<?=$get->id?>" title="Clear"><i class="fa fa-check-circle"></i></a>
+                            <a class="revertLoan" id="revert-<?=$get->id?>" title="Revert to Pending"><i class="fa fa-refresh"></i></a>
                         </td>
                         <!-- <td class="text-center text-danger deleteBank" id="del-<?=$get->id?>">
                             <?php if($get->deleted === "1"): ?>
@@ -65,7 +67,7 @@ defined('BASEPATH') OR exit('');
         </table>
     </div>
     <?php else:?>
-    No Cleared Loans
+    No Approved Loans
     <?php endif; ?>
 </div>
 <!-- Pagination -->

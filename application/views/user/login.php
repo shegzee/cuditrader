@@ -8,7 +8,7 @@
 		<?php
 		/*
 		<form autocomplete="on" id="login-form" class="login-form">
-			<input type="text" id="username" placeholder="Email">
+			<input type="text" id="email" placeholder="Email">
 			<input type="password" id="password" placeholder="Password">
 
 			<button class="button button-primary">

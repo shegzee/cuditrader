@@ -118,6 +118,36 @@ class User_model extends CI_Model{
         return $query->result_array();
     }
 
+    /* *********************************
+    METHODS FOR COLLATERAL PAGE
+    
+    collaterals in custody of cudi (type)
+    collaterals returned (type)
+    collaterals traded in all (type)
+    */
+    public function get_present_collaterals($user_id, $collateral_unit_id) {
+        $this->db->where('status_number', $this->get_status_number("GRANTED"));
+        // $this->db->orwhere('status_number', $this->get_status_number("APPROVED"));
+        $this->db->where('user_id', $user_id);
+        $this->db->where('collateral_unit_id', $collateral_unit_id);
+        $this->db->select('id', 'collateral_amount');
+        return $this->db->get('loans')->result();
+    }
+
+    /*
+    get status number for status given as string
+    */
+    public function get_status_number($status)
+    {
+        $this->db->like('status', $status);
+        // $this->db->start_cache();
+        $this->db->select('status_number');
+        // $this->db->stop_cache();
+        $query = $this->db->get('loan_status');
+        $result = $query->row();
+        return $result ? $result->status_number : -1;
+    }
+
     /*
     ********************************************************************************************************************************
     ********************************************************************************************************************************

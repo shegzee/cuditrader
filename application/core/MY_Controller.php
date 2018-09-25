@@ -82,6 +82,8 @@ class MY_Controller extends CI_Controller {
     $blank_first: make the first item in the dropdown blank
     $order_by: order by
     $direction: direction for order by
+
+    MODIFY this: no accessing database layer directly, _nauw_.
     */
     protected function prep_select($table_name, $key_field, $value_field, $blank_first=FALSE, $order_by="", $direction="ASC") {
         // prepopulate select

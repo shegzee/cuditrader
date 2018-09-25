@@ -46,7 +46,7 @@
       <?php if (isset($current_user)) { ?>
         <a href="<?= base_url('user/logout') ?>" class="btn btn-primary mr-1 track-click" data-category="sign-in" data-action="goto" data-label="from-navbar">Sign Out</a>
       <a href="<?= base_url('user/loans') ?>" class="btn btn-outline-primary track-click" data-category="invite" data-action="goto" data-label="from-navbar">Loans</a>
-      <a href="<?= base_url('user/profile') ?>"><img src="<?= $user->profile->picture_url; ?>" height="40" width="40" style="border-radius: 50%" alt="<?=$user->username; ?>" title="Profile" /></a>
+      <a href="<?= base_url('user/profile') ?>"><img src="<?= $user->profile->picture_url; ?>" height="40" width="40" style="border-radius: 50%" alt="<?=$user->email; ?>" title="Profile: <?= $user->email?>" /></a>
       <?php } else { ?>
       <a href="<?= base_url('user/login') ?>" class="btn btn-primary mr-1 track-click" data-category="sign-in" data-action="goto" data-label="from-navbar">Sign In</a>
       <a href="<?= base_url('user/register') ?>" class="btn btn-outline-primary track-click" data-category="invite" data-action="goto" data-label="from-navbar">Sign Up</a>

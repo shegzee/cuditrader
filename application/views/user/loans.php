@@ -4,7 +4,7 @@
       <p>
         <a href="<?= base_url('user/loans/'); ?>"><span class="status">ALL</span></a>
     <?php foreach ($statuses as $this_status) { ?>
-    <?php if ($this_status == "GRANTED") {continue;} ?>
+    <?php //if ($this_status == "GRANTED") {continue;} ?>
     <a href="<?= base_url('user/loans/'.strtolower($this_status)); ?>"><span class="loan-status loan-status-<?= strtolower($this_status); ?>"><?= $this_status; ?></span></a>
     <?php } ?>
     <a href="<?= base_url('loan/request'); ?>"><span class="status">REQUEST</span></a></p>
@@ -25,7 +25,7 @@
               <th>
                 <span>Loan Duration</span>
               </th>
-              <?php if ($status = "APPROVED"): ?>
+              <?php if ($status = "GRANTED"): ?>
               <th>
                 <span>Due Date</span>
               </th>
@@ -47,8 +47,8 @@
               <td><?= $loan->collateral_amount; ?> <?=html_entity_decode($collateral_unit_icons[$loan->collateral_unit_id])?></td>
               <td><?= $cryptocurrencies[$loan->collateral_unit_id]; ?></td>
               <td><?= $loan->loan_duration; ?> Months</td>
-              <?php if ($status = "APPROVED"): ?>
-              <td><?= date('jS F, Y', strtotime("+".$loan->loan_duration." months", strtotime($loan->approved_on))) ?></td>
+              <?php if ($status = "GRANTED"): ?>
+              <td><?= date('jS F, Y', strtotime("+".$loan->loan_duration." months", strtotime($loan->granted_on))) ?></td>
               <?php endif; ?>
               <td><a href="<?= base_url('user/loans/'.strtolower($statuses[$loan->status_number])); ?>"><span class="status status-<?= strtolower($statuses[$loan->status_number]); ?>"><?= $statuses[$loan->status_number]; ?></span></a></td>
               <td><a href="<?=base_url('loan/'.$loan->id); ?>">View</a><?php if (strcasecmp(strtolower($statuses[$loan->status_number]), "pending") == 0) { ?> | <a href="<?= base_url('loan/cancel/'.$loan->id); ?>" title="Cancel Loan Request">x</a>
