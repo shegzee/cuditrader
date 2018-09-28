@@ -13,10 +13,16 @@
                   <span class="emails-email"><?= $user->email; ?></span>
                   <!-- if there's only one email address, we shouldn't show default -->
                   <span class="status status-primary">Primary</span>
-                  <span class="status status-error">Unverified</span>
-                  <span class="status">Verified</span>
+                  <?php if ($user->active): ?>
+                    <span class="status">Verified</span>
+                  <?php else: ?>
+                    <span class="status status-error">Unverified</span>
+                  <?php endif; ?>
                   <span class="actions">
-                    <span class="status action resend">Resend verification</span>
+                    <?php if (!$user->active): ?>
+                      <span class="status action resend">Resend verification</span>
+                    <?php endif; ?>
+                    <span class="status action edit"><a href="<?= base_url('user/change_email') ?>">Change email</a></span>
                   </span>
                 </td>
                   <!-- <td class="date">Joined on: <?= date('jS M, Y', $user->created_on) ; ?></td> -->
