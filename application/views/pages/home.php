@@ -14,6 +14,8 @@
 
   </div>
   <div class="layout-root h-100 d-flex flex-column justify-content-center">
+  <p></p>
+    
     <div class="container">
       <h1>Crypto-Secured Loans</h1>
       <p class="lead mt-4 mb-5"><strong>Cudi Trader</strong> lends money to individuals<br>and who provide Bitcoin or Ethereum as collateral.</p>

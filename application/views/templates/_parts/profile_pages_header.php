@@ -42,6 +42,9 @@
       <li class="nav-item d-none d-xl-inline-block">
         <a href="<?= base_url('about') ?>" class="nav-link big-link track-click" data-category="about-us" data-action="goto" data-label="from-navbar-expanded">About Us</a>
       </li>
+      <li class="nav-item d-none d-xl-inline-block">
+        <a href="<?= base_url('contact') ?>" class="nav-link big-link track-click" data-category="contact-us" data-action="goto" data-label="from-navbar-expanded">Contact Us</a>
+      </li>
     </ul>
     <form class="form-inline">
       <?php if (isset($current_user)) { ?>

@@ -1,46 +1,34 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
-    <div class="container page-heading" id="about_heading">
-  <div class="col">
+<div class="container page-heading" id="about_heading">
+  <!-- <div class="col"> -->
+  <div class="">
+  <p></p>
     <h1>About Us</h1>
-    <p>Cudi Trader is a new kind of financial services company. We lend cash to long-term crypto holders who need liquidity but don’t want to sell their coin.</p>
+    <p>CudiTrader is a new kind of BlockChain services company. We lend cash to long-term crypto holders who need liquidity but don’t want to sell their coin.</p>
   </div>
 </div>
 <div class="featured-image">
-  
 
-
-
-
-
-
-<img src="./About Us _ Cudi Trader_files/about_us-xs.jpg" srcset="/public/images/about_us/about_us-sm.jpg 768w, /public/images/about_us/about_us-md.jpg 990w, /public/images/about_us/about_us-lg.jpg 1200w, /public/images/about_us/about_us-xl.jpg 1920w" alt="About Us header">
-
+<!-- <img src="./About Us _ Cudi Trader_files/about_us-xs.jpg" srcset="/public/images/about_us/about_us-sm.jpg 768w, /public/images/about_us/about_us-md.jpg 990w, /public/images/about_us/about_us-lg.jpg 1200w, /public/images/about_us/about_us-xl.jpg 1920w" alt="About Us header"> -->
 
 </div>
 <div class="container page-content" id="about_content">
-  <div class="col">
+  <!-- <div class="col"> -->
+  <div class="">
     <h2>About Cudi Trader</h2>
 
-    <p>Unchained was founded by people who believe that
-    cryptocurrencies have the potential to change the world but only
-    if they're useful.  We set out to build financial products for
-    long-term crypto-investors to get more value from their assets
-    today and in the future.</p>
+    <p>CudiTrader was founded by people that believe that cryptocurrencies have the potential to change the way the world operates from financial services to advertisements online computing. We set out to build blockchain based products for long-term crypto-investors to get more value from their assets today and in the future.</p>
 
-    <p>We are focused on technological excellence because we are
-    stewards of our customers' collateral.  We desire to ensure our
-    customers have excellent service whenever they interact with
-    us.</p>
+    <p>We are focused on technological and customer excellence because we are stewards of our customers' collateral. We desire to ensure our customers have excellent service whenever they interact with us.</p>
 
-    <p>We are entrepreneurs, programmers, writers, researchers, data
-    scientists, hackers, and investors.  We are curious and
-    contrary.</p>
+    <p>We are professionals, entrepreneurs, programmers, blockchain and crypto enthusiasts. We are curious and go beyond the norms.</p>
 
     <p>Please contact us for career, press, and speaking inquiries.</p>
 
   </div>
 </div>
-<div class="container page-content" id="">
+<!-- <div class="container page-content" id="">
   <div class="col">
     <h2>Our Team</h2>
   </div>
@@ -196,4 +184,4 @@
     <div class="bio">
     </div>
   </div>
-</div>
+</div> -->

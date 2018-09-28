@@ -39,7 +39,7 @@
         <ul class="list-unstyled">
           <!--<li><a data-category="press" data-action="goto" data-label="from-footer" class="track-click" target="_blank" href="http://press.unchained-capital.com/">Press</a></li>-->
 	  <li><a data-category="about-us" data-action="goto" data-label="from-footer" class="track-click" target="_blank" href="<?=base_url('about')?>">About Us</a></li>
-          <li><a data-category="terms-of-service" data-action="goto" data-label="from-footer" class="track-click" href="<?=base_url('terms_of_service')?>">Terms of Service</a></li>
+          <li><a data-category="terms-of-service" data-action="goto" data-label="from-footer" class="track-click" href="<?=base_url('terms')?>">Terms of Service</a></li>
           <li><a data-category="privacy" data-action="goto" data-label="from-footer" class="track-click" href="<?=base_url('privacy')?>">Privacy Policy</a></li>
         </ul>
         <ul class="list-unstyled">

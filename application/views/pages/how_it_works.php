@@ -1,8 +1,9 @@
 
     <div class="container page-heading" id="about_heading">
   <div class="col">
+  <p></p>
     <h1>How It Works</h1>
-    <p>Cudi Trader offers cash loans to individuals and businesses who provide Bitcoin or Ethereum as collateral.</p>
+    <p>CudiTrader offers cash loans to Nigerian individuals and businesses who provide Bitcoin or Ethereum as collateral.</p>
   </div>
 </div>
 <div class="featured-image">
@@ -36,9 +37,7 @@
   <h2 id="servicing">Servicing</h2>
 
 <ul>
-  <li>Make monthly, interest-only payments.</li>
-  <li>If the value of your collateral drops by 25% we will request more collateral or a principal payment.</li>
-  <li>If the value of your collateral drops by 45% we have the right to repossess your collateral and sell it to recover principal and any outstanding interest.</li>
+  <li>Pay your interest and collateral as you see fit by the end of a 1 month duration.</li>
 </ul>
 
 </div>
@@ -48,8 +47,7 @@
 
 <ul>
   <li>Your final payment will include principal repayment. We will return your collateral to an address of your choosing.</li>
-  <li>Given sufficient collateral value, you may also renew your loan (with potentially new terms) and defer principal repayment.</li>
-  <li>Disclaimer: A $10,000 loan for 2 years costs $2,500 with $100 in monthly interest payments and one payment of $10,000 due at maturity with an Annual Percentage Rate (APR) of 12.63%.</li>
+  <li>Disclaimer: A #10,000 loan for 1 month costs #10,500 to close out at the end of the month.</li>
 </ul>
 
 </div>
