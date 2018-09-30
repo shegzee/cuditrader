@@ -87,4 +87,4 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 //Define Application Constant Values
 define('DEFAULT_NAME', 'Cuditrader');
-define('DEFAULT_EMAIL', 'tolutheo@gmail.com');
+define('DEFAULT_EMAIL', 'info@cuditrader.com');
