@@ -342,7 +342,7 @@ defined('BASEPATH') OR exit("Access denied to the requested resource");
 
                                 &copy; <?=date('Y')?> Cuditrader
                                 <p>Potters House. 2, Alhaji Akanbi Street. Oko Oba. Lagos</p>
-                                <p><a href="http://cuditrader.com">cuditrader.com</a></p>
+                                <p><a href="https://cuditrader.com">cuditrader.com</a></p>
                             </td>
                         </tr>
                         <!-- End of WRAPPER -->

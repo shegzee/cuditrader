@@ -117,7 +117,7 @@ gains while still getting value from your assets today!</p>
           <!-- section_details_button -->
 <div class="row section-buttons">
   <div class="col d-flex justify-content-center">
-    <a href="http://cuditrader.com/loans" data-category="loans" data-action="goto" data-label="from-value-prop" class="btn btn-orange track-click">
+    <a href="https://cuditrader.com/loans" data-category="loans" data-action="goto" data-label="from-value-prop" class="btn btn-orange track-click">
       Learn More
     </a>
   </div>
@@ -298,7 +298,7 @@ accordance with PCI standards.</p>
           <!-- section_details_button -->
 <div class="row section-buttons">
   <div class="col d-flex justify-content-center">
-    <a href="http://cuditrader.com/how_it_works" data-category="how-it-works" data-action="goto" data-label="from-features" class="btn btn-orange track-click">
+    <a href="https://cuditrader.com/how_it_works" data-category="how-it-works" data-action="goto" data-label="from-features" class="btn btn-orange track-click">
       How it Works
     </a>
   </div>

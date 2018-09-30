@@ -86,7 +86,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     
                     <div class="row">
                         <div class="col-sm-12 text-center" style="color:white">
-                            Designed and Developed by <a href="http://cuditrader.com/" target='_blank' class="text-primary">Margin Tech Investments</a> (2018)
+                            Designed and Developed by <a href="https://cuditrader.com/" target='_blank' class="text-primary">Margin Tech Investments</a> (2018)
                         </div>
                     </div>
                 </div>
