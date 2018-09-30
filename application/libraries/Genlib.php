@@ -6,7 +6,7 @@ require_once './application/controllers/admin/functions.php';
  * Description of Genlib
  * Class deals with functions needed in multiple controllers to avoid repetition in each of the controllers
  *
- * @author Amir <amirsanni@gmail.com>
+ * @author Theophile <tolutheo@gmail.com>
  */
 class Genlib {
     protected $CI;

@@ -44,9 +44,9 @@
         </ul>
         <ul class="list-unstyled">
           <li><a data-category="contact-us" data-action="twitter" data-label="from-footer" class="track-click" target="_blank" href="https://www.twitter.com/CudiTrader">Twitter</a></li>
-          <!-- <li><a data-category="contact-us" data-action="telegram" data-label="from-footer" class="track-click" target="_blank" href="#">Telegram</a></li>
-          <li><a data-category="contact-us" data-action="facebook" data-label="from-footer" class="track-click" target="_blank" href="#">Facebook</a></li> -->
-	  <li><a data-category="contact-us" data-action="github" data-label="from-footer" class="track-click" target="_blank" href="https://www.instagram.com/get_loans_on_bitcoins">Instagram</a></li>
+          <!-- <li><a data-category="contact-us" data-action="telegram" data-label="from-footer" class="track-click" target="_blank" href="#">Telegram</a></li>-->
+          <li><a data-category="contact-us" data-action="facebook" data-label="from-footer" class="track-click" target="_blank" href="https://www.facebook.com/CudiTrader-543949182731430/">Facebook</a></li> 
+	  <li><a data-category="contact-us" data-action="instagram" data-label="from-footer" class="track-click" target="_blank" href="https://www.instagram.com/get_loans_on_bitcoins">Instagram</a></li>
         </ul>
       </div>
     </div>

@@ -85,6 +85,29 @@ class Open_user extends MY_Controller {
 				$_SESSION['message'] = 'The account has been created. You may now login.';
 				$this->session->mark_as_flash('message');
 				redirect('user/login');
+				//Send Registeration Email Codes Start
+				//$activity = "Your Cuditrader account has been created: <b>".set_value('email')."</b> '";
+                
+                //$this->activity->add($this->session->admin_id, "User Account Creation", $activity, $this->activity_group);                
+                
+                //send email to user containing account details
+                $e_info['msg_content'] = "<p>Dear ".set_value('first_name').", </p>"
+                . "<p>An account has been created for you on Cuditrader. Click the link in this mail to verify your account </p>"
+				. "<p>Below are your details:</p>"
+				. "<b>Name: ".set_value('first_name') + .set_value('last_name')."</b><br>"
+                . "<b>Email: ".set_value('email')."</b><br>"
+                . "<p>Regards</p>";
+                
+                $e_info['btn_link'] = base_url();
+                $e_info['btn_text'] = "Click here to verify your account";
+
+                $u_msg = $this->load->view('email/default', $e_info, TRUE);
+                
+                //send_email($sname, $semail, $rname, $remail, $subject, $message, $cc='', $bcc='', $replyToEmail="", $files="")
+                //$bcc = $this->genlib->getPortalAdminBcc();
+				$this->genlib->send_email(DEFAULT_NAME, DEFAULT_EMAIL, set_value('first_name'), set_value('email'), "Cuditrader Account", $u_msg, '');
+				
+				//Send email end
 			}
 			else
 			{
