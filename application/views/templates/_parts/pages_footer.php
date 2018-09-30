@@ -67,7 +67,9 @@
 </script>
 
     
-    <script type="text/javascript" src="<?=base_url()?>public/js/podium.js"></script>
-  
+<script type="text/javascript" src="<?=base_url()?>public/js/podium.js"></script>
+
+<!-- Display McAfee Seal on Site Footer -->
+<script type="text/javascript" src="https://cdn.ywxi.net/js/1.js" async></script>
 
 </body></html>
