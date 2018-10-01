@@ -83,7 +83,7 @@ class Open_user extends MY_Controller {
 			$this->load->library('ion_auth');
 			if ($this->User_model->add($email, $password, $first_name, $last_name, $phone, $address))
 			{
-				$_SESSION['message'] = 'Welcome! Please verify your email';
+				$_SESSION['message'] = 'Your account has been created successfully. Please check your email.';
 				$this->session->mark_as_flash('message');
 				//Send Registeration Email Codes Start                
                 

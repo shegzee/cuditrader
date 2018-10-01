@@ -309,11 +309,11 @@ defined('BASEPATH') OR exit("Access denied to the requested resource");
                                         <!-- ICON 3 -->
                                         <td align="center" valign="middle" style="margin: 0; padding: 0; padding-left: 10px; 
                                             padding-right: 10px; border-collapse: collapse; border-spacing: 0;">
-                                            <a target="_blank" href="" style="text-decoration: none;">
+                                            <a target="_blank" href="https://www.instagram.com/get_loans_on_bitcoins/" style="text-decoration: none;">
                                                 <img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; 
                                                     outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; 
-                                                    border: none; display: inline-block; color: #000000;" alt="Google" 
-                                                    title="Google Plus" width="44" height="44" src="<?=base_url('public/images/social/instagram.png')?>">
+                                                    border: none; display: inline-block; color: #000000;" alt="Instagram" 
+                                                    title="Instagram" width="44" height="44" src="<?=base_url('public/images/social/instagram.png')?>">
                                             </a>
                                         </td>    
 
@@ -323,7 +323,7 @@ defined('BASEPATH') OR exit("Access denied to the requested resource");
                                             <a target="_blank" href="#" style="text-decoration: none;">
                                                 <img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none;
                                                     text-decoration: none; -ms-interpolation-mode: bicubic; border: none; 
-                                                    display: inline-block; color: #000000;" alt="Google" title="LinkedIn"
+                                                    display: inline-block; color: #000000;" alt="Google" title="Google"
                                                     width="44" height="44" src="<?=base_url('public/images/social/googleplus.png')?>">
                                             </a>
                                         </td>
