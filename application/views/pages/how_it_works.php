@@ -148,7 +148,7 @@ solid and secure stack to protect your assets.</p>
           <!-- section_details_button -->
 <div class="row section-buttons">
   <div class="col d-flex justify-content-center">
-    <a href="cuditrader.com/sign_up" data-category="invite" data-action="goto" data-label="from-security" class="btn btn-orange track-click">
+    <a href="/user/register" data-category="invite" data-action="goto" data-label="from-security" class="btn btn-orange track-click">
       Get Started
     </a>
   </div>
@@ -163,7 +163,7 @@ solid and secure stack to protect your assets.</p>
 <div class="page-section section-dark start-application mt-0">
   <div class="container d-flex justify-content-center">
     <div>
-      <a href="cuditrader.com/sign_up" class="btn btn-orange track-click" data-category="invite" data-action="goto" data-label="from-how-it-works">
+      <a href="/user/register" class="btn btn-orange track-click" data-category="invite" data-action="goto" data-label="from-how-it-works">
         Start your application
       </a>
       <span>Unchain your cryptocurrency and apply for a loan now.</span>
@@ -181,7 +181,7 @@ solid and secure stack to protect your assets.</p>
   
   
   <div class="collapsible">
-    <a data-category="faq" data-action="toggle" data-label="how_it_works-collateral_type" class="heading track-click" data-toggle="collapse" href="cuditrader.com/how_it_works/#how_it_works_1" aria-expanded="false" aria-controls="how_it_works_1">
+    <a data-category="faq" data-action="toggle" data-label="how_it_works-collateral_type" class="heading track-click" data-toggle="collapse" href="/#how_it_works_1" aria-expanded="false" aria-controls="how_it_works_1">
       <p>What type of collateral do you accept?</p>
 
       <i class="fa fa-plus"></i>
@@ -462,7 +462,7 @@ multiple executives and authorized signing staff.</p>
 
 </div>
   
-<div class="page-section section-blue">
+<!-- <div class="page-section section-blue">
   <div class="container">
     <div class="row section-head">
       <div class="col d-flex flex-column align-items-center">
@@ -499,4 +499,4 @@ multiple executives and authorized signing staff.</p>
       <div class="signup-error" hidden=""></div>
     </form>
   </div>
-</div>
+</div> -->
