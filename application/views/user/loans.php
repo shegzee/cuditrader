@@ -80,5 +80,70 @@
             </tr>
           </tbody> -->
         </table>
-    </section>
+    <!-- Loan Modal -->
+    <div class="modal" id="loanModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+              	<?= form_open(); ?>
+                  <div class="modal-header">
+                      <h5><strong>Request for Loan: </strong></h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="input-group">
+                          <?php
+							echo form_label('Bank Name:', 'bank_id');
+							echo form_error('bank_id');
+							echo form_dropdown('bank_id', $banks_dropdown, set_value('bank_id'), "required='required'");
+                          ?>
+                        </div>
+                      <div class="input-group">
+                          <?php
+							echo form_label('Account number:', 'account_number');
+							echo form_error('account_number');
+							echo form_input('account_number', set_value('account_number'), "required='required'");
+                          ?>
+                        </div>
+                        <div class="input-group">
+                        	<?php
+                        		echo form_label('Account Name:', 'account_name');
+								echo form_error('account_name');
+								echo form_input('account_name', set_value('account_name'));
+                        	?>
+                        </div>
+                        <div class="input-group">
+                            <?php
+                            	echo form_label('Account type:', 'account_type_id');
+								echo form_error('account_type_id');
+								echo form_dropdown('account_type_id', $account_types_dropdown, set_value('account_type_id'), "required='required'");
+                            ?>
+                          </div>
+                          <div class="input-group">
+                              <?php
+                              	echo form_label('Set as primary account:', 'is_primary');
+								echo form_error('is_primary');
+								echo form_checkbox('is_primary', "1");
+                              ?>
+                            </div>
+                          <div class="input-group">
+                              <?php
+                              	echo form_label('Description:', 'description');
+								echo form_error('description');
+								echo form_textarea('description');
+                              ?>
+                            </div>
+                  </div>
+                  <div class="modal-footer">
+                      <!-- <input ng-click="vm.CreateEvent(vm.bid)" ng-disabled="" type="button" class="btn btn-primary" data-dismiss="modal" onclick="form.submit()" value="OK" /> -->
+                      <?= form_submit('OK', 'OK', 'class="btn btn-primary"'); ?>
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                  </div>
+                <?= form_close(); ?>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Loan Modal end -->
   </div>

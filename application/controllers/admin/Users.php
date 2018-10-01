@@ -301,5 +301,22 @@ class Users extends CI_Controller{
             return FALSE;
         }
     }
+    public function resetPassword(){
+        $email = $this->input->post('email', TRUE);
+        
+        $json = $this->genlib->resetCustomerPassword($email, 'admin');
+        
+        if($json['status'] === 1){
+            $user_info = $this->user->getUserInfoForLogin($email);            
+            
+            //log activity
+            $activity = "reset the password of user <b>{$email}</b>";
+            
+            //add($user_id, $title, $activity, $activity_group)
+            $this->activity->add($this->session->admin_id, "User Password Reset", $activity, $this->activity_group);
+        }
+        
+        $this->output->set_content_type('application/json')->set_output(json_encode($json));
+    }
     
 }

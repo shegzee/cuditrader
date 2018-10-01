@@ -78,12 +78,29 @@ class Open_user extends MY_Controller {
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
 			$address = $this->input->post('address');
+			$full_name = $first_name + $last_name;
 
 			$this->load->library('ion_auth');
 			if ($this->User_model->add($email, $password, $first_name, $last_name, $phone, $address))
 			{
-				$_SESSION['message'] = 'The account has been created. You may now login.';
+				$_SESSION['message'] = 'Welcome! Please verify your email';
 				$this->session->mark_as_flash('message');
+				//Send Registeration Email Codes Start                
+                
+                //send verification email to user
+                $e_info['msg_content'] = "<p>Dear ".set_value('first_name').", </p>"
+                . "<h1>Welcome to Cuditrader</h1></br>"
+                . "<p>Thanks for choosing Cudirader. Please verify your email address to start borrowing loans using your Bitcoin/Ethereum as collateral.</p>";
+                
+                $e_info['btn_link'] = base_url();
+                $e_info['btn_text'] = "Click here to verify your account";
+
+                $u_msg = $this->load->view('email/default', $e_info, TRUE);
+                
+				//send_email($sname, $semail, $rname, $remail, $subject, $message, $replyToEmail="", $files="")
+				$this->genlib->send_email(DEFAULT_NAME, DEFAULT_EMAIL, set_value('first_name'), set_value('email'), "Welcome! Please verify your email", $u_msg);
+				
+				//Send email end
 				redirect('user/login');
 			}
 			else
