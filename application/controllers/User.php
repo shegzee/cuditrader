@@ -27,7 +27,7 @@ class User extends User_Controller {
 	public function logout()
 	{
 		$this->ion_auth->logout();
-		redirect('user/login');
+		redirect('auth/login');
 	}
 
 	public function profile()
@@ -45,7 +45,7 @@ class User extends User_Controller {
 		}
 		else
 		{
-			$split_name = split(" ", $this->input->post('full_name'), 2);
+			$split_name = preg_split("\s+", $this->input->post('full_name'), 2);
 			$user_data = array(
 				'first_name' => $split_name[0],
 				'last_name' => $split_name[1],
@@ -128,12 +128,16 @@ class User extends User_Controller {
 	*/
 	public function loans($status="all")
 	{
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+
 		$this->data['page_title'] = "Loans";
 
 		$this->load->model("Loan_model");
 
 		$this->data['loan_currencies']	= parent::prep_select('loan_units', 'id', 'name', FALSE, 'name');
 		$this->data['cryptocurrencies']	= parent::prep_select('collateral_units', 'id', 'name', TRUE, 'name', 'ASC');
+		$this->data['tenors']			= parent::prep_select('loan_tenors', 'tenor', 'display', TRUE, 'tenor', 'ASC');
 		$this->data['statuses']			= parent::prep_select('loan_status', 'status_number', 'status', FALSE, 'status_number');
 		$this->data['status_ids'] 		= array_flip($this->data['statuses']);
 
@@ -142,12 +146,47 @@ class User extends User_Controller {
 		// $this->data['status_ids'] 		= array_flip($this->data['statuses']);
 		// $this->data['loan_currencies']	= parent::prep_select('loan_units', 'id', 'name', FALSE, 'name');
 		// $this->data['cryptocurrencies']	= parent::prep_select('collateral_units', 'id', 'name', TRUE, 'name', 'ASC');
+		
+
+		$this->form_validation->set_rules('loan_unit_id', 'Loan Unit', 'required');
+		$this->form_validation->set_rules('loan_amount', 'Loan Amount', 'required|numeric');
+		$this->form_validation->set_rules('collateral_unit_id', 'Collateral Unit', 'required');
+		$this->form_validation->set_rules('collateral_amount', 'Collateral Amount', 'required|numeric');
+		$this->form_validation->set_rules('loan_duration', 'Loan Duration', 'required|is_natural');
+
+		if ($this->form_validation->run() === FALSE) {
+			// $this->render('loan/request_loan');
+		}
+		else {
+			$data = array(
+				'loan_unit_id' 			=> $this->input->post('loan_unit_id'),
+				'loan_amount' 			=> $this->input->post('loan_amount'),
+				'collateral_unit_id' 	=> $this->input->post('collateral_unit_id'),
+				'collateral_amount' 	=> $this->input->post('collateral_amount'),
+				'loan_duration' 		=> $this->input->post('loan_duration'),
+				'user_id'				=> $this->user->id
+			);
+
+			if ($this->Loan_model->new_loan($data) == TRUE) {
+				$_SESSION['message'] = "The loan request has been made. It will be processed within 24 hours.";
+				$this->session->mark_as_flash('message');
+			}
+			// else if {
+
+			// }
+			else {
+				$_SESSION['message'] = "Sorry, you have a pending loan request.";
+				$this->session->mark_as_flash('message');
+			}
+		}
+
 		if ($status=="all") {
 			$this->data['loans'] = $this->Loan_model->get_loans($this->user->id);
 		}
 		else {
 			$this->data['loans'] = $this->Loan_model->get_loans($this->user->id, $status);
 		}
+
 		$this->render('user/loans');
 	}
 
@@ -249,5 +288,8 @@ class User extends User_Controller {
     public function full_name($user) {
     	return $user->first_name." ".$user->last_name;
     }
+
+    
+
 
 }

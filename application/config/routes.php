@@ -57,6 +57,7 @@ $route['admin/dbmanagement'] = "admin/misc/dbmanagement";
 $route['user/login'] = "open_user/login";
 $route['user/register'] = "open_user/register";
 
+$route['auth'] = 'auth';
 $route['user'] = 'user';
 $route['loan/(:num)'] = 'loan/view_loan/$1';
 $route['loan/status/(:any)'] = 'loan/view_loans_by_status/$1';

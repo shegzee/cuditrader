@@ -3,11 +3,17 @@
       <p class="header-description">View <?= $status ?> loan status and history here.</p>
       <p>
         <a href="<?= base_url('user/loans/'); ?>"><span class="status">ALL</span></a>
-    <?php foreach ($statuses as $this_status) { ?>
-    <?php //if ($this_status == "GRANTED") {continue;} ?>
-    <a href="<?= base_url('user/loans/'.strtolower($this_status)); ?>"><span class="loan-status loan-status-<?= strtolower($this_status); ?>"><?= $this_status; ?></span></a>
-    <?php } ?>
-    <a href="<?= base_url('loan/request'); ?>"><span class="status">REQUEST</span></a></p>
+        <?php foreach ($statuses as $this_status) { ?>
+        <?php //if ($this_status == "GRANTED") {continue;} ?>
+          <a href="<?= base_url('user/loans/'.strtolower($this_status)); ?>"><span class="loan-status loan-status-<?= strtolower($this_status); ?>"><?= $this_status; ?></span></a>
+        <?php } ?>
+        <!-- <a href="<?= base_url('loan/request'); ?>"><span class="status">REQUEST</span></a> -->
+      </p>
+      <p>
+        <a data-toggle="modal" data-target="#loanModal">
+          <span><i class="fa fa-plus-circle"></i>REQUEST A LOAN</span>
+        </a>
+      </p>
     <?= isset($_SESSION['message']) ? "<p>".$_SESSION['message']."</p>" : FALSE ?>
       <?php if($loans): ?>
       <table id="keywords" cellspacing="0" cellpadding="0">
@@ -25,7 +31,7 @@
               <th>
                 <span>Loan Duration</span>
               </th>
-              <?php if ($status = "GRANTED"): ?>
+              <?php if (strtolower($status) == "granted"): ?>
               <th>
                 <span>Due Date</span>
               </th>
@@ -47,7 +53,7 @@
               <td><?= $loan->collateral_amount; ?> <?=html_entity_decode($collateral_unit_icons[$loan->collateral_unit_id])?></td>
               <td><?= $cryptocurrencies[$loan->collateral_unit_id]; ?></td>
               <td><?= $loan->loan_duration; ?> Months</td>
-              <?php if ($status = "GRANTED"): ?>
+              <?php if (strtolower($status) == "granted"): ?>
               <td><?= date('jS F, Y', strtotime("+".$loan->loan_duration." months", strtotime($loan->granted_on))) ?></td>
               <?php endif; ?>
               <td><a href="<?= base_url('user/loans/'.strtolower($statuses[$loan->status_number])); ?>"><span class="status status-<?= strtolower($statuses[$loan->status_number]); ?>"><?= $statuses[$loan->status_number]; ?></span></a></td>
@@ -58,6 +64,9 @@
           <?php } ?>
           <?php else:?>
           <p>No loans found</p>
+          <!-- <a data-toggle="modal" data-target="#loanModal">
+            <span><i class="fa fa-plus-circle"></i>REQUEST A LOAN</span>
+          </a> -->
           <?php endif; ?>
           <!-- <tbody>
             <tr>
@@ -85,6 +94,7 @@
           <div class="modal-dialog" role="document">
               <div class="modal-content">
               	<?= form_open(); ?>
+                <p><?=validation_errors(); ?></p>
                   <div class="modal-header">
                       <h5><strong>Request for Loan: </strong></h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -94,50 +104,70 @@
                   <div class="modal-body">
                       <div class="input-group">
                           <?php
-							echo form_label('Bank Name:', 'bank_id');
-							echo form_error('bank_id');
-							echo form_dropdown('bank_id', $banks_dropdown, set_value('bank_id'), "required='required'");
+  echo form_label('Loan currency:', 'loan_unit_id').'<br />';
+  echo form_error('loan_unit_id');
+  echo form_dropdown('loan_unit_id', $loan_currencies, set_select('loan_unit_id'), "required='required'");
+
+							// echo form_label('Bank Name:', 'bank_id');
+							// echo form_error('bank_id');
+							// echo form_dropdown('bank_id', $banks_dropdown, set_value('bank_id'), "required='required'");
                           ?>
                         </div>
                       <div class="input-group">
                           <?php
-							echo form_label('Account number:', 'account_number');
-							echo form_error('account_number');
-							echo form_input('account_number', set_value('account_number'), "required='required'");
+  echo form_label('Loan amount:', 'loan_amount').'<br />';
+  echo form_error('loan_amount');
+  echo form_input('loan_amount', set_value('loan_amount'), "required='required'");
+
+							// echo form_label('Account number:', 'account_number');
+							// echo form_error('account_number');
+							// echo form_input('account_number', set_value('account_number'), "required='required'");
                           ?>
                         </div>
                         <div class="input-group">
                         	<?php
-                        		echo form_label('Account Name:', 'account_name');
-								echo form_error('account_name');
-								echo form_input('account_name', set_value('account_name'));
-                        	?>
+  echo form_label('Cryptocurrency:', 'collateral_unit_id').'<br />';
+  echo form_error('collateral_unit_id');
+  echo form_dropdown('collateral_unit_id', $cryptocurrencies, set_value('collateral_unit_id'), "required='required'");
+
+        //         echo form_label('Account Name:', 'account_name');
+                // echo form_error('account_name');
+                // echo form_input('account_name', set_value('account_name'));
+                          ?>
                         </div>
                         <div class="input-group">
                             <?php
-                            	echo form_label('Account type:', 'account_type_id');
-								echo form_error('account_type_id');
-								echo form_dropdown('account_type_id', $account_types_dropdown, set_value('account_type_id'), "required='required'");
+  echo form_label('Cryptocurrency amount:', 'collateral_amount').'<br />';
+  echo form_error('collateral_amount');
+  echo form_input('collateral_amount', set_value('collateral_amount'), "required='required'");
+
+        //         echo form_label('Account type:', 'account_type_id');
+                // echo form_error('account_type_id');
+                // echo form_dropdown('account_type_id', $account_types_dropdown, set_value('account_type_id'), "required='required'");
                             ?>
                           </div>
                           <div class="input-group">
                               <?php
-                              	echo form_label('Set as primary account:', 'is_primary');
-								echo form_error('is_primary');
-								echo form_checkbox('is_primary', "1");
+  echo form_label('Tenor (months):', 'loan_duration').'<br />';
+  echo form_error('loan_duration');
+  echo form_dropdown('loan_duration', $tenors, set_value('loan_duration'), "required='required'");
+
+        //         echo form_label('Set as primary account:', 'is_primary');
+								// echo form_error('is_primary');
+								// echo form_checkbox('is_primary', "1");
                               ?>
                             </div>
                           <div class="input-group">
                               <?php
-                              	echo form_label('Description:', 'description');
-								echo form_error('description');
-								echo form_textarea('description');
+        //                       	echo form_label('Description:', 'description');
+								// echo form_error('description');
+								// echo form_textarea('description');
                               ?>
                             </div>
                   </div>
                   <div class="modal-footer">
                       <!-- <input ng-click="vm.CreateEvent(vm.bid)" ng-disabled="" type="button" class="btn btn-primary" data-dismiss="modal" onclick="form.submit()" value="OK" /> -->
-                      <?= form_submit('OK', 'OK', 'class="btn btn-primary"'); ?>
+                      <?= form_submit('request', 'Request', 'class="btn btn-primary"'); ?>
                       <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                   </div>
                 <?= form_close(); ?>

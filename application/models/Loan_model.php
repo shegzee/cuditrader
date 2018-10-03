@@ -65,6 +65,7 @@ class Loan_model extends CI_Model
     		$status_number = $this->get_status_number($status);
     		$this->db->where('status_number', $status_number);
     	}
+    	$this->db->order_by('requested_on', 'DESC');
     	$this->db->where('user_id', $user_id);
     	$query = $this->db->get('loans');
     	return $query->result();

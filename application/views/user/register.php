@@ -45,9 +45,9 @@
 	</form>
 
 	<div class="below" id="footer_hero">
-		<a href="Cudi – RecoverAccount.html">Lost your password?</a><!--
+		<a href="<?=base_url('auth/forgot_password') ?>">Lost your password?</a><!--
 		--><span class="divider">・</span><!--
-		--><!-- Already have an account?  --><a id="loginlink" href="<?=base_url('user/login') ?>">Login</a>
+		--><!-- Already have an account?  --><a id="loginlink" href="<?=base_url('auth/login') ?>">Login</a>
 	</div>
 </section>
 

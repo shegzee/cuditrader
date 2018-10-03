@@ -22,8 +22,9 @@
                     <?php if (!$user->active): ?>
                       <span class="status action resend">Resend verification</span>
                     <?php endif; ?>
-                    <span class="status action edit"><a href="<?= base_url('user/change_email') ?>">Change email</a></span>
+                    <!-- <span class="status action edit"><a href="<?= base_url('user/change_email') ?>">Change email</a></span> -->
                   </span>
+                  <span class="status"><a href="<?= base_url('auth/change_password') ?>">Change Password</a></span>
                 </td>
                   <!-- <td class="date">Joined on: <?= date('jS M, Y', $user->created_on) ; ?></td> -->
               </tr>

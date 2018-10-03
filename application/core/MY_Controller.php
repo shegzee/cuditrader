@@ -115,18 +115,18 @@ class Auth_Controller extends MY_Controller {
         if ($this->ion_auth->logged_in() === FALSE) {
             redirect('user/login');
         }
-        else {
-            // $this->load->model('User_model');
-            // $this->user = $this->ion_auth->user()->row();
-            // $this->user->profile = $this->User_model->get_profile($this->user->id)->row();
-            // $this->user->profile->picture_url = $this->User_model->profile_picture_url($this->user->id);
-            // $this->user->full_name = $this->user->first_name." ".$this->user->last_name;
-            // $this->data['user'] = $this->user;
-            if (!$this->user->active) {
-                $this->ion_auth->logout();
-                redirect('home');
-            }
-        }
+        // else {
+        //     // $this->load->model('User_model');
+        //     // $this->user = $this->ion_auth->user()->row();
+        //     // $this->user->profile = $this->User_model->get_profile($this->user->id)->row();
+        //     // $this->user->profile->picture_url = $this->User_model->profile_picture_url($this->user->id);
+        //     // $this->user->full_name = $this->user->first_name." ".$this->user->last_name;
+        //     // $this->data['user'] = $this->user;
+        //     if (!$this->user->active && $this->uri->uri_string()!='user/profile') {
+        //         // $this->ion_auth->logout();
+        //         redirect('user/profile');
+        //     }
+        // }
     }
 
     protected function render($the_view = NULL, $template = 'pages_template') {
@@ -142,6 +142,15 @@ class User_Controller extends Auth_Controller {
     // var $user;
     function __construct() {
         parent::__construct();
+
+        if (!$this->user->active 
+            && $this->uri->uri_string()!='user/profile' 
+            && $this->uri->uri_string()!='user/logout') {
+                // $this->ion_auth->logout();
+            $_SESSION['message'] = "Please, verify your email to proceed";
+            $this->session->mark_as_flash('message');
+            redirect('user/profile');
+        }
     }
 
     protected function render($the_view = NULL, $template = 'user_template') {

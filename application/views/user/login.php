@@ -36,8 +36,8 @@
 
 		?>
 		<div class="below" id="footer_hero">
-			<a href="Cudi-RecoverAccount.html" class="email-link">Lost your password?</a>
-			<a id="registerlink" href="<?=base_url('user/register') ?>">Sign up</a>
+			<a href="<?=base_url('auth/forgot_password') ?>" class="email-link">Lost your password?</a>
+			<a id="registerlink" href="<?=base_url('auth/register') ?>">Sign up</a>
 
 		</div>
 	</section>

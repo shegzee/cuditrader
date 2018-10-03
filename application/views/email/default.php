@@ -212,7 +212,7 @@ defined('BASEPATH') OR exit("Access denied to the requested resource");
                                                 border-collapse: collapse; border-spacing: 0; border-radius: 4px; 
                                                 -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px;"
                                                 bgcolor="#1D5394">
-                                                <?=$btn_text ?? 'Go'?>
+                                                <?=$btn_text ? $btn_text : 'Go'?>
                                             </td>
                                         </tr>
                                     </table>
