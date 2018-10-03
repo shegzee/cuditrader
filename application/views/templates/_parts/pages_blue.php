@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');?>
+<!-- <?php defined('BASEPATH') OR exit('No direct script access allowed');?>
 
 <div class="page-section section-blue">
   <div class="container">
@@ -37,4 +37,4 @@
       <div class="signup-error" hidden=""></div>
     </form>
   </div>
-</div>
+</div> -->

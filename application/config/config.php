@@ -36,9 +36,9 @@ else if(stristr($host, "localhost") !== FALSE || (stristr($host, "192.168.") !==
 
 else{
     $allowed = ['www.1410inc.xyz', '1410inc.xyz'];//input all allowed urls here e.g. amirsanni.com, www.practa.ng, smartagapp.com
-    // $allowed = ['www.cuditrader.com', 'cuditrader.com'];
+    //$allowed = ['www.cuditrader.com', 'cuditrader.com'];
 
-    $config['base_url'] = in_array($host, $allowed) ? $protocol.$host."/cudi/" : "http://".$_SERVER['HTTP_HOST']."/";
+    $config['base_url'] = in_array($host, $allowed) ? $protocol.$host."/cudi/" : "https://".$_SERVER['HTTP_HOST']."/";
 }
 
 /*

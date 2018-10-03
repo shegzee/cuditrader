@@ -18,8 +18,7 @@
         <div class="copyright">©2018 Margin Tech Investments, Inc. All rights reserved.</div>
         <div id="unchained-address">
           <div>
-            Potters House<br>
-            2, Alhaji Akanbi Street. Oko Oba. Lagos
+            3, Segun Maru Street. Berger. Lagos, Nigeria.
           </div>
         </div>
         <div id="unchained-phone">
@@ -32,6 +31,7 @@
       <div class="col-md-6 mt-3 mt-md-0 d-flex justify-content-between">
         <ul class="list-unstyled">
           <li><a data-category="loans" data-action="goto" data-label="from-footer" class="track-click" href="<?=base_url('loans')?>">Loans</a></li>
+          <li><a data-category="loans" data-action="goto" data-label="from-footer" class="track-click" href="<?=base_url('privacy')?>">Privacy</a></li>
 	  <!--<li><a data-category="business-loans" data-action="goto" data-label="from-footer" class="track-click" href="cuditrader.com/business_loans">Business Loans</a></li>
           <li><a data-category="realestate" data-action="goto" data-label="from-footer" class="track-click" href="cuditrader.com/realestate">Real Estate</a></li>  
 	  <li><a data-category="taxes" data-action="goto" data-label="from-footer" class="track-click" href="cuditrader.com/taxes">Taxes</a></li>-->
