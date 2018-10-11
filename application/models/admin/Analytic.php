@@ -417,4 +417,43 @@ class Analytic extends CI_Model{
             return FALSE;
         // }
     }
+
+    /**
+     * selects all loan requests made today
+     * @return boolean
+     */
+    public function totalAmountRequestedToday(){
+        $q = "SELECT SUM(loan_amount) as 'totalTransToday' FROM loans WHERE DATE(requested_on) = CURRENT_DATE";
+       
+        $run_q = $this->db->query($q);
+       
+        if($run_q->num_rows() > 0){
+            foreach($run_q->result() as $get){
+                return $get->totalTransToday;
+            }
+        }
+
+        else{
+            return FALSE;
+        }
+    }
+    /**
+     * selects all loan granted ever
+     * @return boolean
+     */
+    public function totalAmountLoanedEver(){
+        $q = "SELECT SUM(loan_amount) as 'totalLoaned' FROM loans LEFT JOIN loan_status ON loans.status_number = loan_status.status_number WHERE loan_status.status IN ('GRANTED', 'CLEARED')";
+       
+        $run_q = $this->db->query($q);
+       
+        if($run_q->num_rows() > 0){
+            foreach($run_q->result() as $get){
+                return $get->totalLoaned;
+            }
+        }
+
+        else{
+            return FALSE;
+        }
+    }
 }

@@ -5,8 +5,8 @@ $(document).ready(function(){
 	
 	
     //load all banks once the page is ready
-    //function header: lalu_(url)
-    lalu_();
+    //function header: lase_(url)
+    lase_();
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -15,9 +15,9 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     //reload the list of bank when fields are changed
-    $("#lUnitListSortBy, #lUnitListPerPage").change(function(){
+    $("#settingListSortBy, #settingListPerPage").change(function(){
         displayFlashMsg("Please wait...", spinnerClass, "", "");
-        lalu_();
+        lase_();
     });
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -27,12 +27,12 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     //load and show page when pagination link is clicked
-    $("#allLUnit").on('click', '.lnp', function(e){
+    $("#allSettings").on('click', '.lnp', function(e){
         e.preventDefault();
 		
         displayFlashMsg("Please wait...", spinnerClass, "", "");
 
-        lalu_($(this).attr('href'));
+        lase_($(this).attr('href'));
 
         return false;
     });
@@ -47,31 +47,35 @@ $(document).ready(function(){
     
     
     //handles the addition of new loan unit .i.e. when "add loan unit" button is clicked
-    $("#addLUnitSubmit").click(function(e){
+    $("#addSettingSubmit").click(function(e){
         e.preventDefault();
         
         //reset all error msgs in case they are set
-        changeInnerHTML(['nameErr', 'logoErr'],
+        changeInnerHTML(['settingErr', 'valueErr'],
         "");
         
-        var name = $("#name").val();
-        var logo = $("#logo").val();
+        var setting = $("#setting").val();
+        var value = $("#value").val();
         
         //ensure all required fields are filled
-        if(!name){
-            !name ? changeInnerHTML('nameErr', "required") : "";
+        if(!setting){
+            !setting ? changeInnerHTML('settingErr', "required") : "";
+            return;
+        }
+        if(!value){
+            !value ? changeInnerHTML('valueErr', "required") : "";
             return;
         }
         
-        //display message telling bank action is being processed
+        //display message telling action is being processed
         $("#fMsgIcon").attr('class', spinnerClass);
         $("#fMsg").text(" Processing...");
         
         //make ajax request if all is well
         $.ajax({
             method: "POST",
-            url: appRoot+"units/addLUnit",
-            data: {name:name, logo:logo}
+            url: appRoot+"settings/addSetting",
+            data: {setting:setting, value:value}
         }).done(function(returnedData){
             $("#fMsgIcon").removeClass();//remove spinner
                 
@@ -79,20 +83,20 @@ $(document).ready(function(){
                 $("#fMsg").css('color', 'green').text(returnedData.msg);
 
                 //reset the form
-                document.getElementById("addNewLUnitForm").reset();
+                document.getElementById("addNewSettingForm").reset();
 
                 //close the modal
                 setTimeout(function(){
                     $("#fMsg").text("");
-                    $("#addNewLUnitModal").modal('hide');
+                    $("#addNewSettingModal").modal('hide');
                 }, 1000);
 
                 //reset all error msgs in case they are set
-                changeInnerHTML(['nameErr', 'logoErr'],
+                changeInnerHTML(['settingErr', 'valueErr'],
                 "");
 
                 //refresh bank list table
-                lalu_();
+                lase_();
 
             }
 
@@ -101,8 +105,8 @@ $(document).ready(function(){
                 $("#fMsg").css('color', 'red').html(returnedData.msg);
 
                 //display individual error messages if applied
-                $("#nameErr").text(returnedData.name);
-                $("#logoErr").text(returnedData.logo);
+                $("#settingErr").text(returnedData.name);
+                $("#valueErr").text(returnedData.logo);
             }
         }).fail(function(){
             if(!navigator.onLine){
@@ -120,25 +124,30 @@ $(document).ready(function(){
     
     
     //handles the updating of bank details
-    $("#editLUnitSubmit").click(function(e){
+    $("#editSettingSubmit").click(function(e){
         e.preventDefault();
         
-        if(formChanges("editLUnitForm")){
+        if(formChanges("editSettingForm")){
             //reset all error msgs in case they are set
-            changeInnerHTML(['nameEditErr', 'logoEditErr'], "");
+            changeInnerHTML(['settingEditErr', 'valueEditErr'], "");
 
-            var name = $("#nameEdit").val();
-            var logo = $("#logoEdit").val();
-            var lUnitId = $("#lUnitId").val();
+            var setting = $("#settingEdit").val();
+            var value = $("#valueEdit").val();
+            var tenorId = $("#tenorId").val();
 
             //ensure all required fields are filled
-            if(!name){
-                !name ? changeInnerHTML('nameEditErr', "required") : "";
+            if(!setting){
+                !setting ? changeInnerHTML('settingEditErr', "required") : "";
+
+                return;
+            }
+            if(!value){
+                !value ? changeInnerHTML('valueEditErr', "required") : "";
 
                 return;
             }
 
-            if(!lUnitId){
+            if(!tenorId){
                 $("#fMsgEdit").text("An unexpected error occured while trying to update collateral details");
                 return;
             }
@@ -150,8 +159,8 @@ $(document).ready(function(){
             //make ajax request if all is well
             $.ajax({
                 method: "POST",
-                url: appRoot+"units/updateLUnit",
-                data: {lUnitId:lUnitId, name:name, logo:logo}
+                url: appRoot+"settings/updateSetting",
+                data: {tenorId:tenorId, setting:setting, value:value}
             }).done(function(returnedData){
                 $("#fMsgEditIcon").removeClass();//remove spinner
 
@@ -165,10 +174,10 @@ $(document).ready(function(){
                     }, 1000);
 
                     //reset all error msgs in case they are set
-                    changeInnerHTML(['nameEditErr', 'logoEditErr'], "");
+                    changeInnerHTML(['settingEditErr', 'valueEditErr'], "");
 
                     //refresh bank list table
-                    lalu_();
+                    lase_();
 
                 }
 
@@ -177,8 +186,8 @@ $(document).ready(function(){
                     $("#fMsgEdit").css('color', 'red').html(returnedData.msg);
 
                     //display individual error messages if applied
-                    $("#nameEditErr").html(returnedData.name);
-                    $("#logoEditErr").html(returnedData.logo);
+                    $("#settingEditErr").html(returnedData.setting);
+                    $("#valueEditErr").html(returnedData.value);
                 }
             }).fail(function(){
                     if(!navigator.onLine){
@@ -199,22 +208,22 @@ $(document).ready(function(){
     
     
     //handles bank search
-    $("#lUnitSearch").on('keyup change', function(){
+    $("#settingsSearch").on('keyup change', function(){
         var value = $(this).val();
         
         if(value){//search only if there is at least one char in input
             $.ajax({
                 type: "get",
-                url: appRoot+"search/lunitsearch",
+                url: appRoot+"search/settingssearch",
                 data: {v:value},
                 success: function(returnedData){
-                    $("#allLUnit").html(returnedData.lUnitTable);
+                    $("#allSettings").html(returnedData.settingsTable);
                 }
             });
         }
         
         else{
-            lalu_();
+            lase_();
         }
     });
     
@@ -229,26 +238,26 @@ $(document).ready(function(){
     
     
     //When the trash icon in front of a loan unit is clicked on the loan units list table (i.e. to delete the unit)
-    $("#allLUnit").on('click', '.deleteLUnit', function(){
+    $("#allSettings").on('click', '.deleteSetting', function(){
         var confirm = window.confirm("Proceed?");
         
         if(confirm){
             var ElemId = $(this).attr('id');
 
-            var lUnitId = ElemId.split("-")[1];//get the bankId
+            var settingId = ElemId.split("-")[1];//get the bankId
 
             //show spinner
             $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
 
-            if(lUnitId){
+            if(settingId){
                 $.ajax({
-                    url: appRoot+"units/deleteLUnit",
+                    url: appRoot+"settings/deleteSetting",
                     method: "POST",
-                    data: {_luId:lUnitId}
+                    data: {_sId:settingId}
                 }).done(function(returnedData){
                     if(returnedData.status === 1){
                        
-                        lalu_();
+                        lase_();
 
                     }
 
@@ -262,27 +271,27 @@ $(document).ready(function(){
     
     
     //to launch the modal to allow for the editing of bank info
-    $("#allLUnit").on('click', '.editLUnit', function(){
+    $("#allSettings").on('click', '.editSetting', function(){
         
-        var lUnitId = $(this).attr('id').split("-")[1];
+        var settingId = $(this).attr('id').split("-")[1];
         
-        $("#lUnitId").val(lUnitId);
+        $("#settingId").val(settingId);
         
         //get info of bank with bankId and prefill the form with it
         //alert($(this).siblings(".bankEmail").children('a').html());
-        var name = $(this).siblings(".name").html();
-        var logo = $(this).siblings(".logo").html();
+        var setting = $(this).siblings(".setting").html();
+        var value = $(this).siblings(".value").html();
         
         //prefill the form fields
-        $("#nameEdit").val(name);
-        $("#logoEdit").val(logo);
+        $("#settingEdit").val(setting);
+        $("#valueEdit").val(value);
         
-        $("#editLUnitModal").modal('show');
+        $("#editSettingModal").modal('show');
     });
     
-    /***************** replicate for collateral units ************************************* */
+    /***************** replicate from tenors ************************************* */
 
-    lacu_();
+    late_();
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -291,9 +300,9 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     //reload the list of bank when fields are changed
-    $("#cUnitListSortBy, #cUnitListPerPage").change(function(){
+    $("#tenorListSortBy, #tenorListPerPage").change(function(){
         displayFlashMsg("Please wait...", spinnerClass, "", "");
-        lacu_();
+        late_();
     });
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -303,12 +312,12 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     //load and show page when pagination link is clicked
-    $("#allCUnit").on('click', '.lnp', function(e){
+    $("#allTenors").on('click', '.lnp', function(e){
         e.preventDefault();
         
         displayFlashMsg("Please wait...", spinnerClass, "", "");
 
-        lacu_($(this).attr('href'));
+        late_($(this).attr('href'));
 
         return false;
     });
@@ -323,66 +332,70 @@ $(document).ready(function(){
     
     
     //handles the addition of new collateral unit .i.e. when "add collateral unit" button is clicked
-    $("#addCUnitSubmit").click(function(e){
+    $("#addTenorSubmit").click(function(e){
         e.preventDefault();
         
         //reset all error msgs in case they are set
-        changeInnerHTML(['nameCUErr', 'logoCUErr'],
+        changeInnerHTML(['tenorErr', 'displayErr'],
         "");
         
-        var name = $("#nameCU").val();
-        var logo = $("#logoCU").val();
+        var tenor = $("#tenor").val();
+        var display = $("#display").val();
         
         //ensure all required fields are filled
-        if(!name){
-            !name ? changeInnerHTML('nameCUErr', "required") : "";
+        if(!tenor){
+            !tenor ? changeInnerHTML('tenorErr', "required") : "";
+            return;
+        }
+        if(!display){
+            !display ? changeInnerHTML('displayErr', "required") : "";
             return;
         }
         
         //display message telling bank action is being processed
-        $("#fMsgCUIcon").attr('class', spinnerClass);
-        $("#fMsgCU").text(" Processing...");
+        $("#fMsgTenorIcon").attr('class', spinnerClass);
+        $("#fMsgTenor").text(" Processing...");
         
         //make ajax request if all is well
         $.ajax({
             method: "POST",
-            url: appRoot+"units/addCUnit",
-            data: {name:name, logo:logo}
+            url: appRoot+"settings/addTenor",
+            data: {tenor:tenor, display:display}
         }).done(function(returnedData){
-            $("#fMsgCUIcon").removeClass();//remove spinner
+            $("#fMsgTenorIcon").removeClass();//remove spinner
                 
             if(returnedData.status === 1){
-                $("#fMsgCU").css('color', 'green').text(returnedData.msg);
+                $("#fMsgTenor").css('color', 'green').text(returnedData.msg);
 
                 //reset the form
-                document.getElementById("addNewCUnitForm").reset();
+                document.getElementById("addNewTenorForm").reset();
 
                 //close the modal
                 setTimeout(function(){
-                    $("#fMsgCU").text("");
-                    $("#addNewCUnitModal").modal('hide');
+                    $("#fMsgTenor").text("");
+                    $("#addNewTenorModal").modal('hide');
                 }, 1000);
 
                 //reset all error msgs in case they are set
-                changeInnerHTML(['nameCUErr', 'logoCUErr'],
+                changeInnerHTML(['tenorErr', 'displayErr'],
                 "");
 
                 //refresh bank list table
-                lacu_();
+                late_();
 
             }
 
             else{
                 //display error message returned
-                $("#fMsgCU").css('color', 'red').html(returnedData.msg);
+                $("#fMsgTenor").css('color', 'red').html(returnedData.msg);
 
                 //display individual error messages if applied
-                $("#nameCUErr").text(returnedData.name);
-                $("#logoCUErr").text(returnedData.logo);
+                $("#tenorErr").text(returnedData.name);
+                $("#displayErr").text(returnedData.logo);
             }
         }).fail(function(){
             if(!navigator.onLine){
-                $("#fMsgCU").css('color', 'red').text("Network error! Pls check your network connection");
+                $("#fMsgTenor").css('color', 'red').text("Network error! Pls check your network connection");
             }
         });
     });
@@ -396,75 +409,81 @@ $(document).ready(function(){
     
     
     //handles the updating of bank details
-    $("#editCUnitSubmit").click(function(e){
+    $("#editTenorSubmit").click(function(e){
         e.preventDefault();
         
-        if(formChanges("editCUnitForm")){
+        if(formChanges("editTenorForm")){
             //reset all error msgs in case they are set
-            changeInnerHTML(['nameCUEditErr', 'logoCUEditErr'], "");
+            changeInnerHTML(['tenorEditErr', 'displayEditErr'], "");
 
-            var name = $("#nameCUEdit").val();
-            var logo = $("#logoCUEdit").val();
-            var cUnitId = $("#cUnitId").val();
+            var tenor = $("#tenorEdit").val();
+            var display = $("#displayEdit").val();
+            var tenorId = $("#tenorId").val();
 
             //ensure all required fields are filled
-            if(!name){
-                !name ? changeInnerHTML('nameCUEditErr', "required") : "";
+            if(!tenor){
+                !tenor ? changeInnerHTML('tenorEditErr', "required") : "";
 
                 return;
             }
 
-            if(!cUnitId){
-                $("#fMsgEditCU").text("An unexpected error occured while trying to update account type");
+            if(!display){
+                !display ? changeInnerHTML('displayEditErr', "required") : "";
+
+                return;
+            }
+
+            if(!tenorId){
+                $("#fMsgEditTenor").text("An unexpected error occured while trying to update account type");
                 return;
             }
 
             //display message telling bank action is being processed
-            $("#fMsgEditCUIcon").attr('class', spinnerClass);
-            $("#fMsgEditCU").text(" Updating details...");
+            $("#fMsgEditTenorIcon").attr('class', spinnerClass);
+            $("#fMsgEditTenor").text(" Updating details...");
 
             //make ajax request if all is well
             $.ajax({
                 method: "POST",
-                url: appRoot+"units/updateCUnit",
-                data: {cUnitId:cUnitId, name:name, logo:logo}
+                url: appRoot+"settings/updateTenor",
+                data: {tenorId:tenorId, tenor:tenor, display:display}
             }).done(function(returnedData){
-                $("#fMsgEditCUIcon").removeClass();//remove spinner
+                $("#fMsgEditTenorIcon").removeClass();//remove spinner
 
                 if(returnedData.status === 1){
-                    $("#fMsgEditCU").css('color', 'green').text(returnedData.msg);
+                    $("#fMsgEditTenor").css('color', 'green').text(returnedData.msg);
 
                     //reset the form and close the modal
                     setTimeout(function(){
-                        $("#fMsgEditCU").text("");
-                        $("#editCUnitModal").modal('hide');
+                        $("#fMsgEditTenor").text("");
+                        $("#editTenorModal").modal('hide');
                     }, 1000);
 
                     //reset all error msgs in case they are set
-                    changeInnerHTML(['nameCUEditErr', 'logoCUEditErr'], "");
+                    changeInnerHTML(['tenorEditErr', 'displayEditErr'], "");
 
                     //refresh bank list table
-                    lacu_();
+                    late_();
 
                 }
 
                 else{
                     //display error message returned
-                    $("#fMsgEditCU").css('color', 'red').html(returnedData.msg);
+                    $("#fMsgEditTenor").css('color', 'red').html(returnedData.msg);
 
                     //display individual error messages if applied
-                    $("#nameCUEditErr").html(returnedData.name);
-                    $("#logoCUEditErr").html(returnedData.logo);
+                    $("#tenorEditErr").html(returnedData.name);
+                    $("#displayEditErr").html(returnedData.logo);
                 }
             }).fail(function(){
                     if(!navigator.onLine){
-                        $("#fMsgEditCU").css('color', 'red').html("Network error! Pls check your network connection");
+                        $("#fMsgEditTenor").css('color', 'red').html("Network error! Pls check your network connection");
                     }
                 });
         }
         
         else{
-            $("#fMsgEditCU").html("No changes were made");
+            $("#fMsgEditTenor").html("No changes were made");
         }
     });
     
@@ -474,23 +493,23 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
-    //handles bank search
-    $("#cUnitSearch").on('keyup change', function(){
+    //handles tenor search
+    $("#tenorSearch").on('keyup change', function(){
         var value = $(this).val();
         
         if(value){//search only if there is at least one char in input
             $.ajax({
                 type: "get",
-                url: appRoot+"search/cUnitsearch",
+                url: appRoot+"search/tenorsearch",
                 data: {v:value},
                 success: function(returnedData){
-                    $("#allCUnit").html(returnedData.cUnitTable);
+                    $("#allTenors").html(returnedData.cUnitTable);
                 }
             });
         }
         
         else{
-            lacu_();
+            late_();
         }
     });
     
@@ -505,27 +524,27 @@ $(document).ready(function(){
     
     
     //When the trash icon in front of a bank account is clicked on the bank list table (i.e. to delete the account)
-    $("#allCUnit").on('click', '.deleteCUnit', function(){
+    $("#allTenors").on('click', '.deleteTenor', function(){
         var confirm = window.confirm("Proceed?");
         
         if(confirm){
             var ElemId = $(this).attr('id');
 
-            var cUnitId = ElemId.split("-")[1];//get the bankId
+            var tenorId = ElemId.split("-")[1];//get the bankId
 
             //show spinner
             $("#"+ElemId).html("<i class='"+spinnerClass+"'</i>");
 
-            if(cUnitId){
+            if(tenorId){
                 $.ajax({
-                    url: appRoot+"units/deleteCUnit",
+                    url: appRoot+"settings/deleteTenor",
                     method: "POST",
-                    data: {_cuId:cUnitId}
+                    data: {_tId:tenorId}
                 }).done(function(returnedData){
                     if(returnedData.status === 1){
                        
                         //change the icon to "undo delete" if it's "active" before the change and vice-versa
-                        lacu_();
+                        late_();
 
                     }
 
@@ -539,22 +558,22 @@ $(document).ready(function(){
     
     
     //to launch the modal to allow for the editing of bank info
-    $("#allCUnit").on('click', '.editCUnit', function(){
+    $("#allTenors").on('click', '.editTenor', function(){
         
-        var cUnitId = $(this).attr('id').split("-")[1];
+        var tenorId = $(this).attr('id').split("-")[1];
         
-        $("#cUnitId").val(cUnitId);
+        $("#tenorId").val(tenorId);
         
         //get info of bank with bankId and prefill the form with it
         //alert($(this).siblings(".bankEmail").children('a').html());
-        var name = $(this).siblings(".name").html();
-        var logo = $(this).siblings(".logo").html();
+        var tenor = $(this).siblings(".tenor").html();
+        var display = $(this).siblings(".display").html();
         
         //prefill the form fields
-        $("#nameCUEdit").val(name);
-        $("#logoCUEdit").val(logo);
+        $("#tenorEdit").val(tenor);
+        $("#displayEdit").val(display);
         
-        $("#editCUnitModal").modal('show');
+        $("#editTenorModal").modal('show');
     });
 });
 
@@ -569,43 +588,43 @@ $(document).ready(function(){
 */
 
 /**
- * lalu_ = "Load all loan units"
+ * lase_ = "Load all loan units"
  * @returns {undefined}
  */
-function lalu_(url){
-    var orderBy = $("#lUnitListSortBy").val().split("-")[0];
-    var orderFormat = $("#lUnitListSortBy").val().split("-")[1];
-    var limit = $("#cUnitListPerPage").val();
+function lase_(url){
+    var orderBy = $("#settingsListSortBy").val().split("-")[0];
+    var orderFormat = $("#settingsListSortBy").val().split("-")[1];
+    var limit = $("#settingsListPerPage").val();
     
     $.ajax({
         type:'get',
-        url: url ? url : appRoot+"units/lalu_/",
+        url: url ? url : appRoot+"settings/lase_/",
         data: {orderBy:orderBy, orderFormat:orderFormat, limit:limit},
      }).done(function(returnedData){
             hideFlashMsg();
 			
-            $("#allLUnit").html(returnedData.lUnitTable);
+            $("#allSettings").html(returnedData.settingsTable);
         });
 }
 
 /* *************************************************************************************** */
 
 /**
- * lacu_ = "Load all collateral units"
+ * late_ = "Load all collateral units"
  * @returns {undefined}
  */
-function lacu_(url){
-    var orderBy = $("#cUnitListSortBy").val().split("-")[0];
-    var orderFormat = $("#cUnitListSortBy").val().split("-")[1];
-    var limit = $("#cUnitListPerPage").val();
+function late_(url){
+    var orderBy = $("#tenorListSortBy").val().split("-")[0];
+    var orderFormat = $("#tenorListSortBy").val().split("-")[1];
+    var limit = $("#tenorListPerPage").val();
     
     $.ajax({
         type:'get',
-        url: url ? url : appRoot+"units/lacu_/",
+        url: url ? url : appRoot+"settings/late_/",
         data: {orderBy:orderBy, orderFormat:orderFormat, limit:limit},
      }).done(function(returnedData){
             hideFlashMsg();
             
-            $("#allCUnit").html(returnedData.cUnitTable);
+            $("#allTenors").html(returnedData.tenorTable);
         });
 }

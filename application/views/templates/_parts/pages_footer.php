@@ -22,7 +22,7 @@
           </div>
         </div>
         <div id="unchained-phone">
-          <a data-category="contact-us" data-action="phone" data-label="from-footer" class="track-click" href="tel:+2348152457369">0815 245 7369</a>
+          <a data-category="contact-us" data-action="phone" data-label="from-footer" class="track-click" href="tel:+2348152457369"><!-- 0815 245 7369 --><?= $site_settings['phone']; ?></a>
         </div>
         <div id="unchained-email">
           <a data-category="contact-us" data-action="email" data-label="from-footer" class="track-click" href="mailto:info@cuditrader.com">info@cuditrader.com</a>

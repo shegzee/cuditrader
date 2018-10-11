@@ -16,7 +16,7 @@ class Settings extends CI_Controller{
         
         //$this->genlib->superOnly();
         
-        $this->load->model(['admin/unit']);
+        $this->load->model(['admin/setting']);
     }
     
     /*
@@ -28,8 +28,8 @@ class Settings extends CI_Controller{
     */
     
     public function index(){
-        $data['pageContent'] = $this->load->view('admin/units/unit', '', TRUE);
-        $data['pageTitle'] = "Currency Units";
+        $data['pageContent'] = $this->load->view('admin/settings/settings', '', TRUE);
+        $data['pageTitle'] = "Settings";
         
         $this->load->view('admin/main', $data);
     }
@@ -44,15 +44,15 @@ class Settings extends CI_Controller{
     */
     
     /**
-     * lalu_ = "Load all loan units"
+     * lase_ = "Load all settings"
      */
-    public function lalu_(){
+    public function lase_(){
         //set the sort order
-        $orderBy = $this->input->get('orderBy', TRUE) ? $this->input->get('orderBy', TRUE) : "name";
+        $orderBy = $this->input->get('orderBy', TRUE) ? $this->input->get('orderBy', TRUE) : "setting";
         $orderFormat = $this->input->get('orderFormat', TRUE) ? $this->input->get('orderFormat', TRUE) : "ASC";
         
-        //count the total loan units in db.
-        $totalLUnits = count($this->unit->getAllLUnits());
+        //count the total Loan units in db.
+        $totalSettings = count($this->setting->getAllSettings());
         
         $this->load->library('pagination');
         
@@ -62,18 +62,18 @@ class Settings extends CI_Controller{
         $start = $pageNumber == 0 ? 0 : ($pageNumber - 1) * $limit;//start from 0 if pageNumber is 0, else start from the next iteration
         
         //call setPaginationConfig($totalRows, $urlToCall, $limit, $attributes) in genlib to configure pagination
-        $config = $this->genlib->setPaginationConfig($totalLUnits, "units/lalu_", $limit, ['class'=>'lnp']);
+        $config = $this->genlib->setPaginationConfig($totalSettings, "settings/lase_", $limit, ['class'=>'lnp']);
         
         $this->pagination->initialize($config);//initialize the library class
         
-        //get all loan units from db
-        $data['allLUnits'] = $this->unit->getAllLUnits($orderBy, $orderFormat, $start, $limit);
-        //echo "<script> console.log('All Loan Units: ',",$data['allLUnits'],");</script>";
-        $data['range'] = $totalLUnits >= 0 ? ($start+1) . "-" . ($start + count($data['allLUnits'])) . " of " . $totalLUnits : "";
+        //get all Loan units from db
+        $data['allSettings'] = $this->setting->getAllSettings($orderBy, $orderFormat, $start, $limit);
+        //echo "<script> console.log('All Loan units: ',",$data['allSettings'],");</script>";
+        $data['range'] = $totalSettings >= 0 ? ($start+1) . "-" . ($start + count($data['allSettings'])) . " of " . $totalSettings : "";
         $data['links'] = $this->pagination->create_links();//page links
         $data['sn'] = $start+1;
         
-        $json['lUnitTable'] = $this->load->view('admin/units/lunitlist', $data, TRUE);//get view with populated loan units table
+        $json['settingsTable'] = $this->load->view('admin/settings/settingslist', $data, TRUE);//get view with populated Loan units table
 
         $this->output->set_content_type('application/json')->set_output(json_encode($json));
     }
@@ -89,16 +89,17 @@ class Settings extends CI_Controller{
     
     
     /**
-     * To add new loan unit
+     * To add new setting
      */
-    public function addLUnit(){
+    public function addSetting(){
         $this->genlib->ajaxOnly();
         
         $this->load->library('form_validation');
 
         $this->form_validation->set_error_delimiters('', '');
         
-        $this->form_validation->set_rules('name', 'Name', ['required', 'trim', 'max_length[50]'], ['required'=>"required"]);
+        $this->form_validation->set_rules('setting', 'Setting', ['required', 'trim', 'max_length[50]'], ['required'=>"required"]);
+        $this->form_validation->set_rules('value', 'Value', ['required', 'trim', 'max_length[255]'], ['required'=>"required"]);
            
         if($this->form_validation->run() !== FALSE){
             /**
@@ -106,11 +107,11 @@ class Settings extends CI_Controller{
              * function header: add($f_name, $l_name, $email, $password, $role, $mobile, $addr)
              */
             
-            $inserted = $this->unit->addLUnit(set_value('name'), set_value('logo'));
+            $inserted = $this->setting->addSetting(set_value('setting'), set_value('value'));
             
             
             $json = $inserted ? 
-                ['status'=>1, 'msg'=>"Unit successfully created"] 
+                ['status'=>1, 'msg'=>"Setting successfully created"] 
                 : 
                 ['status'=>0, 'msg'=>"Oops! Unexpected server error! Pls contact administrator for help. Sorry for the embarrassment"];
         }
@@ -138,7 +139,7 @@ class Settings extends CI_Controller{
     /**
      * 
      */
-    public function updateLUnit(){
+    public function updateSetting(){
         $this->genlib->ajaxOnly();
         
         $this->load->library('form_validation');
@@ -152,9 +153,9 @@ class Settings extends CI_Controller{
              * update info in db
              */
 				
-            $id = $this->input->post('lUnitId', TRUE);
+            $id = $this->input->post('settingId', TRUE);
 
-            $updated = $this->unit->updateLUnit($id, set_value('name'), set_value('logo'));
+            $updated = $this->setting->updateSetting($id, set_value('name'), set_value('logo'));
             
             
             $json = $updated ? 
@@ -184,35 +185,35 @@ class Settings extends CI_Controller{
     ********************************************************************************************************************************
     */
     
-    public function deleteLUnit(){
+    public function deleteSetting(){
         $this->genlib->ajaxOnly();
         
-        $unit_id = $this->input->post('_luId');
-        // $new_value = $this->genmod->gettablecol('loan_units', 'deleted', 'id', $unit_id) == 1 ? 0 : 1;
+        $setting_id = $this->input->post('_luId');
+        // $new_value = $this->genmod->gettablecol('loan_units', 'deleted', 'id', $setting_id) == 1 ? 0 : 1;
         
-        $done = $this->unit->deleteLUnit($unit_id);
+        $done = $this->setting->deleteSetting($setting_id);
         
         $json['status'] = $done ? 1 : 0;
         // $json['_nv'] = $new_value;
         $json['_nv'] = 0;
-        $json['_luId'] = $unit_id;
+        $json['_luId'] = $setting_id;
         
         $this->output->set_content_type('application/json')->set_output(json_encode($json));
     }
 
 
  /* --------------------------------------------------------------------------------------- */
- // here's for collateral units
+ // here's for tenors
  /**
-     * lacu_ = "Load all collateral units"
+     * late_ = "Load all tenors"
      */
-    public function lacu_(){
+    public function late_(){
         //set the sort order
         $orderBy = $this->input->get('orderBy', TRUE) ? $this->input->get('orderBy', TRUE) : "name";
         $orderFormat = $this->input->get('orderFormat', TRUE) ? $this->input->get('orderFormat', TRUE) : "ASC";
         
-        //count the total collateral units in db.
-        $totalCUnits = count($this->unit->getAllCUnits());
+        //count the total tenors in db.
+        $totalTenors = count($this->setting->getAllTenors());
         
         $this->load->library('pagination');
         
@@ -222,18 +223,18 @@ class Settings extends CI_Controller{
         $start = $pageNumber == 0 ? 0 : ($pageNumber - 1) * $limit;//start from 0 if pageNumber is 0, else start from the next iteration
         
         //call setPaginationConfig($totalRows, $urlToCall, $limit, $attributes) in genlib to configure pagination
-        $config = $this->genlib->setPaginationConfig($totalCUnits, "units/lacu_", $limit, ['class'=>'lnp']);
+        $config = $this->genlib->setPaginationConfig($totalTenors, "settings/late_", $limit, ['class'=>'lnp']);
         
         $this->pagination->initialize($config);//initialize the library class
         
-        //get all collateral units from db
-        $data['allCUnits'] = $this->unit->getAllCUnits($orderBy, $orderFormat, $start, $limit);
-        //echo "<script> console.log('All Units: ',",$data['allCUnits'],");</script>";
-        $data['range'] = $totalCUnits >= 0 ? ($start+1) . "-" . ($start + count($data['allCUnits'])) . " of " . $totalCUnits : "";
+        //get all tenors from db
+        $data['allTenors'] = $this->setting->getAllTenors($orderBy, $orderFormat, $start, $limit);
+        //echo "<script> console.log('All Units: ',",$data['allTenors'],");</script>";
+        $data['range'] = $totalTenors >= 0 ? ($start+1) . "-" . ($start + count($data['allTenors'])) . " of " . $totalTenors : "";
         $data['links'] = $this->pagination->create_links();//page create_links
         $data['sn'] = $start+1;
         
-        $json['cUnitTable'] = $this->load->view('admin/units/cunitlist', $data, TRUE);//get view with populated collateral units table
+        $json['tenorTable'] = $this->load->view('admin/settings/tenorlist', $data, TRUE);//get view with populated tenors table
 
         $this->output->set_content_type('application/json')->set_output(json_encode($json));
     }
@@ -251,14 +252,15 @@ class Settings extends CI_Controller{
     /**
      * To add new collateral unit
      */
-    public function addCUnit(){
+    public function addTenor(){
         $this->genlib->ajaxOnly();
         
         $this->load->library('form_validation');
 
         $this->form_validation->set_error_delimiters('', '');
         
-        $this->form_validation->set_rules('name', 'Name', ['required', 'trim', 'max_length[50]'], ['required'=>"required"]);
+        $this->form_validation->set_rules('tenor', 'Tenor', ['required', 'trim', 'max_length[50]'], ['required'=>"required"]);
+        $this->form_validation->set_rules('display', 'Display', ['required'], ['required'=>"required"]);
            
         if($this->form_validation->run() !== FALSE){
             /**
@@ -266,11 +268,11 @@ class Settings extends CI_Controller{
              * function header: add($f_name, $l_name, $email, $password, $role, $mobile, $addr)
              */
             
-            $inserted = $this->unit->addCUnit(set_value('name'), set_value('logo'));
+            $inserted = $this->setting->addTenor(set_value('tenor'), set_value('display'));
             
             
             $json = $inserted ? 
-                ['status'=>1, 'msg'=>"Collateral unit successfully created"] 
+                ['status'=>1, 'msg'=>"Tenor successfully created"] 
                 : 
                 ['status'=>0, 'msg'=>"Oops! Unexpected server error! Pls contact administrator for help. Sorry for the embarrassment"];
         }
@@ -298,27 +300,28 @@ class Settings extends CI_Controller{
     /**
      * 
      */
-    public function updateCUnit(){
+    public function updateTenor(){
         $this->genlib->ajaxOnly();
         
         $this->load->library('form_validation');
 
         $this->form_validation->set_error_delimiters('', '');
         
-        $this->form_validation->set_rules('name', 'Name', ['required', 'trim', 'max_length[50]'], ['required'=>"required"]);
+        $this->form_validation->set_rules('tenor', 'Tenor', ['required'], ['required'=>"required"]);
+        $this->form_validation->set_rules('display', 'Display', ['required', 'trim', 'max_length[50]'], ['required'=>"required"]);
         
         if($this->form_validation->run() !== FALSE){
             /**
              * update info in db
              */
                 
-            $id = $this->input->post('cUnitId', TRUE);
+            $id = $this->input->post('tenorId', TRUE);
 
-            $updated = $this->unit->updateCUnit($id, set_value('name'), set_value('logo'));
+            $updated = $this->setting->updateTenor($id, set_value('tenor'), set_value('display'));
             
             
             $json = $updated ? 
-                    ['status'=>1, 'msg'=>"Collateral unit successfully updated"] 
+                    ['status'=>1, 'msg'=>"Tenor successfully updated"] 
                     : 
                     ['status'=>0, 'msg'=>"Oops! Unexpected server error! Pls contact administrator for help. Sorry for the embarrassment"];
         }
@@ -344,19 +347,19 @@ class Settings extends CI_Controller{
     ********************************************************************************************************************************
     */
     
-    public function deleteCUnit(){
+    public function deleteTenor(){
         $this->genlib->ajaxOnly();
         
-        $id = $this->input->post('_cuId');
+        $id = $this->input->post('_tId');
         // $new_value = $this->genmod->gettablecol('collateral_units', 'deleted', 'id', $id) == 1 ? 0 : 1;
-        // $this->unit->deleteCUnit($id);
+        // $this->unit->deleteTenor($id);
         
-        $done = $this->unit->deleteCUnit($id);
+        $done = $this->setting->deleteTenor($id);
         
         $json['status'] = $done ? 1 : 0;
         // $json['_nv'] = $new_value;
         $json['_nv'] = 0;
-        $json['_cuId'] = $id;
+        $json['_tId'] = $id;
         
         $this->output->set_content_type('application/json')->set_output(json_encode($json));
     }

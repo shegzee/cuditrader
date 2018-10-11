@@ -195,9 +195,12 @@ class Genmod extends CI_Model{
 		}
 		
 		else{
-			$this->db->select('transDate, totalPrice');
-			$this->db->where(['YEAR(transDate)'=>$year_to_fetch]);
-			$run_q = $this->db->get('transactions');
+			$this->db->select('requested_on, loan_amount');
+            $this->db->where(['YEAR(requested_on)'=>$year_to_fetch]);
+            $this->db->from('loans');
+            $this->db->join('loan_status', 'loans.status_number = loan_status.status_number');
+			$this->db->where_in('loan_status.status', array('GRANTED', 'CLEARED'));
+			$run_q = $this->db->get();
 		}
         
         if($run_q->num_rows()){
@@ -225,6 +228,34 @@ class Genmod extends CI_Model{
      * @return boolean
      */
     public function getPaymentMethods($year){
+        if($this->db->platform() == "sqlite3"){
+            $q = "SELECT modeOfPayment FROM transactions WHERE strftime('%Y', transDate) GROUP BY ref";
+            
+            $run_q = $this->db->query($q);
+        }
+        
+        else{
+            $this->db->select('modeOfPayment');
+            $year ? $this->db->where('YEAR(transDate)', $year) : "";
+            $this->db->group_by('ref');
+            $run_q = $this->db->get('transactions');
+        }
+        
+        if($run_q->num_rows()){
+            return $run_q->result();
+        }
+        
+        else{
+            return FALSE;
+        }
+    }
+
+    /**
+     * Get all mode of payments
+     * @year
+     * @return boolean
+     */
+    public function getCollateralUnitsUsed($year){
 		if($this->db->platform() == "sqlite3"){
 			$q = "SELECT modeOfPayment FROM transactions WHERE strftime('%Y', transDate) GROUP BY ref";
 			
@@ -232,10 +263,14 @@ class Genmod extends CI_Model{
 		}
 		
 		else{
-			$this->db->select('modeOfPayment');
-			$year ? $this->db->where('YEAR(transDate)', $year) : "";
-			$this->db->group_by('ref');
-			$run_q = $this->db->get('transactions');
+			$this->db->select('loans.collateral_unit_id, collateral_units.name');
+			$year ? $this->db->where('YEAR(requested_on)', $year) : "";
+            $this->db->from('loans');
+            $this->db->join('collateral_units', 'loans.collateral_unit_id = collateral_units.id');
+            $this->db->join('loan_status', 'loans.status_number = loan_status.status_number');
+            $this->db->where_in('loan_status.status', array('GRANTED', 'CLEARED'));
+			$this->db->group_by('loans.collateral_unit_id');
+			$run_q = $this->db->get();
 		}
         
         if($run_q->num_rows()){
@@ -245,5 +280,11 @@ class Genmod extends CI_Model{
         else{
             return FALSE;
         }
+    }
+
+    public function getCollateralUnits() {
+        $run_q = $this->db->get('collateral_units');
+
+        return $run_q->result_array();
     }
 }

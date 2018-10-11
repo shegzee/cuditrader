@@ -8,13 +8,14 @@ class MY_Controller extends CI_Controller {
     {
         parent::__construct();
         $this->load->library('ion_auth');
+        $this->load->model('Utility_model');
 
         if ($this->ion_auth->logged_in()) {
             $this->load->model('User_model');
             $this->user = $this->ion_auth->user()->row();
             $this->user->profile = $this->User_model->get_profile($this->user->id)->row();
             $this->user->profile->picture_url = $this->User_model->profile_picture_url($this->user->id);
-            $this->user->full_name = $this->user->first_name." ".$this->user->last_name;
+            $this->user->full_name = trim($this->user->first_name." ".$this->user->last_name);
             $this->data['user'] = $this->user;
         }
         else {
@@ -26,6 +27,8 @@ class MY_Controller extends CI_Controller {
         $this->data['page_description'] = 'Cudi Trader';
         $this->data['before_closing_head'] = '';
         $this->data['before_closing_body'] = '';
+
+        $this->data['site_settings'] = $this->get_all_settings();
     }
  
     protected function render($the_view = NULL, $template = 'pages_template')
@@ -93,18 +96,27 @@ class MY_Controller extends CI_Controller {
         else {
             $result = array();
         }
-        $this->db->order_by($order_by, $direction);
-        $this->db->select("$key_field, $value_field");
-        $query = $this->db->get($table_name);
         
-        $result_array = $query->result_array();
+        $result_array = $this->Utility_model->prep_select_data($table_name, $key_field, $value_field, $order_by, $direction);
 
-        
         foreach ($result_array as $item) {
             $result[$item[$key_field]] = $item[$value_field];
         }
 
+
         return $result;
+    }
+
+    protected function get_setting($setting=FALSE) {
+        if (!$setting) {
+            return "";
+        }
+        return $this->Utility_model->get_setting($setting);
+    }
+    
+    protected function get_all_settings() {
+        // return $this->Utility_model->get_all_settings();
+        return $this->prep_select("settings", "setting", "value");
     }
 }
 

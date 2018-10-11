@@ -58,7 +58,7 @@ defined('BASEPATH') OR exit('');
     <!-- collateral units here -->
      <div class="col-sm-12">
         <div class="pwell">
-            <!-- Header (add new collateral type, sort order etc.) -->
+            <!-- Header (add new collateral unit, sort order etc.) -->
             <div class="row">
                 <div class="col-sm-12">
                     <div class="col-sm-2 fa fa-plus pointer" style="color:#337ab7" data-target='#addNewCUnitModal' data-toggle='modal'>

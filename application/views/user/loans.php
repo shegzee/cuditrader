@@ -5,13 +5,13 @@
         <a href="<?= base_url('user/loans/'); ?>"><span class="status">ALL</span></a>
         <?php foreach ($statuses as $this_status) { ?>
         <?php //if ($this_status == "GRANTED") {continue;} ?>
-          <a href="<?= base_url('user/loans/'.strtolower($this_status)); ?>"><span class="loan-status loan-status-<?= strtolower($this_status); ?>"><?= $this_status; ?></span></a>
+          <a href="<?= base_url('user/loans/'.strtolower($this_status)); ?>"><span class="status loan-status-<?= strtolower($this_status); ?>"><?= $this_status; ?></span></a>
         <?php } ?>
         <!-- <a href="<?= base_url('loan/request'); ?>"><span class="status">REQUEST</span></a> -->
       </p>
       <p>
         <a data-toggle="modal" data-target="#loanModal">
-          <span><i class="fa fa-plus-circle"></i>REQUEST A LOAN</span>
+          <span class="status"><i class="fa fa-plus-circle"></i>REQUEST A LOAN</span>
         </a>
       </p>
     <?= isset($_SESSION['message']) ? "<p>".$_SESSION['message']."</p>" : FALSE ?>

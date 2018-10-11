@@ -9,10 +9,10 @@ defined('BASEPATH') OR exit('');
                 <div class="pull-left"><i class="fa fa-exchange"></i></div>
                 <div class="pull-right">
                     <div><?=$totalSalesToday?></div>
-                    <div class="latestStuffsText">Total Sales Today</div>
+                    <div class="latestStuffsText">Total Requested Today</div>
                 </div>
             </div>
-            <div class="panel-footer text-center" style="color:#5cb85c">Number of Loans Given Out Today</div>
+            <div class="panel-footer text-center" style="color:#5cb85c">Amount requested by users today</div>
         </div>
     </div>
     <div class="col-sm-4">
@@ -21,10 +21,10 @@ defined('BASEPATH') OR exit('');
                 <div class="pull-left"><i class="fa fa-tasks"></i></div>
                 <div class="pull-right">
                     <div><?=$totalTransactions?></div>
-                    <div class="latestStuffsText pull-right">Total Amount of Loans</div>
+                    <div class="latestStuffsText pull-right">Total Amount Loaned</div>
                 </div>
             </div>
-            <div class="panel-footer text-center" style="color:#f0ad4e">All-time Total Transactions</div>
+            <div class="panel-footer text-center" style="color:#f0ad4e">All-time amount loaned</div>
         </div>
     </div>
     <div class="col-sm-4">
@@ -70,7 +70,7 @@ defined('BASEPATH') OR exit('');
         
         <section class="panel">
           <center>
-              <canvas id="paymentMethodChart" width="200" height="200"/></canvas><br>Payment Methods(%)<span id="paymentMethodYear"></span>
+              <canvas id="paymentMethodChart" width="200" height="200"/></canvas><br>Collateral Used(%)<span id="paymentMethodYear"></span>
           </center>
         </section>
     </div>

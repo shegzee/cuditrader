@@ -128,6 +128,13 @@ defined('BASEPATH') OR exit('');
                             </a>
                         </li>
                         
+                        <li class="<?= $pageTitle == 'Settings' ? 'active' : '' ?>">
+                            <a href="<?= admin_url('settings') ?>">
+                                <i class="fa fa-settings"></i>
+                                Settings
+                            </a>
+                        </li>
+                        
                         <li class="<?= $pageTitle == 'Administrators' ? 'active' : '' ?>">
                             <a href="<?= admin_url('administrators') ?>">
                                 <i class="fa fa-user"></i>
@@ -217,6 +224,13 @@ defined('BASEPATH') OR exit('');
                             <a href="<?= admin_url('units') ?>">
                                 <i class="fa fa-money"></i>
                                 Currency Units
+                            </a>
+                        </li>
+                        
+                        <li class="<?= $pageTitle == 'Settings' ? 'active' : '' ?>">
+                            <a href="<?= admin_url('settings') ?>">
+                                <i class="fa fa-gears"></i>
+                                Settings
                             </a>
                         </li>
                         

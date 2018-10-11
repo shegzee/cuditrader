@@ -69,7 +69,7 @@ function getEarnings(year){
         };
 
         //show the expense title
-        document.getElementById('earningsTitle').innerHTML = "Earnings (" + response.earningsYear +")";
+        document.getElementById('earningsTitle').innerHTML = "Loans Granted (" + response.earningsYear +")";
 
         var earningsGraph = document.getElementById("earningsGraph").getContext("2d");
 
@@ -110,7 +110,12 @@ function loadPaymentMethodChart(year){
         url: appRoot+"dashboard/paymentmethodchart/"+yearToGet,
         dataType: "html",
         success: function(data) {
+            var colours_array = [{color:"#084D5F",highlight:"#0B6B85"},
+                                {color:"#557f7c",highlight:"#556f7c"},
+                                {color:"#333",highlight:"pink"}]
             var response = jQuery.parseJSON(data);
+            var units = response.statistics;
+
             var cash = response.cash;
             var pos = response.pos;
             var cashAndPos = response.cashAndPos;
@@ -126,22 +131,30 @@ function loadPaymentMethodChart(year){
                 } 
 
                 else {
-                  var paymentMethodData = [{
-                    value: cash,
-                    color:"#084D5F",
-                    highlight: "#0B6B85",
-                    label: "Cash Only"
-                  }, {
-                    value: pos,
-                    color: "#557f7c",
-                    highlight: "#556f7c",
-                    label: "POS Only"
-                  }, {
-                    value: cashAndPos,
-                    color: "#333",
-                    highlight: "pink",
-                    label: "Cash and POS"
-                  }];
+                  // var paymentMethodData = [{
+                  //   value: cash,
+                  //   color:"#084D5F",
+                  //   highlight: "#0B6B85",
+                  //   label: "Cash Only"
+                  // }, {
+                  //   value: pos,
+                  //   color: "#557f7c",
+                  //   highlight: "#556f7c",
+                  //   label: "POS Only"
+                  // }, {
+                  //   value: cashAndPos,
+                  //   color: "#",
+                  //   highlight: "pink",
+                  //   label: "Cash and POS"
+                  // }];
+                  var paymentMethodData = [];
+                  for (var i = units.length - 1; i >= 0; i--) {
+                      var item =    {value: units[i].count,
+                                    color: colours_array[i % colours_array.length].color,
+                                    highlight: colours_array[i % colours_array.length].highlight,
+                                    label: units[i].name};
+                      paymentMethodData.push(item);
+                  }
                 }
             } 
 

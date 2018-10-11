@@ -286,7 +286,7 @@ class User extends User_Controller {
     }
 
     public function full_name($user) {
-    	return $user->first_name." ".$user->last_name;
+    	return trim($user->first_name." ".$user->last_name);
     }
 
     

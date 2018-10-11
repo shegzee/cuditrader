@@ -35,8 +35,10 @@ class Dashboard extends CI_Controller{
         $data['highestEarners'] = $this->analytic->highestEarners();
         $data['lowestEarners'] = $this->analytic->lowestEarners();
         $data['totalItems'] = $this->db->count_all('items');
-        $data['totalSalesToday'] = (int)$this->analytic->totalSalesToday();
-        $data['totalTransactions'] = $this->transaction->totalTransactions();
+        // $data['totalSalesToday'] = (int)$this->analytic->totalSalesToday();
+        $data['totalSalesToday'] = (int)$this->analytic->totalAmountRequestedToday();
+        // $data['totalTransactions'] = $this->transaction->totalTransactions();
+        $data['totalTransactions'] = $this->analytic->totalAmountLoanedEver();
         $data['dailyTransactions'] = $this->analytic->getDailyTrans();
         $data['transByDays'] = $this->analytic->getTransByDays();
         $data['transByMonths'] = $this->analytic->getTransByMonths();
@@ -77,10 +79,10 @@ class Dashboard extends CI_Controller{
         if ($earnings) {
             foreach ($allMonths as $allMonth) {
                 foreach ($earnings as $get) {
-                    $earningMonth = date("M", strtotime($get->transDate));
+                    $earningMonth = date("M", strtotime($get->requested_on));
                     
                     if ($allMonth == $earningMonth) {
-                        $lastEarnings += $get->totalPrice;
+                        $lastEarnings += $get->loan_amount;
                         
                         $monthEarnings[$allMonth] = $lastEarnings;
                     } 
@@ -138,7 +140,8 @@ class Dashboard extends CI_Controller{
     function paymentMethodChart($year=''){
         $year_to_fetch = $year ? $year : date('Y');
         
-        $payment_methods = $this->genmod->getPaymentMethods($year_to_fetch);
+        $payment_methods = $this->genmod->getCollateralUnitsUsed($year_to_fetch);
+        $collateral_units = $this->genmod->getCollateralUnits();
         
         $json['status'] = 0;
         $cash = 0;
@@ -146,32 +149,51 @@ class Dashboard extends CI_Controller{
         $cash_and_pos = 0;
         $json['year'] = $year_to_fetch;
 
+        $units = array();
+        foreach ($collateral_units as $unit) {
+            $units[] = array("name"=>$unit['name'], "count"=>0);
+        }
+
         if($payment_methods) {
             foreach ($payment_methods as $get) {
-                if ($get->modeOfPayment == "Cash") {
-                    $cash++;
-                } 
-                
-                else if ($get->modeOfPayment == "POS") {
-                    $pos++;
+
+                foreach ($units as $key => $value) {
+                    if ($get->name == $value["name"]) {
+                        $units[$key]["count"] = $value["count"]+1;
+                    }
                 }
+                // if ($get->name == "Bitcoin") {
+                //     $cash++;
+                // } 
                 
-                else if($get->modeOfPayment === "Cash and POS"){
-                    $cash_and_pos++;
-                }
+                // else if ($get->name == "Ethereum") {
+                //     $pos++;
+                // }
+                
+                // else if($get->name === "Cash and POS"){
+                //     $cash_and_pos++;
+                // }
             }
             
             //calculate the percentage of each
-            $total = $cash + $pos + $cash_and_pos;
+            // $total = $cash + $pos + $cash_and_pos;
+            // $total = 0;
+            // foreach ($units as $key => $value) {
+            //     $total += $value["count"];
+            // }
+            // foreach ($units as $key => $value) {
+            //     $units[$key]["count"] = round(($value["count"] / $total) * 100, 2);
+            // }
             
-            $cash_percentage = round(($cash/$total) * 100, 2);
-            $pos_percentage =  round(($pos/$total) * 100, 2);
-            $cash_and_pos_percentage = round(($cash_and_pos/$total) * 100, 2);
+            // $cash_percentage = round(($cash/$total) * 100, 2);
+            // $pos_percentage =  round(($pos/$total) * 100, 2);
+            // $cash_and_pos_percentage = round(($cash_and_pos/$total) * 100, 2);
             
             $json['status'] = 1;
-            $json['cash'] = $cash_percentage;
-            $json['pos'] = $pos_percentage;
-            $json['cashAndPos'] = $cash_and_pos_percentage;
+            // $json['cash'] = $cash_percentage;
+            // $json['pos'] = $pos_percentage;
+            // $json['cashAndPos'] = $cash_and_pos_percentage;
+            $json['statistics'] = $units;
         }
         
         //set final output
