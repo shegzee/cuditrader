@@ -13,6 +13,8 @@ defined('BASEPATH') OR exit('');
                     <th>SN</th>
                     <th>NAME</th>
                     <th>LOGO</th>
+                    <th>EXCHANGE RATE ($1)</th>
+                    <th>API URL</th>
                     <th>EDIT</th>
                     <th>DELETE</th>
                 </tr>
@@ -24,6 +26,8 @@ defined('BASEPATH') OR exit('');
                         <td class="name"><?=$get->name?></td>
                         <!-- <td class="hidden name"><?=$get->name?></td> -->
                         <td class="logo"><?=$get->logo?></td>
+                        <td class="dollar_exchange_rate"><?=$get->dollar_exchange_rate?></td>
+                        <td class="api_url"><?=$get->api_url?></td>
                         <!-- <td><?=date('jS M, Y h:i:sa', $get->created_on)?></td> -->
                         <td class="text-center editLUnit" id="edit-<?=$get->id?>">
                             <i class="fa fa-pencil pointer"></i>

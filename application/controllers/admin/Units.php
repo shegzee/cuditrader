@@ -99,6 +99,8 @@ class Units extends CI_Controller{
         $this->form_validation->set_error_delimiters('', '');
         
         $this->form_validation->set_rules('name', 'Name', ['required', 'trim', 'max_length[50]'], ['required'=>"required"]);
+        $this->form_validation->set_rules('dollar_exchange_rate', 'Dollar Exchange Rate', ['numeric'], ['numeric'=>"not a valid exchange rate value"]);
+
            
         if($this->form_validation->run() !== FALSE){
             /**
@@ -106,7 +108,7 @@ class Units extends CI_Controller{
              * function header: add($f_name, $l_name, $email, $password, $role, $mobile, $addr)
              */
             
-            $inserted = $this->unit->addLUnit(set_value('name'), set_value('logo'));
+            $inserted = $this->unit->addLUnit(set_value('name'), set_value('logo'), set_value('dollar_exchange_rate'), set_value('api_url'));
             
             
             $json = $inserted ? 
@@ -146,6 +148,7 @@ class Units extends CI_Controller{
         $this->form_validation->set_error_delimiters('', '');
         
         $this->form_validation->set_rules('name', 'Name', ['required', 'trim', 'max_length[50]'], ['required'=>"required"]);
+        $this->form_validation->set_rules('dollar_exchange_rate', 'Dollar Exchange Rate', ['numeric'], ['numeric'=>"not a valid exchange rate value"]);
         
         if($this->form_validation->run() !== FALSE){
             /**
@@ -154,7 +157,7 @@ class Units extends CI_Controller{
 				
             $id = $this->input->post('lUnitId', TRUE);
 
-            $updated = $this->unit->updateLUnit($id, set_value('name'), set_value('logo'));
+            $updated = $this->unit->updateLUnit($id, set_value('name'), set_value('logo'), set_value('dollar_exchange_rate'), set_value('api_url'));
             
             
             $json = $updated ? 
@@ -259,6 +262,7 @@ class Units extends CI_Controller{
         $this->form_validation->set_error_delimiters('', '');
         
         $this->form_validation->set_rules('name', 'Name', ['required', 'trim', 'max_length[50]'], ['required'=>"required"]);
+        $this->form_validation->set_rules('markup', 'Markup', ['numeric'], ['numeric'=>"not a valid markup value"]);
            
         if($this->form_validation->run() !== FALSE){
             /**
@@ -266,7 +270,7 @@ class Units extends CI_Controller{
              * function header: add($f_name, $l_name, $email, $password, $role, $mobile, $addr)
              */
             
-            $inserted = $this->unit->addCUnit(set_value('name'), set_value('logo'));
+            $inserted = $this->unit->addCUnit(set_value('name'), set_value('logo'), set_value('api_url'), set_value('markup'));
             
             
             $json = $inserted ? 
@@ -306,6 +310,7 @@ class Units extends CI_Controller{
         $this->form_validation->set_error_delimiters('', '');
         
         $this->form_validation->set_rules('name', 'Name', ['required', 'trim', 'max_length[50]'], ['required'=>"required"]);
+        $this->form_validation->set_rules('markup', 'Markup', ['numeric'], ['numeric'=>"not a valid markup value"]);
         
         if($this->form_validation->run() !== FALSE){
             /**
@@ -314,7 +319,7 @@ class Units extends CI_Controller{
                 
             $id = $this->input->post('cUnitId', TRUE);
 
-            $updated = $this->unit->updateCUnit($id, set_value('name'), set_value('logo'));
+            $updated = $this->unit->updateCUnit($id, set_value('name'), set_value('logo'), set_value('api_url'), set_value('markup'));
             
             
             $json = $updated ? 

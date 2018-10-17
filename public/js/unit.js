@@ -51,15 +51,22 @@ $(document).ready(function(){
         e.preventDefault();
         
         //reset all error msgs in case they are set
-        changeInnerHTML(['nameErr', 'logoErr'],
+        changeInnerHTML(['nameErr', 'logoErr', 'dollar_exchange_rateErr', 'api_urlErr'],
         "");
         
         var name = $("#name").val();
         var logo = $("#logo").val();
+        var dollar_exchange_rate = $("#dollar_exchange_rate").val();
+        var api_url = $("#api_url").val();
         
         //ensure all required fields are filled
         if(!name){
             !name ? changeInnerHTML('nameErr', "required") : "";
+            return;
+        }
+
+        if(dollar_exchange_rate && isNaN(dollar_exchange_rate)) {
+            changeInnerHTML('dollar_exchange_rateErr', 'must be a number');
             return;
         }
         
@@ -71,7 +78,7 @@ $(document).ready(function(){
         $.ajax({
             method: "POST",
             url: appRoot+"units/addLUnit",
-            data: {name:name, logo:logo}
+            data: {name:name, logo:logo, dollar_exchange_rate:dollar_exchange_rate, api_url:api_url}
         }).done(function(returnedData){
             $("#fMsgIcon").removeClass();//remove spinner
                 
@@ -88,7 +95,7 @@ $(document).ready(function(){
                 }, 1000);
 
                 //reset all error msgs in case they are set
-                changeInnerHTML(['nameErr', 'logoErr'],
+                changeInnerHTML(['nameErr', 'logoErr', 'dollar_exchange_rate', 'api_url'],
                 "");
 
                 //refresh bank list table
@@ -103,6 +110,8 @@ $(document).ready(function(){
                 //display individual error messages if applied
                 $("#nameErr").text(returnedData.name);
                 $("#logoErr").text(returnedData.logo);
+                $("#dollar_exchange_rateErr").text(returnedData.dollar_exchange_rate);
+                $("#api_urlErr").text(returnedData.api_url);
             }
         }).fail(function(){
             if(!navigator.onLine){
@@ -125,16 +134,22 @@ $(document).ready(function(){
         
         if(formChanges("editLUnitForm")){
             //reset all error msgs in case they are set
-            changeInnerHTML(['nameEditErr', 'logoEditErr'], "");
+            changeInnerHTML(['nameEditErr', 'logoEditErr', 'dollar_exchange_rateEditErr', 'api_urlEditErr'], "");
 
             var name = $("#nameEdit").val();
             var logo = $("#logoEdit").val();
+            var dollar_exchange_rate = $("#dollar_exchange_rateEdit").val();
+            var api_url = $("#api_urlEdit").val();
             var lUnitId = $("#lUnitId").val();
 
             //ensure all required fields are filled
             if(!name){
                 !name ? changeInnerHTML('nameEditErr', "required") : "";
 
+                return;
+            }
+            if(dollar_exchange_rate && isNaN(dollar_exchange_rate)) {
+                changeInnerHTML('dollar_exchange_rateEditErr', 'must be a number');
                 return;
             }
 
@@ -151,7 +166,7 @@ $(document).ready(function(){
             $.ajax({
                 method: "POST",
                 url: appRoot+"units/updateLUnit",
-                data: {lUnitId:lUnitId, name:name, logo:logo}
+                data: {lUnitId:lUnitId, name:name, logo:logo, dollar_exchange_rate:dollar_exchange_rate, api_url:api_url}
             }).done(function(returnedData){
                 $("#fMsgEditIcon").removeClass();//remove spinner
 
@@ -165,7 +180,7 @@ $(document).ready(function(){
                     }, 1000);
 
                     //reset all error msgs in case they are set
-                    changeInnerHTML(['nameEditErr', 'logoEditErr'], "");
+                    changeInnerHTML(['nameEditErr', 'logoEditErr', 'dollar_exchange_rateEditErr', 'api_urlEditErr'], "");
 
                     //refresh bank list table
                     lalu_();
@@ -179,6 +194,8 @@ $(document).ready(function(){
                     //display individual error messages if applied
                     $("#nameEditErr").html(returnedData.name);
                     $("#logoEditErr").html(returnedData.logo);
+                    $("#dollar_exchange_rateEditErr").html(returnedData.dollar_exchange_rate);
+                    $("#api_urlEditErr").html(returnedData.api_url);
                 }
             }).fail(function(){
                     if(!navigator.onLine){
@@ -272,10 +289,14 @@ $(document).ready(function(){
         //alert($(this).siblings(".bankEmail").children('a').html());
         var name = $(this).siblings(".name").html();
         var logo = $(this).siblings(".logo").html();
+        var dollar_exchange_rate = $(this).siblings(".dollar_exchange_rate").html();
+        var api_url = $(this).siblings(".api_url").html();
         
         //prefill the form fields
         $("#nameEdit").val(name);
         $("#logoEdit").val(logo);
+        $("#dollar_exchange_rateEdit").val(dollar_exchange_rate);
+        $("#api_urlEdit").val(api_url);
         
         $("#editLUnitModal").modal('show');
     });
@@ -327,15 +348,22 @@ $(document).ready(function(){
         e.preventDefault();
         
         //reset all error msgs in case they are set
-        changeInnerHTML(['nameCUErr', 'logoCUErr'],
+        changeInnerHTML(['nameCUErr', 'logoCUErr', 'api_urlCUErr', 'markupCUErr'],
         "");
         
         var name = $("#nameCU").val();
         var logo = $("#logoCU").val();
+        var api_url = $("#api_urlCU").val();
+        var markup = $("#markupCU").val();
         
         //ensure all required fields are filled
         if(!name){
             !name ? changeInnerHTML('nameCUErr', "required") : "";
+            return;
+        }
+
+        if(markup && isNaN(markup)) {
+            changeInnerHTML('markupCUErr', 'must be a number');
             return;
         }
         
@@ -347,7 +375,7 @@ $(document).ready(function(){
         $.ajax({
             method: "POST",
             url: appRoot+"units/addCUnit",
-            data: {name:name, logo:logo}
+            data: {name:name, logo:logo, api_url:api_url, markup:markup}
         }).done(function(returnedData){
             $("#fMsgCUIcon").removeClass();//remove spinner
                 
@@ -364,7 +392,7 @@ $(document).ready(function(){
                 }, 1000);
 
                 //reset all error msgs in case they are set
-                changeInnerHTML(['nameCUErr', 'logoCUErr'],
+                changeInnerHTML(['nameCUErr', 'logoCUErr', 'api_urlCUErr', 'markupCUErr'],
                 "");
 
                 //refresh bank list table
@@ -379,6 +407,8 @@ $(document).ready(function(){
                 //display individual error messages if applied
                 $("#nameCUErr").text(returnedData.name);
                 $("#logoCUErr").text(returnedData.logo);
+                $("#api_urlCUErr").text(returnedData.api_url);
+                $("#markupCUErr").text(returnedData.markup);
             }
         }).fail(function(){
             if(!navigator.onLine){
@@ -401,16 +431,23 @@ $(document).ready(function(){
         
         if(formChanges("editCUnitForm")){
             //reset all error msgs in case they are set
-            changeInnerHTML(['nameCUEditErr', 'logoCUEditErr'], "");
+            changeInnerHTML(['nameCUEditErr', 'logoCUEditErr', 'api_urlCUEditErr', 'markupCUEditErr'], "");
 
             var name = $("#nameCUEdit").val();
             var logo = $("#logoCUEdit").val();
+            var api_url = $("#api_urlCUEdit").val();
+            var markup = $("#markupCUEdit").val();
             var cUnitId = $("#cUnitId").val();
 
             //ensure all required fields are filled
             if(!name){
                 !name ? changeInnerHTML('nameCUEditErr', "required") : "";
 
+                return;
+            }
+
+            if(markup && isNaN(markup)) {
+                changeInnerHTML('markupCUEditErr', 'must be a number');
                 return;
             }
 
@@ -427,7 +464,7 @@ $(document).ready(function(){
             $.ajax({
                 method: "POST",
                 url: appRoot+"units/updateCUnit",
-                data: {cUnitId:cUnitId, name:name, logo:logo}
+                data: {cUnitId:cUnitId, name:name, logo:logo, api_url:api_url, markup:markup}
             }).done(function(returnedData){
                 $("#fMsgEditCUIcon").removeClass();//remove spinner
 
@@ -441,7 +478,7 @@ $(document).ready(function(){
                     }, 1000);
 
                     //reset all error msgs in case they are set
-                    changeInnerHTML(['nameCUEditErr', 'logoCUEditErr'], "");
+                    changeInnerHTML(['nameCUEditErr', 'logoCUEditErr', 'api_urlCUEditErr', 'markupCUEditErr'], "");
 
                     //refresh bank list table
                     lacu_();
@@ -455,6 +492,8 @@ $(document).ready(function(){
                     //display individual error messages if applied
                     $("#nameCUEditErr").html(returnedData.name);
                     $("#logoCUEditErr").html(returnedData.logo);
+                    $("#api_urlCUEditErr").text(returnedData.api_url);
+                    $("#markupCUEditErr").text(returnedData.markup);
                 }
             }).fail(function(){
                     if(!navigator.onLine){
@@ -549,10 +588,14 @@ $(document).ready(function(){
         //alert($(this).siblings(".bankEmail").children('a').html());
         var name = $(this).siblings(".name").html();
         var logo = $(this).siblings(".logo").html();
+        var api_url = $(this).siblings(".api_url").html();
+        var markup = $(this).siblings(".markup").html();
         
         //prefill the form fields
         $("#nameCUEdit").val(name);
         $("#logoCUEdit").val(logo);
+        $("#api_urlCUEdit").val(api_url);
+        $("#markupCUEdit").val(markup);
         
         $("#editCUnitModal").modal('show');
     });

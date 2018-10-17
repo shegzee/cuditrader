@@ -35,6 +35,10 @@ defined('BASEPATH') OR exit('');
                             <option value="created_on-DESC">Date Created (recent first)</option> -->
                             <option value="logo-ASC">Logo - ascending</option>
                             <option value="logo-DESC">Logo - descending</option>
+                            <option value="dollar_exchange_rate-ASC">Dollar Exchange Rate - ascending</option>
+                            <option value="dollar_exchange_rate-DESC">Dollar Exchange Rate - descending</option>
+                            <option value="api_url-ASC">API URL - ascending</option>
+                            <option value="api_url-DESC">API URL - descending</option>
                         </select>
                     </div>
                     <div class="col-sm-3 form-inline form-group-sm">
@@ -87,6 +91,10 @@ defined('BASEPATH') OR exit('');
                             <option value="created_on-DESC">Date Created (recent first)</option> -->
                             <option value="logo-ASC">Logo - ascending</option>
                             <option value="logo-DESC">Logo - descending</option>
+                            <option value="api_url-ASC">API URL - ascending</option>
+                            <option value="api_url-DESC">API URL - descending</option>
+                            <option value="markup-ASC">Markup - ascending</option>
+                            <option value="markup-DESC">Markup - descending</option>
                         </select>
                     </div>
                     <div class="col-sm-3 form-inline form-group-sm">
@@ -131,8 +139,22 @@ defined('BASEPATH') OR exit('');
                         
                         <div class="form-group-sm col-sm-6">
                             <label for='logo' class="control-label">Logo</label>
-                            <input type="tel" id='logo' class="form-control" placeholder="Logo">
+                            <input type="text" id='logo' class="form-control" placeholder="Logo">
                             <span class="help-block errMsg" id="logoErr"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="form-group-sm col-sm-6">
+                            <label for='dollar_exchange_rate' class="control-label">Exchange Rate ($1)</label>
+                            <input type="number" id='dollar_exchange_rate' class="form-control checkField" placeholder="Dollar Exchange Rate">
+                            <span class="help-block errMsg" id="dollar_exchange_rateErr"></span>
+                        </div>
+                        
+                        <div class="form-group-sm col-sm-6">
+                            <label for='api_url' class="control-label">API URL</label>
+                            <input type="text" id='api_url' class="form-control" placeholder="API URL">
+                            <span class="help-block errMsg" id="api_urlErr"></span>
                         </div>
                     </div>
                 </form>
@@ -171,8 +193,22 @@ defined('BASEPATH') OR exit('');
                         
                         <div class="form-group-sm col-sm-6">
                             <label for='logoEdit' class="control-label">Logo</label>
-                            <input type="tel" id='logoEdit' class="form-control" placeholder="Logo">
+                            <input type="text" id='logoEdit' class="form-control" placeholder="Logo">
                             <span class="help-block errMsg" id="logoEditErr"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group-sm col-sm-6">
+                            <label for='dollar_exchange_rateEdit' class="control-label">Exchange Rate ($1)</label>
+                            <input type="number" id='dollar_exchange_rateEdit' class="form-control checkField" placeholder="Dollar Exchange Rate">
+                            <span class="help-block errMsg" id="dollar_exchange_rateEditErr"></span>
+                        </div>
+                        
+                        <div class="form-group-sm col-sm-6">
+                            <label for='api_urlEdit' class="control-label">API URL</label>
+                            <input type="text" id='api_urlEdit' class="form-control" placeholder="API URL">
+                            <span class="help-block errMsg" id="api_urlEditErr"></span>
                         </div>
                     </div>
                     
@@ -212,8 +248,22 @@ defined('BASEPATH') OR exit('');
                         
                         <div class="form-group-sm col-sm-6">
                             <label for='logoCU' class="control-label">Logo</label>
-                            <input type="tel" id='logoCU' class="form-control" placeholder="Currency  Logo">
+                            <input type="text" id='logoCU' class="form-control" placeholder="Currency Logo">
                             <span class="help-block errMsg" id="logoCUErr"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group-sm col-sm-8">
+                            <label for='api_urlCU' class="control-label">API URL</label>
+                            <input type="text" id='api_urlCU' class="form-control checkField" placeholder="API URL">
+                            <span class="help-block errMsg" id="api_urlCUErr"></span>
+                        </div>
+                        
+                        <div class="form-group-sm col-sm-4">
+                            <label for='markupCU' class="control-label">Markup (%)</label>
+                            <input type="number" id='markupCU' class="form-control" placeholder="Markup (%)">
+                            <span class="help-block errMsg" id="markupCUErr"></span>
                         </div>
                     </div>
                 </form>
@@ -254,6 +304,20 @@ defined('BASEPATH') OR exit('');
                             <label for='logoCUEdit' class="control-label">Logo</label>
                             <input type="tel" id='logoCUEdit' class="form-control" placeholder="Logo">
                             <span class="help-block errMsg" id="logoCUEditErr"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group-sm col-sm-8">
+                            <label for='api_urlCUEdit' class="control-label">API URL</label>
+                            <input type="text" id='api_urlCUEdit' class="form-control checkField" placeholder="API URL">
+                            <span class="help-block errMsg" id="api_urlCUEditErr"></span>
+                        </div>
+                        
+                        <div class="form-group-sm col-sm-4">
+                            <label for='markupCUEdit' class="control-label">Markup (%)</label>
+                            <input type="text" id='markupCUEdit' class="form-control" placeholder="Markup (%)">
+                            <span class="help-block errMsg" id="markupCUEditErr"></span>
                         </div>
                     </div>
                     

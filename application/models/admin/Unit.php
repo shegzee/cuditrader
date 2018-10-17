@@ -24,8 +24,8 @@ class Unit extends CI_Model{
      * 
      * 
      */
-    public function addLUnit($name, $logo){
-        $data = ['name'=>$name, 'logo'=>$logo];
+    public function addLUnit($name, $logo, $dollar_exchange_rate, $api_url){
+        $data = ['name'=>$name, 'logo'=>$logo, 'dollar_exchange_rate'=>$dollar_exchange_rate, 'api_url'=>$api_url];
         
         //set the datetime based on the db driver in use
         // $this->db->platform() == "sqlite3" 
@@ -182,8 +182,8 @@ class Unit extends CI_Model{
     ********************************************************************************************************************************
     */
     
-    public function updateLUnit($id, $name, $logo){
-        $data = ['name'=>$name, 'logo'=>$logo];
+    public function updateLUnit($id, $name, $logo, $dollar_exchange_rate, $api_url){
+        $data = ['name'=>$name, 'logo'=>$logo, 'dollar_exchange_rate'=>$dollar_exchange_rate, 'api_url'=>$api_url];
         
         $this->db->where('id', $id);
         
@@ -218,8 +218,8 @@ class Unit extends CI_Model{
      * @param type $addr
      * @return boolean
      */
-    public function addCUnit($name, $logo){
-        $data = ['name'=>$name, 'logo'=>$logo];
+    public function addCUnit($name, $logo, $api_url, $markup){
+        $data = ['name'=>$name, 'logo'=>$logo, 'api_url'=>$api_url, 'markup'=>$markup];
         
         //set the datetime based on the db driver in use
         // $this->db->platform() == "sqlite3" 
@@ -373,8 +373,8 @@ class Unit extends CI_Model{
     ********************************************************************************************************************************
     */
     
-    public function updateCUnit($id, $name, $logo){
-        $data = ['name'=>$name, 'logo'=>$logo];
+    public function updateCUnit($id, $name, $logo, $api_url, $markup){
+        $data = ['name'=>$name, 'logo'=>$logo, 'api_url'=>$api_url, 'markup'=>$markup];
         
         $this->db->where('id', $id);
         
