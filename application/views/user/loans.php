@@ -106,7 +106,7 @@
                           <?php
   echo form_label('Loan currency:', 'loan_unit_id').'<br />';
   echo form_error('loan_unit_id');
-  echo form_dropdown('loan_unit_id', $loan_currencies, set_select('loan_unit_id'), "required='required'");
+  echo form_dropdown('loan_unit_id', $loan_currencies, set_select('loan_unit_id'), "id='loan_unit_id' required='required'");
 
 							// echo form_label('Bank Name:', 'bank_id');
 							// echo form_error('bank_id');
@@ -117,7 +117,7 @@
                           <?php
   echo form_label('Loan amount:', 'loan_amount').'<br />';
   echo form_error('loan_amount');
-  echo form_input('loan_amount', set_value('loan_amount'), "required='required'");
+  echo form_input('loan_amount', set_value('loan_amount', 0), "id='loan_amount' required='required'");
 
 							// echo form_label('Account number:', 'account_number');
 							// echo form_error('account_number');
@@ -128,7 +128,7 @@
                         	<?php
   echo form_label('Cryptocurrency:', 'collateral_unit_id').'<br />';
   echo form_error('collateral_unit_id');
-  echo form_dropdown('collateral_unit_id', $cryptocurrencies, set_value('collateral_unit_id'), "required='required'");
+  echo form_dropdown('collateral_unit_id', $cryptocurrencies, set_value('collateral_unit_id', ''), "id='collateral_unit_id' required='required'");
 
         //         echo form_label('Account Name:', 'account_name');
                 // echo form_error('account_name');
@@ -139,7 +139,7 @@
                             <?php
   echo form_label('Cryptocurrency amount:', 'collateral_amount').'<br />';
   echo form_error('collateral_amount');
-  echo form_input('collateral_amount', set_value('collateral_amount'), "required='required'");
+  echo form_input('collateral_amount', set_value('collateral_amount', 0), "id='collateral_amount' required='required'");
 
         //         echo form_label('Account type:', 'account_type_id');
                 // echo form_error('account_type_id');
@@ -150,7 +150,7 @@
                               <?php
   echo form_label('Tenor (months):', 'loan_duration').'<br />';
   echo form_error('loan_duration');
-  echo form_dropdown('loan_duration', $tenors, set_value('loan_duration'), "required='required'");
+  echo form_dropdown('loan_duration', $tenors, set_value('loan_duration', ''), "id='loan_duration' required='required'");
 
         //         echo form_label('Set as primary account:', 'is_primary');
 								// echo form_error('is_primary');
@@ -177,3 +177,7 @@
   </div>
   <!-- Loan Modal end -->
   </div>
+
+<script src="<?=base_url()?>public/js/jquery.min.js"></script>
+<script src="<?=base_url()?>public/js/main.js"></script>
+<script src="<?=base_url()?>public/js/request_loan.js"></script>

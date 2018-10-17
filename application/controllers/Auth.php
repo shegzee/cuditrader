@@ -412,4 +412,28 @@ class Auth extends MY_Controller {
 		redirect('auth/login');
 	}
 
+	public function dummy_json()
+	{
+		$json = '[
+    	{
+	        "id": "bitcoin", 
+	        "name": "Bitcoin", 
+	        "symbol": "BTC", 
+	        "rank": "1", 
+	        "price_usd": "6659.76684263", 
+	        "price_btc": "1.0", 
+	        "24h_volume_usd": "6482367115.14", 
+	        "market_cap_usd": "115378296124", 
+	        "available_supply": "17324675.0", 
+	        "total_supply": "17324675.0", 
+	        "max_supply": "21000000.0", 
+	        "percent_change_1h": "0.8", 
+	        "percent_change_24h": "0.02", 
+	        "percent_change_7d": "0.27", 
+	        "last_updated": "1539672386"
+	    }
+	]';
+	$this->output->set_content_type('application/json')->set_output($json);
+	}
+
 }

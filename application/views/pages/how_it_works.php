@@ -435,7 +435,7 @@ returned to an address of your choosing.</p>
   
   <div class="collapsible">
     <a data-category="faq" data-action="toggle" data-label="how_it_works-collateral_storage" class="heading track-click" data-toggle="collapse" href="cuditrader.com/how_it_works/#how_it_works_15" aria-expanded="false" aria-controls="how_it_works_15">
-      <p>How does Unchained Capital store collateral?</p>
+      <p>How does Cudi Trader store collateral?</p>
 
       <i class="fa fa-plus"></i>
     </a>

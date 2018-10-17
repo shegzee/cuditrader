@@ -7,6 +7,7 @@ class Loan extends Auth_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Loan_model');
+		$this->load->model('Utility_model');
 
 		$this->data['loan_currencies']	= parent::prep_select('loan_units', 'id', 'name', FALSE, 'name');
 		$this->data['cryptocurrencies']	= parent::prep_select('collateral_units', 'id', 'name', TRUE, 'name', 'ASC');
@@ -114,6 +115,101 @@ class Loan extends Auth_Controller {
 			$this->data['loans'] = $this->Loan_model->get_loans($this->user->id, $status);
 		}
 		$this->render('loan/view_loans');
+	}
+
+	/********************************************************
+	AJAX methods to compute collateral amount and loan amount based on values
+	*********************************************************/
+
+	public function compute_collateral_amount()
+	{
+		$loan_unit_id = $this->input->get('loan_unit_id', TRUE) ? $this->input->get('loan_unit_id', TRUE) : 1;
+		$loan_amount = $this->input->get('loan_amount', TRUE) ? $this->input->get('loan_amount', TRUE) : 0;
+		$collateral_unit_id = $this->input->get('collateral_unit_id', TRUE) ? $this->input->get('collateral_unit_id', TRUE) : 1;
+
+		$collateral_unit_price = $this->Utility_model->get_collateral_unit_price($collateral_unit_id); // dollar price of one unit of collateral
+
+		if ($collateral_unit_price == "connection error") {
+			$status = 0;
+			$collateral_amount = 0;
+		}
+		else {
+			$status = 1;
+			$markup = $this->Utility_model->get_markup($collateral_unit_id); // markup
+			$loan_unit_exchange_rate = $this->Utility_model->get_exchange_rate($loan_unit_id); // one dollar in loan unit
+
+			$collateral_dollar_price = ($loan_amount / $loan_unit_exchange_rate) * ((100 + $markup) / 100); // worth of collateral to be obtained
+			$collateral_amount = $collateral_dollar_price / $collateral_unit_price; // amount of collateral
+		}
+
+		$json = array('collateral_amount' => $collateral_amount, 'status' => $status);
+
+		// $this->output->set_content_type('application/json')->set_output($collateral_unit_price);
+		$this->output->set_content_type('application/json')->set_output(json_encode($json));
+	}
+
+	public function collateral_computation_data()
+	{
+		$loan_unit_id = $this->input->get('loan_unit_id', TRUE) ? $this->input->get('loan_unit_id', TRUE) : 1;
+		// $loan_amount = $this->input->get('loan_amount', TRUE) ? $this->input->get('loan_amount', TRUE) : 0;
+		$collateral_unit_id = $this->input->get('collateral_unit_id', TRUE) ? $this->input->get('collateral_unit_id', TRUE) : 1;
+
+		$json = array();
+		$json['collateral_unit_api_url'] = $this->Utility_model->get_collateral_unit_api_url($collateral_unit_id);
+		$json['markup'] = doubleval($this->Utility_model->get_markup($collateral_unit_id));
+		$json['loan_unit_exchange_rate'] = $this->Utility_model->get_exchange_rate($loan_unit_id);
+
+		$this->output->set_content_type('application/json')->set_output(json_encode($json));
+	}
+
+	public function compute_loan_amount()
+	{
+		$collateral_unit_id = $this->input->get('collateral_unit_id', TRUE) ? $this->input->get('collateral_unit_id', TRUE) : 1;
+		$collateral_amount = $this->input->get('collateral_amount', TRUE) ? $this->input->get('collateral_amount', TRUE) : 0;
+		$loan_unit_id = $this->input->get('loan_unit_id', TRUE) ? $this->input->get('loan_unit_id', TRUE) : 1;
+
+		$collateral_unit_price = $this->Utility_model->get_collateral_unit_price($collateral_unit_id); // dollar price of one unit of collateral
+
+		if ($collateral_unit_price == "connection error") {
+			$status = 0;
+			$loan_amount = 0;
+		}
+		else {
+			$status = 1;
+			$markup = $this->Utility_model->get_markup($collateral_unit_id); // markup
+			$loan_unit_exchange_rate = $this->Utility_model->get_exchange_rate($loan_unit_id); // one dollar in loan unit
+
+			$collateral_dollar_price = $collateral_amount * $collateral_unit_price;
+			$loan_amount = ($collateral_dollar_price * $loan_unit_exchange_rate) / ((100 + $markup) / 100);
+		}
+
+		$json = array('loan_amount' => $loan_amount, 'status' => $status);
+
+		$this->output->set_content_type('application/json')->set_output(json_encode($json));
+	}
+
+	public function dummy_json()
+	{
+		$json = '[
+    	{
+	        "id": "bitcoin", 
+	        "name": "Bitcoin", 
+	        "symbol": "BTC", 
+	        "rank": "1", 
+	        "price_usd": "6659.76684263", 
+	        "price_btc": "1.0", 
+	        "24h_volume_usd": "6482367115.14", 
+	        "market_cap_usd": "115378296124", 
+	        "available_supply": "17324675.0", 
+	        "total_supply": "17324675.0", 
+	        "max_supply": "21000000.0", 
+	        "percent_change_1h": "0.8", 
+	        "percent_change_24h": "0.02", 
+	        "percent_change_7d": "0.27", 
+	        "last_updated": "1539672386"
+	    }
+	]';
+	$this->output->set_content_type('application/json')->set_output($json);
 	}
 
 }

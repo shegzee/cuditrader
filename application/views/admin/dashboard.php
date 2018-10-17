@@ -30,7 +30,7 @@ defined('BASEPATH') OR exit('');
     <div class="col-sm-4">
         <div class="panel panel-info">
             <div class="panel-body latestStuffsBody" style="background-color: #337ab7">
-                <div class="pull-left"><i class="fa fa-shopping-cart"></i></div>
+                <div class="pull-left"><i class="fa fa-money"></i></div>
                 <div class="pull-right">
                     <div><?=$totalItems?></div>
                     <div class="latestStuffsText pull-right">Collaterals Held</div>
