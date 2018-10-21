@@ -217,7 +217,7 @@ class User extends User_Controller {
 		}
 		else
 		{
-			$split_name = split(" ", $this->input->post('full_name'), 2);
+			$split_name = preg_split("\s+", $this->input->post('full_name'), 2);
 			$user_data = array(
 				'first_name' => $split_name[0],
 				'last_name' => $split_name[1],
