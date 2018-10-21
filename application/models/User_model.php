@@ -51,6 +51,20 @@ class User_model extends CI_Model{
     public function login($email, $password, $remember=FALSE) {
         return $this->ion_auth->login($email, $password, $remember);
     }
+
+    public function create_profile($user_id) {
+        $this->db->select('id');
+        $this->db->where('user_id', $user_id);
+
+        $run_q = $this->db->get('user_profile');
+
+        if($run_q->num_rows() > 0){
+            return $run_q->row();
+        }
+        else{
+            $this->db->insert('user_profile', array("user_id" => $user_id));
+        }
+    }
     
     public function get_profile($user_id) {
         $this->db->where('user_id', $user_id);

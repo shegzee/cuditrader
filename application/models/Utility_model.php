@@ -81,6 +81,8 @@ class Utility_model extends CI_Model{
 
     /*
     Gets the exchange rate per dollar for loan unit
+
+    need to modify this to get realtime exchange rate
     */
     public function get_exchange_rate($loan_unit_id) {
         // $rates = array(1=>363);

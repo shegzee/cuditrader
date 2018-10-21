@@ -17,7 +17,8 @@ class Auth extends MY_Controller {
 
 	public function index()
 	{
-		$this->render('pages/home');
+		// $this->render('pages/home');
+		redirect('auth/login');
 	}
 
 	public function login()
@@ -47,8 +48,8 @@ class Auth extends MY_Controller {
 			}
 			else
 			{
-				$_SESSION['auth_message'] = $this->ion_auth->errors();
-				$this->session->mark_as_flash('auth_message');
+				$_SESSION['message'] = $this->ion_auth->errors();
+				$this->session->mark_as_flash('message');
 				redirect('auth/login');
 			}
 		}
@@ -84,11 +85,12 @@ class Auth extends MY_Controller {
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
 			$address = $this->input->post('address');
-			$full_name = $first_name + $last_name;
+			$full_name = $first_name." ".$last_name;
 
 			$this->load->library('ion_auth');
 			if ($this->User_model->add($email, $password, $first_name, $last_name, $phone, $address))
 			{
+				$this->session->set_flashdata('message', $this->ion_auth->messages());
 				$_SESSION['message'] = 'Welcome! Please verify your email';
 				$this->session->mark_as_flash('message');
 				//Send Registeration Email Codes Start                
@@ -395,6 +397,7 @@ class Auth extends MY_Controller {
 		if ($activation)
 		{
 			// redirect them to the auth page
+			$this->User_model->create_profile($id);
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
 			redirect("auth", 'refresh');
 		}

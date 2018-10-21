@@ -12,7 +12,7 @@
 	echo form_open(current_url(), 'autocomplete="on" id="register-form" class="login-form"');
 	?>
 		<div class="form-message error">
-			<i class="fa fa-exclamation-circle"></i><span class="form-message-label"><?= isset($_SESSION['auth_message']) ? "<p><span style='color:black'>".$_SESSION['auth_message']."</span></p>" : "" ?></span>
+			<i class="fa fa-exclamation-circle"></i><span class="form-message-label"><?= isset($_SESSION['message']) ? "<p><span style='color:black'>".$_SESSION['message']."</span></p>" : "" ?></span>
 		</div>
 
 			<?php
