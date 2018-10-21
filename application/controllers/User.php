@@ -41,7 +41,7 @@ class User extends User_Controller {
 		
 		if ($this->form_validation->run()===FALSE)
 		{
-			$this->render('user/profile');
+			// $this->render('user/profile');
 		}
 		else
 		{

@@ -13,6 +13,9 @@ class MY_Controller extends CI_Controller {
         if ($this->ion_auth->logged_in()) {
             $this->load->model('User_model');
             $this->user = $this->ion_auth->user()->row();
+            // in case profile hasn't been created.
+            // This is only needed to deal with already created users, so it shoukd be useless in a bit.
+            $this->User_model->create_profile($this->user->id);
             $this->user->profile = $this->User_model->get_profile($this->user->id)->row();
             $this->user->profile->picture_url = $this->User_model->profile_picture_url($this->user->id);
             $this->user->full_name = trim($this->user->first_name." ".$this->user->last_name);
