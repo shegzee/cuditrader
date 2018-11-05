@@ -20,6 +20,7 @@ defined('BASEPATH') OR exit('');
                     <th>DATE APPROVED</th>
                     <th>DATE GRANTED</th>
                     <th>STATUS</th>
+                    <th>WALLET ADDRESS</th>
                     <th>EDIT</th>
                     <th>ACTIONS</th>
                     <!-- <th>DATE CREATED</th> -->
@@ -46,6 +47,7 @@ defined('BASEPATH') OR exit('');
                         <td class="granted_on"><?=$get->granted_on ?></td>
                         <!-- <td><?=date('jS M, Y h:i:sa', $get->requested_on)?></td> -->
                         <td class="status"><?=$get->status ?></td>
+                        <td class="status"><?=$get->wallet_address ?></td>
                         <td class="text-center editLoan" id="edit-<?=$get->id?>">
                             <i class="fa fa-pencil pointer"></i>
                         </td>

@@ -355,45 +355,6 @@ defined('BASEPATH') OR exit('');
     </div>
 
 
-<!-- Modal to add new bank -->
-<div class='modal fade' id='addNewBankModal' role="dialog" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class='modal-header'>
-                <button class="close" data-dismiss='modal'>&times;</button>
-                <h4 class="text-center">Add New Bank</h4>
-                <div class="text-center">
-                    <i id="fMsgIcon"></i><span id="fMsg"></span>
-                </div>
-            </div>
-            <div class="modal-body">
-                <form id='addNewBankForm' name='addNewBankForm' role='form'>
-                    <div class="row">
-                        <div class="form-group-sm col-sm-6">
-                            <label for='name' class="control-label">Name</label>
-                            <input type="text" id='name' class="form-control checkField" placeholder="Name">
-                            <span class="help-block errMsg" id="nameErr"></span>
-                        </div>
-                        
-                        <div class="form-group-sm col-sm-6">
-                            <label for='mobile2' class="control-label">Description</label>
-                            <input type="tel" id='description' class="form-control" placeholder="Bank Description">
-                            <span class="help-block errMsg" id="descriptionErr"></span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="reset" form="addNewBankForm" class="btn btn-warning pull-left">Reset Form</button>
-                <button type='button' id='addBankSubmit' class="btn btn-primary">Add Bank</button>
-                <button type='button' class="btn btn-danger" data-dismiss='modal'>Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end of modal to add new bank -->
-
-
 <!-- Modal for editing loan -->
 <div class='modal fade' id='editLoanModal' role="dialog" data-backdrop="static">
     <div class="modal-dialog">
@@ -497,7 +458,112 @@ defined('BASEPATH') OR exit('');
         </div>
     </div>
 </div>
-<!--- end of modal to edit bank details --->
+<!--- end of modal to edit loan --->
+
+<!-- Modal for approving loan: sets wallet_address -->
+<div class='modal fade' id='approveLoanModal' role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class='modal-header'>
+                <button class="close" data-dismiss='modal'>&times;</button>
+                <h4 class="text-center">Approve Loan</h4>
+                <div class="text-center">
+                    <i id="fMsgApproveLoanIcon"></i>
+                    <span id="fMsgApproveLoan"></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group-sm col-sm-6">
+                        <label for='userAL' class="control-label">User</label>
+                        <input type="text" id='userAL' class="form-control checkField" placeholder="User">
+                        <span class="help-block errMsg" id="userALErr"></span>
+                    </div>
+                    <div class="form-group-sm col-sm-6">
+                        <label for='loanAmountAL' class="control-label">Loan Amount</label>
+                        <input type="text" id='loanAmountAL' class="form-control checkField" placeholder="Loan Amount">
+                        <span class="help-block errMsg" id="loanAmountALErr"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group-sm col-sm-6">
+                        <label for='durationAL' class="control-label">Duration</label>
+                        <input type="text" id='durationAL' class="form-control checkField" placeholder="Loan Tenor">
+                        <span class="help-block errMsg" id="durationALErr"></span>
+                    </div>
+                    <div class="form-group-sm col-sm-6">
+                        <label for='collateralAmountAL' class="control-label">Collateral Amount</label>
+                        <input type="text" id='collateralAmountAL' class="form-control checkField" placeholder="Collateral Amount">
+                        <span class="help-block errMsg" id="collateralAmountALErr"></span>
+                    </div>
+                </div>
+
+                <form id='approveLoanForm' name='approveLoanForm' role='form'>
+                    <div class="row">
+                        <div class="form-group-sm col-sm-12">
+                            <label for='walletAddress' class="control-label">Wallet Address</label>
+                            <input type="text" id='walletAddress' class="form-control checkField" placeholder="Wallet Address">
+                            <span class="help-block errMsg" id="walletAddressErr"></span>
+                        </div>
+                        
+                        <!-- <div class="form-group-sm col-sm-6">
+                            <label for='descriptionATEdit' class="control-label">Description</label>
+                            <input type="tel" id='descriptionATEdit' class="form-control" placeholder="Description">
+                            <span class="help-block errMsg" id="descriptionATEditErr"></span>
+                        </div> -->
+                    </div>
+                    
+                    <input type="hidden" id="loanIdAL">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" form="approveLoanForm" class="btn btn-warning pull-left">Reset Form</button>
+                <button type='button' id='approveLoanSubmit' class="btn btn-primary">Approve</button>
+                <button type='button' class="btn btn-danger" data-dismiss='modal'>Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--- end of modal to edit account type --->
+
+
+<!-- Modal to add new bank -->
+<div class='modal fade' id='addNewBankModal' role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class='modal-header'>
+                <button class="close" data-dismiss='modal'>&times;</button>
+                <h4 class="text-center">Add New Bank</h4>
+                <div class="text-center">
+                    <i id="fMsgIcon"></i><span id="fMsg"></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form id='addNewBankForm' name='addNewBankForm' role='form'>
+                    <div class="row">
+                        <div class="form-group-sm col-sm-6">
+                            <label for='name' class="control-label">Name</label>
+                            <input type="text" id='name' class="form-control checkField" placeholder="Name">
+                            <span class="help-block errMsg" id="nameErr"></span>
+                        </div>
+                        
+                        <div class="form-group-sm col-sm-6">
+                            <label for='mobile2' class="control-label">Description</label>
+                            <input type="tel" id='description' class="form-control" placeholder="Bank Description">
+                            <span class="help-block errMsg" id="descriptionErr"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" form="addNewBankForm" class="btn btn-warning pull-left">Reset Form</button>
+                <button type='button' id='addBankSubmit' class="btn btn-primary">Add Bank</button>
+                <button type='button' class="btn btn-danger" data-dismiss='modal'>Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of modal to add new bank -->
 
 <!-- modals for account types -->
 <!-- Modal to add new account type -->

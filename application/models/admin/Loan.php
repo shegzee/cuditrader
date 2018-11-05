@@ -143,7 +143,7 @@ class Loan extends CI_Model{
     set approve_date
     set approver_id
     */
-    public function approve_loan($loan_id, $admin_id, $new_value)
+    public function approve_loan($loan_id, $admin_id, $wallet_address, $new_value=2)
     {
         if (!$this->is_assigned_to_loan($admin_id, $loan_id)) {
             return FALSE;
@@ -155,7 +155,12 @@ class Loan extends CI_Model{
         $this->db->set('approved_on', "datetime('now')", FALSE) 
                 : 
         $this->db->set('approved_on', "NOW()", FALSE);
-        return $this->update_status($loan_id, "APPROVED");
+        $this->db->set('wallet_address', $wallet_address);
+        $ret_val = $this->update_status($loan_id, "APPROVED");
+
+        // add code to send email here
+
+        return $ret_val;
     }
 
     /*

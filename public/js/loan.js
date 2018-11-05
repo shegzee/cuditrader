@@ -49,7 +49,7 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
-    //handles the addition of new bank details .i.e. when "add bank" button is clicked
+    //handles the addition of new loan .i.e. when "add bank" button is clicked
     $("#addLoanSubmit").click(function(e){
         e.preventDefault();
         
@@ -178,7 +178,7 @@ $(document).ready(function(){
             // }
 
             if(!loanId){
-                $("#fMsgEdit").text("An unexpected error occured while trying to update bank's details");
+                $("#fMsgEdit").text("An unexpected error occured while trying to update loan details");
                 return;
             }
 
@@ -221,6 +221,82 @@ $(document).ready(function(){
                     //display individual error messages if applied
                     $("#nameEditErr").html(returnedData.name);
                     $("#descriptionEditErr").html(returnedData.description);
+                }
+            }).fail(function(){
+                    if(!navigator.onLine){
+                        $("#fMsgEdit").css('color', 'red').html("Network error! Pls check your network connection");
+                    }
+                });
+        }
+        
+        else{
+            $("#fMsgEdit").html("No changes were made");
+        }
+    });
+    
+    /////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
+
+
+    //handles the approval of a loan: setting the wallet address
+    $("#approveLoanSubmit").click(function(e){
+        e.preventDefault();
+        
+        if(formChanges("approveLoanForm")){
+            //reset all error msgs in case they are set
+            changeInnerHTML('walletAddressErr', "");
+
+            var walletAddress = $("#walletAddress").val();
+            var loanId = $("#loanIdAL").val();
+
+            //ensure all required fields are filled
+            if(!walletAddress){
+                !walletAddress ? changeInnerHTML('walletAddressErr', "required") : "";
+                return;
+            }
+
+            if(!loanId){
+                $("#fMsgEdit").text("An unexpected error occured while trying to update loan details");
+                return;
+            }
+
+            //display message telling loan is being processed
+            $("#fMsgEditIcon").attr('class', spinnerClass);
+            $("#fMsgEdit").text(" Updating details...");
+
+            //make ajax request if all is well
+            $.ajax({
+                method: "POST",
+                url: appRoot+"loans/approve",
+                data: {loanId:loanId, walletAddress:walletAddress}
+            }).done(function(returnedData){
+                $("#fMsgEditIcon").removeClass();//remove spinner
+
+                if(returnedData.status === 1){
+                    $("#fMsgEdit").css('color', 'green').text(returnedData.msg);
+
+                    //reset the form and close the modal
+                    setTimeout(function(){
+                        $("#fMsgEdit").text("");
+                        $("#approveLoanModal").modal('hide');
+                    }, 1000);
+
+                    //reset all error msgs in case they are set
+                    changeInnerHTML('walletAddressErr', "");
+
+                    //refresh bank list table
+                    load_all();
+
+                }
+
+                else{
+                    //display error message returned
+                    $("#fMsgEdit").css('color', 'red').html(returnedData.msg);
+
+                    //display individual error messages if applied
+                    $("#walletAddressErr").html(returnedData.walletAddress);
                 }
             }).fail(function(){
                     if(!navigator.onLine){
@@ -313,10 +389,44 @@ $(document).ready(function(){
     ******************************************************************************************************************************
     ******************************************************************************************************************************
     */
-    
-    
-    //When the approve icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
+
+    //to launch the modal to allow for the editing of bank info
     $("#reqLoan").on('click', '.approveLoan', function(){
+        
+        var loanId = $(this).attr('id').split("-")[1];
+        
+        $("#loanIdAL").val(loanId);
+        
+        //get info of bank with loanId and prefill the form with it
+        //alert($(this).siblings(".bankEmail").children('a').html());
+
+        var user = $(this).siblings(".user").html();
+        var loan_amount_disp = $(this).siblings(".loan_amount_disp").html();
+        var collateral_amount_disp = $(this).siblings(".collateral_amount_disp").html();
+        var duration = $(this).siblings(".duration").html();
+        
+        
+        //prefill the form fields
+        // $("#walletAddress").val(defaultWalletAddress);
+        // $("#nameEdit").val(name);
+        $("#userAL").val(user).prop('disabled', true);
+        $("#loanAmountAL").val(loan_amount_disp).prop('disabled', true);
+        $("#collateralAmountAL").val(collateral_amount_disp).prop('disabled', true);
+        $("#durationAL").val(duration).prop('disabled', true);
+
+        // prefill dropdowns
+        // $("#status-"+status_id).prop('selected', 'selected');
+        // $("#user-"+user_id).prop('selected', 'selected');
+        // $("#loan_unit-"+loan_unit_id).prop('selected', 'selected');
+        // $("#collateral_unit-"+collateral_unit_id).prop('selected', 'selected');
+        
+        $("#approveLoanModal").modal('show');
+    });
+    
+    
+    
+    //FORMER ACTION FOR When the approve icon in front of a loan is clicked on the bank list table (i.e. to delete the account)
+    $("#reqLoan").on('click', '.approveLoanX', function(){
         var confirm = window.confirm("Proceed?");
         
         if(confirm){

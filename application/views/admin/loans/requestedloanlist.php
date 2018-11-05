@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('');
                     <th>DATE REQUESTED</th>
                     <th>STATUS</th>
                     <th>EDIT</th>
-                    <th>ACTIONS</th>
+                    <th colspan="2">ACTIONS</th>
                     <!-- <th>DATE CREATED</th> -->
                     <!-- <th>DELETE</th> -->
                 </tr>
@@ -34,17 +34,19 @@ defined('BASEPATH') OR exit('');
                         <td class="hidden collateral_unit_id"><?=$get->collateral_unit_id?></td>
                         <td class="hidden collateral_amount"><?=$get->collateral_amount?></td>
                         <td class="hidden status_id"><?=$get->status_number?></td>
-                        <td class="loan_amount"><?= html_entity_decode($loan_unit_icons[$get->loan_unit_id])?><?=number_format($get->loan_amount) ?></td>
-                        <td class="collateral_amount"><?=$get->collateral_amount?><?=html_entity_decode($collateral_unit_icons[$get->collateral_unit_id])?></td>
+                        <td class="loan_amount_disp"><?= html_entity_decode($loan_unit_icons[$get->loan_unit_id])?><?=number_format($get->loan_amount) ?></td>
+                        <td class="collateral_amount_disp"><?=$get->collateral_amount?><?=html_entity_decode($collateral_unit_icons[$get->collateral_unit_id])?></td>
                         <td class="duration"><?=$get->loan_duration ?> months</td>
                         <td class="requested_on"><?=$get->requested_on ?></td>
                         <td class="status"><?=$get->status ?></td>
                         <td class="text-center editLoan" id="edit-<?=$get->id?>">
                             <i class="fa fa-pencil pointer"></i>
                         </td>
-                        <td class="actions">
-                            <a class="approveLoan" id="approve-<?=$get->id?>" title="Approve"><i class="fa fa-check"></i></a>
-                            <a class="denyLoan" id="deny-<?=$get->id?>" title="Deny"><i class="fa fa-remove"></i></a>
+                        <td class="actions approveLoan" id="approve-<?=$get->id?>" title="Approve">
+                            <i class="fa fa-check"></i>
+                        </td>
+                        <td class="actions denyLoan" id="deny-<?=$get->id?>" title="Deny">
+                            <i class="fa fa-remove"></i>
                         </td>
                         <!-- <td class="text-center text-danger deleteBank" id="del-<?=$get->id?>">
                             <?php if($get->deleted === "1"): ?>
