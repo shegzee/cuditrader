@@ -414,7 +414,7 @@ class Loans extends CI_Controller
         $requested_status_number = $this->loan->get_status_number("REQUESTED");
         $loan_id = $this->input->post('loanId');
         $wallet_address = $this->input->post('walletAddress');
-        $new_value = $this->genmod->gettablecol('loans', 'status_number', 'id', $loan_id) == $approved_status_number ? $requested_status_number : $approved_status_number;
+        $new_value = $approved_status_number;
 
         $updated = $this->loan->approve_loan($loan_id, $_SESSION['admin_id'], $wallet_address);
         

@@ -320,3 +320,32 @@ ERROR - 2018-11-05 21:22:05 --> Severity: Notice --> A non well formed numeric v
 ERROR - 2018-11-05 21:22:05 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\approvedloanlist.php 56
 ERROR - 2018-11-05 21:22:05 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\cancelledloanlist.php 52
 ERROR - 2018-11-05 21:22:05 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\cancelledloanlist.php 52
+ERROR - 2018-11-05 21:28:12 --> Severity: error --> Exception: Unable to locate the model you have specified: Admin C:\wamp\www\cudi\system\core\Loader.php 344
+ERROR - 2018-11-05 21:28:12 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\approvedloanlist.php 44
+ERROR - 2018-11-05 21:28:12 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\approvedloanlist.php 56
+ERROR - 2018-11-05 21:28:12 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\grantedloanlist.php 48
+ERROR - 2018-11-05 21:28:13 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\grantedloanlist.php 59
+ERROR - 2018-11-05 21:28:13 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\grantedloanlist.php 48
+ERROR - 2018-11-05 21:28:13 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\grantedloanlist.php 59
+ERROR - 2018-11-05 21:28:13 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\grantedloanlist.php 48
+ERROR - 2018-11-05 21:28:13 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\grantedloanlist.php 59
+ERROR - 2018-11-05 21:28:13 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\clearedloanlist.php 57
+ERROR - 2018-11-05 21:28:13 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\deniedloanlist.php 43
+ERROR - 2018-11-05 21:28:13 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\deniedloanlist.php 54
+ERROR - 2018-11-05 21:28:13 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\cancelledloanlist.php 52
+ERROR - 2018-11-05 21:28:13 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\cancelledloanlist.php 52
+ERROR - 2018-11-05 21:28:34 --> Severity: error --> Exception: Unable to locate the model you have specified: Admin C:\wamp\www\cudi\system\core\Loader.php 344
+ERROR - 2018-11-05 21:28:34 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\approvedloanlist.php 44
+ERROR - 2018-11-05 21:28:34 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\approvedloanlist.php 56
+ERROR - 2018-11-05 21:28:34 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\grantedloanlist.php 48
+ERROR - 2018-11-05 21:28:34 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\grantedloanlist.php 59
+ERROR - 2018-11-05 21:28:34 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\grantedloanlist.php 48
+ERROR - 2018-11-05 21:28:34 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\grantedloanlist.php 59
+ERROR - 2018-11-05 21:28:35 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\grantedloanlist.php 48
+ERROR - 2018-11-05 21:28:35 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\grantedloanlist.php 59
+ERROR - 2018-11-05 21:28:35 --> Severity: Notice --> A non well formed numeric value encountered C:\wamp\www\cudi\application\views\admin\loans\deniedloanlist.php 43
+ERROR - 2018-11-05 21:28:35 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\deniedloanlist.php 54
+ERROR - 2018-11-05 21:28:35 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\clearedloanlist.php 57
+ERROR - 2018-11-05 21:28:35 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\cancelledloanlist.php 52
+ERROR - 2018-11-05 21:28:35 --> Severity: Notice --> Undefined property: stdClass::$deleted C:\wamp\www\cudi\application\views\admin\loans\cancelledloanlist.php 52
+ERROR - 2018-11-05 23:13:47 --> Severity: error --> Exception: Unable to locate the model you have specified: Admin C:\wamp\www\cudi\system\core\Loader.php 344
