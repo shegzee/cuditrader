@@ -88,17 +88,20 @@ class Auth extends MY_Controller {
 			$full_name = $first_name." ".$last_name;
 
 			$this->load->library('ion_auth');
-			if ($this->User_model->add($email, $password, $first_name, $last_name, $phone, $address))
+			$user_id = $this->User_model->add($email, $password, $first_name, $last_name, $phone, $address);
+			if ($user_id)
 			{
+				$user = $this->ion_auth->user($user_id);
+				$activation_code = $user->activation_code;
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				$_SESSION['message'] = 'Welcome! Please verify your email';
+				$_SESSION['message'] = 'Welcome! Please verify your email'.$activation_code;
 				$this->session->mark_as_flash('message');
 				//Send Registeration Email Codes Start                
-                /*
+                
                 //send verification email to user
                 $e_info['msg_content'] = "<p>Dear ".set_value('first_name').", </p>"
                 . "<h1>Welcome to Cuditrader</h1></br>"
-                . "<p>Thanks for choosing Cudirader. Please verify your email address to start borrowing loans using your Bitcoin/Ethereum as collateral.</p>";
+                . "<p>Thanks for choosing Cudi Trader. Please verify your email address to start borrowing loans using your Bitcoin/Ethereum as collateral.</p>";
 
                 // compose verification link with generated activation code.
                 // $activation_link = base_url('user/verify_email/'.$activation_code);
@@ -112,7 +115,7 @@ class Auth extends MY_Controller {
 				$this->genlib->send_email(DEFAULT_NAME, DEFAULT_EMAIL, set_value('first_name'), set_value('email'), "Welcome! Please verify your email", $u_msg);
 				
 				//Send email end
-				*/
+				
 				redirect('auth/login');
 			}
 			else
