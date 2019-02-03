@@ -88,13 +88,14 @@ class Auth extends MY_Controller {
 			$full_name = $first_name." ".$last_name;
 
 			$this->load->library('ion_auth');
-			$user_id = $this->User_model->add($email, $password, $first_name, $last_name, $phone, $address);
+			$user_info = $this->User_model->add($email, $password, $first_name, $last_name, $phone, $address);
+			$user_id = $user_info['id'];
+			echo "User ID: ".$user_id;
 			if ($user_id)
 			{
-				$user = $this->ion_auth->user($user_id);
-				$activation_code = $user->activation_code;
+				$activation_code = $user_info['activation'];
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				$_SESSION['message'] = 'Welcome! Please verify your email'.$activation_code;
+				$_SESSION['message'] = 'Welcome, '.$full_name.'! Please verify your email.';
 				$this->session->mark_as_flash('message');
 				//Send Registeration Email Codes Start                
                 

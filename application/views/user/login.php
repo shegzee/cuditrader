@@ -20,7 +20,7 @@
 	echo form_open(current_url(), 'autocomplete="on" id="login-form" class="login-form"');
 		?>
 		<div class="<?= !isset($_SESSION['message']) ?'form-message':'' ?> error">
-			<i class="fa fa-exclamation-circle"></i><span class="form-message-label"><?= isset($_SESSION['message']) ? "<p><span style='color:black'>".$_SESSION['message']."</span></p>" : "" ?></span>
+			<i class="fa fa-exclamation-circle"></i><span class="form-message-label"><?= isset($_SESSION['message']) ? "<span style='color:black'>".$_SESSION['message']."</span>" : "" ?></span>
 		</div>
 	<?php
 	echo form_error('email', '<div class="error">', '</div>');

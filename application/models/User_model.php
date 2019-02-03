@@ -40,12 +40,13 @@ class User_model extends CI_Model{
                 'phone' => $phone,
                 'address' => $address
             );
-        $user_id = $this->ion_auth->register($email, $password, $email, $additional_data);
+        // $user_id = $this->ion_auth->register($email, $password, $email, $additional_data);
+        $user_info = $this->ion_auth->register($email, $password, $email, $additional_data);
         // create an entry in the 'user_profile' table for this user
-        if ($user_id) {
-            $this->db->insert('user_profile', array("user_id" => $user_id));
+        if ($user_info) {
+            $this->db->insert('user_profile', array("user_id" => $user_info['id']));
         }
-        return $user_id;
+        return $user_info;
     }
 
     public function login($email, $password, $remember=FALSE) {
