@@ -1352,7 +1352,7 @@ function laal_(url){
 }
 
 /**
- * lagl_ = "Load all approved loans"
+ * lagl_ = "Load all granted loans"
  * @returns {undefined}
  */
 function lagl_(url){

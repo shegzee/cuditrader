@@ -158,7 +158,31 @@ class Loan extends CI_Model{
         $this->db->set('wallet_address', $wallet_address);
         $ret_val = $this->update_status($loan_id, "APPROVED");
 
-        // add code to send email here
+        $loan_info = $this->get_loan_info($loan_id);
+                
+        if($loan_info){
+            foreach($loan_info as $get){                
+                $user_full_name = $get->first_name . " " . $get->last_name;
+                $user_email = $get->email;
+                $collateral_amount = $get->collateral_amount;
+                $collateral_unit_name = $get->collateral_unit_name;
+
+            }
+
+            // add code to send email here
+            $e_info['msg_content'] = "<p>Dear {$user_full_name}, </p>"
+            . "<p>Your loan request has been approved.</p>"
+            . "<p>Send the crypto to the following wallet address, and your loan will be granted within 24 hours:</p>"
+            . "<p>Crypto: <strong>{$collateral_amount} {$collateral_unit_name}</strong></p>"
+            . "<p>Wallet Address: <strong>{$wallet_address}</strong></p>"
+            . "<p>Regards,</p>"
+            . "<p>Cudi Trader</p>";
+
+            $u_msg = $this->load->view('email/default', $e_info, TRUE);
+
+            //send_email($sname, $semail, $rname, $remail, $subject, $message, $cc='', $bcc='', $replyToEmail="", $files="")
+            $this->genlib->send_email(DEFAULT_NAME, DEFAULT_EMAIL, $user_full_name, $user_email, "Loan Approved", $u_msg);
+        }
 
         return $ret_val;
     }
@@ -269,7 +293,7 @@ class Loan extends CI_Model{
      * @param type $id
      * @return boolean
      */
-    public function get_loan_info($loan_id){
+    public function get_loan_details($loan_id){
         // $this->db->select('id, first_name, last_name, role');
         $this->db->where('id', $loan_id);
 
@@ -284,7 +308,35 @@ class Loan extends CI_Model{
         }
     }
 
+    public function get_loan_info($loan_id) {
+        $query_text = "SELECT `loans`.*, `loan_status`.`status`, `users`.`first_name`, `users`.`last_name`, `users`.`email`, `collateral_units`.`name` AS `collateral_unit_name` FROM `loans` JOIN `users` ON `users`.`id`=`loans`.`user_id` JOIN `loan_status` ON `loan_status`.`status_number`=`loans`.`status_number` JOIN `collateral_units` ON `collateral_units`.`id`=`loans`.`collateral_unit_id`=`collateral_units`.`id` WHERE `loans`.`id`=".$loan_id;
+        $run_q = $this->db->query($query_text);
+        
+        if($run_q->num_rows() > 0){
+            return $run_q->result();
+        }
+        return FALSE;
+    }
 
+    /**
+     * Get some details about a user
+     * @param type $email
+     * @return boolean
+     */
+    public function get_user_info($user_id){
+        $this->db->select('id, first_name, last_name', 'email');
+        $this->db->where('id', $user_id);
+
+        $run_q = $this->db->get('users');
+
+        if($run_q->num_rows() > 0){
+            return $run_q->result();
+        }
+
+        else{
+            return FALSE;
+        }
+    }
 
 
    /*
@@ -338,7 +390,8 @@ class Loan extends CI_Model{
         }
         
         else{
-            return FALSE;
+            // return FALSE;
+            return array();
         }
     }
     
@@ -372,7 +425,8 @@ class Loan extends CI_Model{
         }
 
         else{
-            return FALSE;
+            // return FALSE;
+            return array();
         }
     }
     
