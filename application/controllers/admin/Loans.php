@@ -417,6 +417,33 @@ class Loans extends CI_Controller
         $new_value = $approved_status_number;
 
         $updated = $this->loan->approve_loan($loan_id, $_SESSION['admin_id'], $wallet_address);
+
+        // send mail
+        $loan_info = $this->loan->get_loan_info($loan_id);
+        
+        if($loan_info){
+            $user_full_name = $loan_info->first_name . " " . $loan_info->last_name;
+            $user_email = $loan_info->email;
+            $collateral_amount = $loan_info->collateral_amount;
+            $collateral_unit_name = $loan_info->collateral_unit_name;
+
+
+            if ($updated) {
+                // add code to send email here
+                $e_info['msg_content'] = "<p>Dear {$user_full_name}, </p>"
+                . "<p>Your loan request has been approved.</p>"
+                . "<p>Send the crypto to the following wallet address, and your loan will be granted within 24 hours:</p>"
+                . "<p>Crypto: <strong>{$collateral_amount} {$collateral_unit_name}</strong></p>"
+                . "<p>Wallet Address: <strong>{$wallet_address}</strong></p>"
+                . "<p>Regards,</p>"
+                . "<p>Cudi Trader</p>";
+
+                $u_msg = $this->load->view('email/default', $e_info, TRUE);
+
+                //send_email($sname, $semail, $rname, $remail, $subject, $message, $cc='', $bcc='', $replyToEmail="", $files="")
+                $this->genlib->send_email(DEFAULT_NAME, DEFAULT_EMAIL, $user_full_name, $user_email, "Loan Approved", $u_msg);
+            }
+        }
         
         
         $json = $updated ? 

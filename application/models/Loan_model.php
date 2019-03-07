@@ -86,6 +86,37 @@ class Loan_model extends CI_Model
     	$this->db->update('loans', $data);
     }
 
+    public function get_loan_info($loan_id) {
+        $query_text = "SELECT `loans`.*, `loan_status`.`status`, `users`.`first_name`, `users`.`last_name`, `users`.`email`, `collateral_units`.`name` AS `collateral_unit_name` FROM `loans` JOIN `users` ON `users`.`id`=`loans`.`user_id` JOIN `loan_status` ON `loan_status`.`status_number`=`loans`.`status_number` JOIN `collateral_units` ON `collateral_units`.`id`=`loans`.`collateral_unit_id`=`collateral_units`.`id` WHERE `loans`.`id`=".$loan_id;
+        $run_q = $this->db->query($query_text);
+        
+        if($run_q->num_rows() > 0){
+            return $run_q->row();
+        }
+        return FALSE;
+    }
+
+    /**
+     * Get some details about a user
+     * @param type $id
+     * @return boolean
+     */
+    public function get_user_info($user_id){
+        $this->db->select('id, first_name, last_name', 'email');
+        $this->db->where('id', $user_id);
+
+        $run_q = $this->db->get('users');
+
+        if($run_q->num_rows() > 0){
+            return $run_q->result();
+        }
+
+        else{
+            return FALSE;
+        }
+    }
+
+
     /* ********************************************************************
 
 	admin end functions

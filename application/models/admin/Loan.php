@@ -158,6 +158,8 @@ class Loan extends CI_Model{
         $this->db->set('wallet_address', $wallet_address);
         $ret_val = $this->update_status($loan_id, "APPROVED");
 
+        // Moved mail sending code to controller
+        /* 
         $loan_info = $this->get_loan_info($loan_id);
                 
         if($loan_info){
@@ -183,6 +185,7 @@ class Loan extends CI_Model{
             //send_email($sname, $semail, $rname, $remail, $subject, $message, $cc='', $bcc='', $replyToEmail="", $files="")
             $this->genlib->send_email(DEFAULT_NAME, DEFAULT_EMAIL, $user_full_name, $user_email, "Loan Approved", $u_msg);
         }
+        */
 
         return $ret_val;
     }
@@ -320,7 +323,7 @@ class Loan extends CI_Model{
 
     /**
      * Get some details about a user
-     * @param type $email
+     * @param type $id
      * @return boolean
      */
     public function get_user_info($user_id){

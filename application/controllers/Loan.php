@@ -53,9 +53,56 @@ class Loan extends Auth_Controller {
 				'user_id'				=> $this->user->id
 			);
 
-			if ($this->Loan_model->new_loan($data) == TRUE) {
+			$loan_id = $this->Loan_model->new_loan($data);
+			if ($loan_id) {
 				$_SESSION['message'] = "The loan request has been made. It will be processed within 24 hours.";
 				$this->session->mark_as_flash('message');
+
+				$loan_info = $this->Loan_model->get_loan_info($loan_id);
+        
+		        if($loan_info){
+		            $user_full_name = $loan_info->first_name . " " . $loan_info->last_name;
+		            $user_email = $loan_info->email;
+		            $collateral_amount = $loan_info->collateral_amount;
+		            $collateral_unit_name = $loan_info->collateral_unit_name;
+
+				// send mail to user concerning loan request
+                // add code to send email here
+                $e_info['msg_content'] = "<p>Dear {$user_full_name}, </p>"
+                . "<p>Your loan request has been sent. It will be processed within 24 hours.</p>"
+                . "<p>Here are the details of the request:</p>"
+                . "<p>Loan requested: <strong>{$data['loan_amount']} {$data['loan_unit_name']}</strong></p>"
+                . "<p>Loan Duration: <strong>{$data['loan_duration']} days</strong></p>"
+                . "<p>Regards,</p>"
+                . "<p>Cudi Trader</p>";
+
+                $u_msg = $this->load->view('email/default', $e_info, TRUE);
+
+                //send_email($sname, $semail, $rname, $remail, $subject, $message, $cc='', $bcc='', $replyToEmail="", $files="")
+                $this->genlib->send_email(DEFAULT_NAME, DEFAULT_EMAIL, $user_full_name, $user_email, "Loan Requested", $u_msg);
+
+                // Notify admins that loan has been requested
+                $e_info['msg_content'] = "<p>User {$user_full_name}, </p>"
+                . "<p>{$user_full_name} ({$user_email}) has requested a loan.</p>"
+                . "<p>Here are the details of the request:</p>"
+                . "<p>Loan requested: <strong>{$data['loan_amount']} {$data['loan_unit_name']}</strong></p>"
+                . "<p>Loan Duration: <strong>{$data['loan_duration']} days</strong></p>";
+
+                $u_msg = $this->load->view('email/default', $e_info, TRUE);
+
+                //send_email($sname, $semail, $rname, $remail, $subject, $message, $cc='', $bcc='', $replyToEmail="", $files="")
+
+                // get all admins and send to all of them.
+
+                $this->load->model('admin/admin', 'admin');
+                $admins = $this->admin->getAll();
+
+                $emails = "";
+                foreach($admins as $admin) {
+                    $emails .= ", ".$admin->email;
+                }
+
+                $this->genlib->send_email(DEFAULT_NAME, DEFAULT_EMAIL, "Cudi Admin", $emails, "Loan Requested", $u_msg);
 			}
 			// else if {
 
